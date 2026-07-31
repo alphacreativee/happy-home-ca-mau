@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Platypi';
+    src: url('Platypi-Bold.eot');
+    src: url('Platypi-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Platypi-Bold.woff2') format('woff2'),
+        url('Platypi-Bold.woff') format('woff'),
+        url('Platypi-Bold.ttf') format('truetype'),
+        url('Platypi-Bold.svg#Platypi-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Platypi';
+    src: url('Platypi-ExtraBold.eot');
+    src: url('Platypi-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('Platypi-ExtraBold.woff2') format('woff2'),
+        url('Platypi-ExtraBold.woff') format('woff'),
+        url('Platypi-ExtraBold.ttf') format('truetype'),
+        url('Platypi-ExtraBold.svg#Platypi-ExtraBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Platypi';
+    src: url('Platypi-Light.eot');
+    src: url('Platypi-Light.eot?#iefix') format('embedded-opentype'),
+        url('Platypi-Light.woff2') format('woff2'),
+        url('Platypi-Light.woff') format('woff'),
+        url('Platypi-Light.ttf') format('truetype'),
+        url('Platypi-Light.svg#Platypi-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Platypi';
+    src: url('Platypi-Medium.eot');
+    src: url('Platypi-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Platypi-Medium.woff2') format('woff2'),
+        url('Platypi-Medium.woff') format('woff'),
+        url('Platypi-Medium.ttf') format('truetype'),
+        url('Platypi-Medium.svg#Platypi-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Platypi';
+    src: url('Platypi-Regular.eot');
+    src: url('Platypi-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Platypi-Regular.woff2') format('woff2'),
+        url('Platypi-Regular.woff') format('woff'),
+        url('Platypi-Regular.ttf') format('truetype'),
+        url('Platypi-Regular.svg#Platypi-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Platypi';
+    src: url('Platypi-SemiBold.eot');
+    src: url('Platypi-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('Platypi-SemiBold.woff2') format('woff2'),
+        url('Platypi-SemiBold.woff') format('woff'),
+        url('Platypi-SemiBold.ttf') format('truetype'),
+        url('Platypi-SemiBold.svg#Platypi-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
