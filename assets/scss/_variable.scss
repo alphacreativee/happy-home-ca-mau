@@ -4,13 +4,18 @@
   --font-heading: "Platypi", sans-serif;
   --font-body: "Manrope", sans-serif;
   // color
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-primary: #4b1610;
-  --color-secondary: #344415;
-  --color-third: #5a4536;
-  --color-fourth: #e1cdad;
-  --color-fifth: #c07e4a;
+  --color-gold-med: #fdd0a4;
+  --color-gold-light: #decdb1;
+  --color-green-dark: #262e17;
+  --color-green-med: #40492a;
+  --color-green-light: #f2f5e4;
+
+  --color-brown-dark: #49392d;
+  --color-brown-med: #4b3b31;
+
+  --color-red: #5e3131;
+  --color-red-dark: #854b20;
+  --color-red-light: #e6dccb;
   //spacing
   --space-8: 8px;
   --space-16: 16px;
@@ -41,6 +46,38 @@
   }
 }
 // font variable
+.font-heading {
+  font-family: var(--font-heading);
+}
+.font-body {
+  font-family: var(--font-body);
+}
+.heading-1 {
+  font-size: 63px;
+  line-height: 1.5;
+}
+.heading-2 {
+  font-size: 24px;
+  line-height: 1.4;
+}
+.heading-3 {
+  font-size: 14px;
+  line-height: 1.2;
+}
+.body-font {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.sub-font {
+  font-size: 11px;
+  line-height: 1.1;
+}
+.fw-regular {
+  font-weight: 400;
+}
+.fw-bold {
+  font-weight: bold;
+}
 // color variable
 .color-black {
   color: var(--color-black);
@@ -48,21 +85,78 @@
 .color-white {
   color: var(--color-white);
 }
+// Gold
+.text-gold-med {
+  color: var(--color-gold-med);
+}
+.bg-gold-med {
+  background-color: var(--color-gold-med);
+}
 
-.color-primary {
-  color: var(--color-primary);
+.text-gold-light {
+  color: var(--color-gold-light);
 }
-.color-secondary {
-  color: var(--color-secondary);
+.bg-gold-light {
+  background-color: var(--color-gold-light);
 }
-.color-third {
-  color: var(--color-third);
+
+// Green
+.text-green-dark {
+  color: var(--color-green-dark);
 }
-.color-fourth {
-  color: var(--color-fourth);
+.bg-green-dark {
+  background-color: var(--color-green-dark);
 }
-.color-fifth {
-  color: var(--color-fifth);
+
+.text-green-med {
+  color: var(--color-green-med);
+}
+.bg-green-med {
+  background-color: var(--color-green-med);
+}
+
+.text-green-light {
+  color: var(--color-green-light);
+}
+.bg-green-light {
+  background-color: var(--color-green-light);
+}
+
+// Brown
+.text-brown-dark {
+  color: var(--color-brown-dark);
+}
+.bg-brown-dark {
+  background-color: var(--color-brown-dark);
+}
+
+.text-brown-med {
+  color: var(--color-brown-med);
+}
+.bg-brown-med {
+  background-color: var(--color-brown-med);
+}
+
+// Red
+.text-red {
+  color: var(--color-red);
+}
+.bg-red {
+  background-color: var(--color-red);
+}
+
+.text-red-dark {
+  color: var(--color-red-dark);
+}
+.bg-red-dark {
+  background-color: var(--color-red-dark);
+}
+
+.text-red-light {
+  color: var(--color-red-light);
+}
+.bg-red-light {
+  background-color: var(--color-red-light);
 }
 .limit-width {
   max-width: 1440px;
