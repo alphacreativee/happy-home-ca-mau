@@ -1141,8 +1141,8 @@ body {
   transform: scale(1);
   will-change: transform;
 }
-.hero .swiper-hero .swiper-slide.swiper-slide-active img {
-  animation: kenBurnsZoom 3s ease-out forwards;
+.hero .swiper-hero .swiper-slide img.kb-zoom {
+  animation: kenBurnsZoom linear forwards;
 }
 .hero .swiper-hero .swiper-pagination {
   display: flex;
@@ -1166,6 +1166,7 @@ body {
   top: 0;
   left: 0;
   height: 100%;
+  width: 0%;
   background-color: var(--color-white);
   border-radius: 2px;
 }

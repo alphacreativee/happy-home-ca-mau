@@ -23,7 +23,8 @@
         will-change: transform;
 
         &.kb-zoom {
-          animation: kenBurnsZoom 3s linear forwards;
+          animation: kenBurnsZoom linear forwards;
+          // Không hard-code 3s nữa, để JS set animation-duration
         }
       }
     }
@@ -50,6 +51,7 @@
           top: 0;
           left: 0;
           height: 100%;
+          width: 0%;
           background-color: var(--color-white);
           border-radius: 2px;
 

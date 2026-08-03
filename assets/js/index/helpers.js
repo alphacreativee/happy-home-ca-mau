@@ -1,11 +1,10 @@
-// export các function trang home
 export function bannerSlide() {
   if (!document.querySelector(".swiper-hero")) return;
 
-  const SCALE_DURATION = 3000;
+  const SCALE_DURATION = 4000;
   const FADE_SPEED = 1000;
 
-  var swiperHero = new Swiper(".swiper-hero", {
+  const swiperHero = new Swiper(".swiper-hero", {
     effect: "fade",
     fadeEffect: { crossFade: true },
     speed: FADE_SPEED,
@@ -13,6 +12,7 @@ export function bannerSlide() {
     autoplay: {
       delay: SCALE_DURATION,
       disableOnInteraction: false,
+      waitForTransition: false,
     },
     pagination: {
       el: ".swiper-pagination",
@@ -22,71 +22,62 @@ export function bannerSlide() {
       },
     },
     on: {
-      init: function (swiper) {
-        resetAllProgress(swiper);
-        runEffects(swiper);
+      init(swiper) {
+        updateProgress(swiper, 0);
+        runZoom(swiper);
       },
-      slideChangeTransitionEnd: function (swiper) {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            runEffects(swiper);
-          });
-        });
+      slideChange(swiper) {
+        updateProgress(swiper, 0);
+        runZoom(swiper);
+      },
+
+      autoplayTimeLeft(swiper, timeLeft, percentage) {
+        const progress = 1 - percentage;
+        updateProgress(swiper, progress);
       },
     },
   });
 
-  function resetAllProgress(swiper) {
-    swiper.pagination.bullets.forEach((bullet) => {
+  function updateProgress(swiper, progressValue) {
+    const realIndex = swiper.realIndex;
+    const bullets = swiper.pagination.bullets;
+
+    bullets.forEach((bullet, index) => {
       const progressEl = bullet.querySelector(".progress");
-      if (progressEl) {
-        progressEl.classList.remove("is-active");
-        progressEl.style.animation = "none";
+      if (!progressEl) return;
+
+      progressEl.classList.remove("is-active");
+      progressEl.style.animation = "none";
+
+      if (index < realIndex) {
+        progressEl.style.width = "100%";
+      } else if (index === realIndex) {
+        progressEl.style.width = `${Math.min(progressValue * 100, 100)}%`;
+      } else {
         progressEl.style.width = "0%";
       }
     });
   }
 
-  function runEffects(swiper) {
-    const activeImg = swiper.slides[swiper.activeIndex].querySelector("img");
-    const activeBullet = swiper.pagination.bullets[swiper.realIndex];
-    const progressEl = activeBullet?.querySelector(".progress");
-
-    // Reset image zoom
-    if (activeImg) {
-      activeImg.classList.remove("kb-zoom");
-    }
-
-    // Reset progress khi về slide đầu (loop)
-    if (swiper.realIndex === 0) {
-      resetAllProgress(swiper);
-    }
-
-    // Reset progress của bullet hiện tại
-    if (progressEl) {
-      progressEl.classList.remove("is-active");
-      progressEl.style.animation = "none";
-      progressEl.style.width = "0%";
-      void progressEl.offsetWidth; // force reflow
-    }
-
-    // Chạy đồng thời cả progress + zoom
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        // Progress
-        if (progressEl) {
-          progressEl.style.animation = "";
-          progressEl.style.width = "";
-          progressEl.style.animationDuration = `${SCALE_DURATION}ms`;
-          progressEl.classList.add("is-active");
-        }
-
-        // Image zoom – bắt đầu cùng lúc, cùng thời gian
-        if (activeImg) {
-          activeImg.style.animationDuration = `${SCALE_DURATION}ms`;
-          activeImg.classList.add("kb-zoom");
-        }
-      });
+  function resetAllImages(swiper) {
+    swiper.slides.forEach((slide) => {
+      const img = slide.querySelector("img");
+      if (img) {
+        img.classList.remove("kb-zoom");
+        img.style.animationDuration = "";
+      }
     });
+  }
+
+  function runZoom(swiper) {
+    const activeImg = swiper.slides[swiper.activeIndex]?.querySelector("img");
+
+    resetAllImages(swiper);
+
+    if (activeImg) {
+      void activeImg.offsetWidth; // force reflow
+      activeImg.style.animationDuration = `${SCALE_DURATION}ms`;
+      activeImg.classList.add("kb-zoom");
+    }
   }
 }
