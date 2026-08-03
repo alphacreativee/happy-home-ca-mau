@@ -16,6 +16,10 @@
   --color-red: #5e3131;
   --color-red-dark: #854b20;
   --color-red-light: #e6dccb;
+  --color-white: #fffefc;
+
+  // transition
+  --tt-medium: all 0.4s ease;
   //spacing
   --space-8: 8px;
   --space-16: 16px;
@@ -78,6 +82,9 @@
 .fw-bold {
   font-weight: bold;
 }
+.fw-semibold {
+  font-weight: 600;
+}
 // color variable
 .color-black {
   color: var(--color-black);
@@ -99,7 +106,12 @@
 .bg-gold-light {
   background-color: var(--color-gold-light);
 }
-
+.text-color-white {
+  color: var(--color-white);
+}
+.bg-color-white {
+  background-color: var(--color-white);
+}
 // Green
 .text-green-dark {
   color: var(--color-green-dark);
@@ -162,6 +174,9 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
+}
+.tst-ease {
+  transition: var(--tt-medium);
 }
 @media (min-width: 1024px) {
   .limit-11-col {

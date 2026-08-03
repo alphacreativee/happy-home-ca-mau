@@ -1,6 +1,6 @@
 // export các function dùng cho home
 import { customDropdown, createFilterTab } from "../../main/js/global.min.js";
-import {} from "../../main/js/helpers.min.js";
+import { bannerSlide } from "../../main/js/helpers.min.js";
 ("use strict");
 $ = jQuery;
 
@@ -14,8 +14,7 @@ gsap.ticker.lagSmoothing(0);
 
 const init = () => {
   gsap.registerPlugin(ScrollTrigger);
-  customDropdown();
-  createFilterTab();
+  bannerSlide();
 };
 document.addEventListener("DOMContentLoaded", () => {
   init();
