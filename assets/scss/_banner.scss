@@ -3,15 +3,97 @@
   width: 100%;
   height: 100svh;
   overflow: hidden;
-  &-image {
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+
+  &-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swiper-hero {
+    .swiper-slide {
+      overflow: hidden;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1);
+        will-change: transform;
+
+        &.kb-zoom {
+          animation: kenBurnsZoom 3s linear forwards;
+        }
+      }
+    }
+
+    .swiper-pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      bottom: 40px;
+
+      .swiper-pagination-bullet {
+        position: relative;
+        width: 55px;
+        height: 3px;
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+        margin: 0 !important;
+        overflow: hidden;
+        cursor: pointer;
+
+        .progress {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          background-color: var(--color-white);
+          border-radius: 2px;
+
+          &.is-active {
+            animation-name: progressRun;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+          }
+        }
+      }
     }
   }
-  .swiper-pagination {
-    top: auto;
-    bottom: 40px;
+
+  &-logo {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 2;
+  }
+
+  &-heading {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 2;
+  }
+}
+
+@keyframes kenBurnsZoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes progressRun {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
   }
 }
