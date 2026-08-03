@@ -1,0 +1,13 @@
+#header {
+  .header {
+    &-container {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0 40px;
+      padding: 12px 20px;
+    }
+    &-contact {
+      gap: 20px;
+    }
+  }
+}
