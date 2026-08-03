@@ -81,3 +81,36 @@ export function bannerSlide() {
     }
   }
 }
+export function growthSection() {
+  if (!document.querySelector(".growth")) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Pin hero lại tại chỗ trong khi growth cuộn lên đè lên trên
+  ScrollTrigger.create({
+    trigger: ".hero",
+    start: "top top",
+    end: "+=100%", // hero đứng yên trong khoảng 1 viewport height cuộn
+    pin: true,
+    pinSpacing: false, // không chừa khoảng trống, để growth đè ngay lên
+  });
+
+  // Growth section: cho nó trượt từ dưới lên, đè lên hero
+  gsap.fromTo(
+    ".growth",
+    {
+      yPercent: 0, // vị trí ban đầu (đứng bình thường theo luồng document)
+    },
+    {
+      yPercent: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".growth",
+        start: "top bottom", // bắt đầu khi growth chạm đáy viewport
+        end: "top top", // kết thúc khi growth chạm đỉnh viewport
+        scrub: true,
+        markers: true, // xoá khi đã chạy đúng, chỉ để debug
+      },
+    },
+  );
+}

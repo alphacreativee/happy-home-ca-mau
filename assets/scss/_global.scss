@@ -1,0 +1,22 @@
+// .pin-stack {
+//   position: relative;
+
+//   > section {
+//     position: relative;
+//   }
+
+//   // Tự động tăng z-index theo thứ tự xuất hiện, không cần set tay từng section
+//   > section:nth-child(1) {
+//     z-index: 1;
+//   }
+//   > section:nth-child(2) {
+//     z-index: 2;
+//   }
+//   > section:nth-child(3) {
+//     z-index: 3;
+//   }
+//   > section:nth-child(4) {
+//     z-index: 4;
+//   }
+//   // ... hoặc dùng CSS counter nếu muốn hoàn toàn tự động
+// }

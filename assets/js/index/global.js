@@ -171,3 +171,22 @@ export function getDateLightPick() {
     // lang: "en-US",
   });
 }
+// html : pin-stack > section
+export function pinStackSections() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const sections = gsap.utils.toArray(".pin-stack > section");
+
+  sections.forEach((section, index) => {
+    // Section cuối cùng không cần pin (không có gì đè lên nó nữa)
+    if (index === sections.length - 1) return;
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      pin: true,
+      pinSpacing: false,
+    });
+  });
+}
