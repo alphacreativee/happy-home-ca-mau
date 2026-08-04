@@ -1,6 +1,4 @@
 .scale {
-  position: relative;
-  height: 300vh;
 }
 .slider {
   position: sticky;
@@ -8,7 +6,10 @@
   width: 100%;
   height: 100svh;
   overflow: hidden;
-
+  &-wrapper {
+    position: relative;
+    // height: 300vh;
+  }
   &-images {
     position: absolute;
     width: 100%;
