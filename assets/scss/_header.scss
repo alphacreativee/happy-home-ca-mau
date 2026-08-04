@@ -70,9 +70,14 @@
     }
     &-logo {
       a {
+        display: block;
         opacity: 0;
         visibility: hidden;
         transition: var(--tt-medium);
+        img {
+          width: 38px;
+          height: 34px;
+        }
       }
     }
     &-left {

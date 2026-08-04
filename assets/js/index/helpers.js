@@ -1,41 +1,67 @@
 export function bannerSlide() {
-  if (!document.querySelector(".swiper-hero")) return;
+  const storyEls = document.querySelectorAll(".swiper-story");
+  if (!storyEls.length) return;
 
   const SCALE_DURATION = 4000;
   const FADE_SPEED = 1000;
 
-  const swiperHero = new Swiper(".swiper-hero", {
-    effect: "fade",
-    fadeEffect: { crossFade: true },
-    speed: FADE_SPEED,
-    loop: true,
-    autoplay: {
-      delay: SCALE_DURATION,
-      disableOnInteraction: false,
-      waitForTransition: false,
-    },
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-      renderBullet: function (index, className) {
-        return `<span class="${className}"><div class="progress"></div></span>`;
-      },
-    },
-    on: {
-      init(swiper) {
-        updateProgress(swiper, 0);
-        runZoom(swiper);
-      },
-      slideChange(swiper) {
-        updateProgress(swiper, 0);
-        runZoom(swiper);
-      },
+  storyEls.forEach((storyEl) => {
+    const paginationEl = storyEl.querySelector(".swiper-pagination");
 
-      autoplayTimeLeft(swiper, timeLeft, percentage) {
-        const progress = 1 - percentage;
-        updateProgress(swiper, progress);
+    const swiperHero = new Swiper(storyEl, {
+      effect: "fade",
+      fadeEffect: { crossFade: true },
+      speed: FADE_SPEED,
+      loop: true,
+      autoplay: {
+        delay: SCALE_DURATION,
+        disableOnInteraction: false,
+        waitForTransition: false,
       },
-    },
+      pagination: {
+        el: paginationEl,
+        clickable: true,
+        renderBullet: function (index, className) {
+          return `<span class="${className}"><div class="progress"></div></span>`;
+        },
+      },
+      on: {
+        init(swiper) {
+          updateProgress(swiper, 0);
+          // Không chạy zoom/autoplay ngay, chờ vào viewport
+          swiper.autoplay.stop();
+        },
+        slideChange(swiper) {
+          updateProgress(swiper, 0);
+          runZoom(swiper);
+        },
+        autoplayTimeLeft(swiper, timeLeft, percentage) {
+          const progress = 1 - percentage;
+          updateProgress(swiper, progress);
+        },
+      },
+    });
+
+    // ----- Quan sát viewport -----
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            swiperHero.autoplay.start();
+            runZoom(swiperHero);
+          } else {
+            swiperHero.autoplay.stop();
+            // reset ảnh để lần sau vào lại chạy zoom từ đầu
+            resetAllImages(swiperHero);
+          }
+        });
+      },
+      {
+        threshold: 0.3, // 30% swiper hiện ra là bắt đầu chạy, chỉnh tùy ý
+      },
+    );
+
+    observer.observe(storyEl);
   });
 
   function updateProgress(swiper, progressValue) {
@@ -109,7 +135,7 @@ export function growthSection() {
         start: "top bottom", // bắt đầu khi growth chạm đáy viewport
         end: "top top", // kết thúc khi growth chạm đỉnh viewport
         scrub: true,
-        markers: true, // xoá khi đã chạy đúng, chỉ để debug
+        // markers: true,
       },
     },
   );

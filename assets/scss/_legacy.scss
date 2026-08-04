@@ -1,0 +1,12 @@
+.legacy {
+  padding: 120px 0;
+  background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+  &-heading {
+    margin-bottom: var(--space-72);
+  }
+  &-desc {
+    max-width: 50%;
+    margin-left: auto;
+    padding-right: 120px;
+  }
+}

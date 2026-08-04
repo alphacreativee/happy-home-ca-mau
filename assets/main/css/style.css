@@ -1146,9 +1146,14 @@ body {
   gap: 20px;
 }
 #header .header-logo a {
+  display: block;
   opacity: 0;
   visibility: hidden;
   transition: var(--tt-medium);
+}
+#header .header-logo a img {
+  width: 38px;
+  height: 34px;
 }
 #header .header-left {
   gap: 20px;
@@ -1312,4 +1317,98 @@ body {
 .golf-title {
   margin-bottom: var(--space-72);
   max-width: 80%;
+}
+
+.legacy {
+  padding: 120px 0;
+  background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+}
+.legacy-heading {
+  margin-bottom: var(--space-72);
+}
+.legacy-desc {
+  max-width: 50%;
+  margin-left: auto;
+  padding-right: 120px;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+}
+.slider-images {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.slider-images img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+.slider-indicator {
+  position: absolute;
+  left: 60px;
+  top: 100%;
+  transform: translateY(-100%);
+  z-index: 2;
+  max-height: calc(100svh - 4rem);
+}
+.slider-indices {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 1rem 1.25rem;
+}
+.slider-indices p {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+  overflow: hidden;
+}
+
+.index {
+  position: relative;
+  min-width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-style: italic;
+  font-size: 63px;
+  line-height: 1.4;
+  font-family: var(--font-heading);
+  color: var(--color-white);
+  white-space: nowrap;
+  transition: font-size 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+  will-change: opacity, font-size, color;
+}
+.index sup {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  font-style: normal;
+  font-weight: bold;
+  vertical-align: super;
+  margin-left: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 1;
+  top: 0;
+  letter-spacing: 0.2rem;
+}
+.index.active {
+  color: var(--color-gold-med);
+  padding-left: 20px;
+}
+
+.line {
+  position: relative;
+  display: block;
+  will-change: transform;
 }
