@@ -140,8 +140,178 @@ export function growthSection() {
     },
   );
 }
+// export function sliderScale() {
+//   // === LẤY DỮ LIỆU SLIDES TỪ HTML ===
+//   const sliderDataContainer = document.querySelector(".slider-data");
+//   if (!sliderDataContainer) return;
+
+//   const sliderItems = sliderDataContainer.querySelectorAll(".slider-item");
+//   if (sliderItems.length === 0) return;
+
+//   const slides = Array.from(sliderItems)
+//     .map((item) => {
+//       const img = item.querySelector(".image img");
+//       const valueEl = item.querySelector(".value");
+//       return {
+//         image: img ? img.src : "",
+//         value: valueEl ? valueEl.innerHTML.trim() : "",
+//       };
+//     })
+//     .filter((slide) => slide.image && slide.value);
+
+//   if (slides.length === 0) return;
+
+//   // === PRELOAD TẤT CẢ ẢNH TRƯỚC ===
+//   slides.forEach((slide) => {
+//     const preloadImg = new Image();
+//     preloadImg.src = slide.image;
+//   });
+
+//   // === DOM ELEMENTS ===
+//   const sliderImages = document.querySelector(".slider-images");
+//   const sliderIndices = document.querySelector(".slider-indices");
+//   const sliderIndicator = document.querySelector(".slider-indicator");
+
+//   // === STATE ===
+//   let activeSlide = 0;
+//   let isAnimating = false;
+
+//   // === TÍNH KHOẢNG CÁCH PIN ===
+//   const pinDistance = window.innerHeight * slides.length;
+
+//   // === TẠO CHỈ SỐ (INDICES) ===
+//   function createIndices() {
+//     sliderIndices.innerHTML = "";
+
+//     const indicators = [];
+
+//     slides.forEach((slide, index) => {
+//       const indicator = document.createElement("p");
+//       indicator.dataset.index = index;
+//       indicator.innerHTML = `<span class="index">${slide.value}</span>`;
+//       sliderIndices.appendChild(indicator);
+//       indicators.push(indicator);
+
+//       const num = indicator.querySelector(".index");
+//       if (index === 0) {
+//         num.classList.add("active");
+//       }
+//     });
+
+//     return indicators;
+//   }
+
+//   // === ANIMATION: KHỐI INDICATOR CHẠY TỪ BOTTOM LÊN TOP, SUỐT QUÁ TRÌNH CUỘN ===
+//   function setupIndicatorScrub() {
+//     gsap.set(sliderIndicator, { top: "125%" });
+
+//     gsap.to(sliderIndicator, {
+//       top: "50%",
+//       ease: "none",
+//       scrollTrigger: {
+//         trigger: ".slider",
+//         start: "top top",
+//         end: `+=${pinDistance}px`,
+//         scrub: true,
+//       },
+//     });
+//   }
+
+//   // === HIỆU ỨNG CHUYỂN ẢNH ===
+//   function animateNewSlide(index, onComplete) {
+//     const newImg = document.createElement("img");
+//     newImg.alt = `Slide ${index + 1}`;
+
+//     gsap.set(newImg, { opacity: 0, scale: 1.08 });
+//     sliderImages.appendChild(newImg);
+
+//     const startFade = () => {
+//       gsap.to(newImg, {
+//         opacity: 1,
+//         duration: 0.6,
+//         ease: "power2.out",
+//         overwrite: "auto",
+//         onComplete: () => {
+//           if (onComplete) onComplete();
+//         },
+//       });
+//       gsap.to(newImg, {
+//         scale: 1,
+//         duration: 1,
+//         ease: "power2.out",
+//         overwrite: "auto",
+//       });
+
+//       const allImgs = sliderImages.querySelectorAll("img");
+//       if (allImgs.length > 3) {
+//         const removeCount = allImgs.length - 3;
+//         for (let i = 0; i < removeCount; i++) {
+//           gsap.killTweensOf(allImgs[i]);
+//           allImgs[i].remove();
+//         }
+//       }
+//     };
+
+//     if (newImg.complete && newImg.naturalWidth !== 0) {
+//       startFade();
+//     } else {
+//       newImg.onload = startFade;
+//       newImg.onerror = () => {
+//         if (onComplete) onComplete();
+//       };
+//     }
+
+//     newImg.src = slides[index].image;
+
+//     animateIndicators(index);
+//   }
+
+//   // === HIỆU ỨNG CHỈ SỐ KHI ĐỔI SLIDE (active state) ===
+//   function animateIndicators(index) {
+//     const indicators = sliderIndices.querySelectorAll("p");
+//     indicators.forEach((el, i) => {
+//       const num = el.querySelector(".index");
+//       if (i === index) {
+//         num.classList.add("active");
+//       } else {
+//         num.classList.remove("active");
+//       }
+//     });
+//   }
+
+//   // === KHỞI TẠO ===
+//   createIndices();
+//   setupIndicatorScrub();
+//   animateNewSlide(0);
+
+//   // === SCROLLTRIGGER CHÍNH (PIN + CHUYỂN SLIDE) ===
+//   ScrollTrigger.create({
+//     trigger: ".slider",
+//     start: "top top",
+//     end: `+=${pinDistance}px`,
+//     scrub: 1,
+//     pin: true,
+//     pinSpacing: true,
+//     onUpdate: (self) => {
+//       const currentSlide = Math.floor(self.progress * slides.length);
+//       if (
+//         activeSlide !== currentSlide &&
+//         currentSlide < slides.length &&
+//         !isAnimating
+//       ) {
+//         activeSlide = currentSlide;
+//         isAnimating = true;
+//         animateNewSlide(activeSlide, () => {
+//           isAnimating = false;
+//         });
+//       }
+//     },
+//   });
+//   requestAnimationFrame(() => {
+//     ScrollTrigger.refresh();
+//   });
+// }
 export function sliderScale() {
-  // === LẤY DỮ LIỆU SLIDES TỪ HTML ===
   const sliderDataContainer = document.querySelector(".slider-data");
   if (!sliderDataContainer) return;
 
@@ -161,28 +331,24 @@ export function sliderScale() {
 
   if (slides.length === 0) return;
 
-  // === PRELOAD TẤT CẢ ẢNH TRƯỚC ===
   slides.forEach((slide) => {
     const preloadImg = new Image();
     preloadImg.src = slide.image;
   });
 
-  // === DOM ELEMENTS ===
+  const sliderWrapper = document.querySelector(".slider-wrapper");
   const sliderImages = document.querySelector(".slider-images");
   const sliderIndices = document.querySelector(".slider-indices");
   const sliderIndicator = document.querySelector(".slider-indicator");
 
-  // === STATE ===
+  // Cộng thêm 1 viewport height để bù cho chiều cao của chính phần tử sticky
+  sliderWrapper.style.height = `${window.innerHeight * (slides.length + 1)}px`;
+
   let activeSlide = 0;
   let isAnimating = false;
 
-  // === TÍNH KHOẢNG CÁCH PIN ===
-  const pinDistance = window.innerHeight * slides.length;
-
-  // === TẠO CHỈ SỐ (INDICES) ===
   function createIndices() {
     sliderIndices.innerHTML = "";
-
     const indicators = [];
 
     slides.forEach((slide, index) => {
@@ -193,31 +359,12 @@ export function sliderScale() {
       indicators.push(indicator);
 
       const num = indicator.querySelector(".index");
-      if (index === 0) {
-        num.classList.add("active");
-      }
+      if (index === 0) num.classList.add("active");
     });
 
     return indicators;
   }
 
-  // === ANIMATION: KHỐI INDICATOR CHẠY TỪ BOTTOM LÊN TOP, SUỐT QUÁ TRÌNH CUỘN ===
-  function setupIndicatorScrub() {
-    gsap.set(sliderIndicator, { top: "125%" });
-
-    gsap.to(sliderIndicator, {
-      top: "50%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".slider",
-        start: "top top",
-        end: `+=${pinDistance}px`,
-        scrub: true,
-      },
-    });
-  }
-
-  // === HIỆU ỨNG CHUYỂN ẢNH ===
   function animateNewSlide(index, onComplete) {
     const newImg = document.createElement("img");
     newImg.alt = `Slide ${index + 1}`;
@@ -231,9 +378,7 @@ export function sliderScale() {
         duration: 0.6,
         ease: "power2.out",
         overwrite: "auto",
-        onComplete: () => {
-          if (onComplete) onComplete();
-        },
+        onComplete: () => onComplete && onComplete(),
       });
       gsap.to(newImg, {
         scale: 1,
@@ -256,50 +401,41 @@ export function sliderScale() {
       startFade();
     } else {
       newImg.onload = startFade;
-      newImg.onerror = () => {
-        if (onComplete) onComplete();
-      };
+      newImg.onerror = () => onComplete && onComplete();
     }
 
     newImg.src = slides[index].image;
-
     animateIndicators(index);
   }
 
-  // === HIỆU ỨNG CHỈ SỐ KHI ĐỔI SLIDE (active state) ===
   function animateIndicators(index) {
     const indicators = sliderIndices.querySelectorAll("p");
     indicators.forEach((el, i) => {
       const num = el.querySelector(".index");
-      if (i === index) {
-        num.classList.add("active");
-      } else {
-        num.classList.remove("active");
-      }
+      if (i === index) num.classList.add("active");
+      else num.classList.remove("active");
     });
   }
 
-  // === KHỞI TẠO ===
   createIndices();
-  setupIndicatorScrub();
+  gsap.set(sliderIndicator, { top: "125%" });
   animateNewSlide(0);
 
-  // === SCROLLTRIGGER CHÍNH (PIN + CHUYỂN SLIDE) ===
   ScrollTrigger.create({
-    trigger: ".slider",
+    trigger: sliderWrapper,
     start: "top top",
-    end: `+=${pinDistance}px`,
-    scrub: 1,
-    pin: true,
-    pinSpacing: true,
+    end: "bottom bottom",
+    scrub: true,
     onUpdate: (self) => {
+      gsap.set(sliderIndicator, {
+        top: gsap.utils.interpolate("125%", "50%", self.progress),
+      });
+
       const currentSlide = Math.floor(self.progress * slides.length);
-      if (
-        activeSlide !== currentSlide &&
-        currentSlide < slides.length &&
-        !isAnimating
-      ) {
-        activeSlide = currentSlide;
+      const clampedSlide = Math.min(currentSlide, slides.length - 1);
+
+      if (activeSlide !== clampedSlide && !isAnimating) {
+        activeSlide = clampedSlide;
         isAnimating = true;
         animateNewSlide(activeSlide, () => {
           isAnimating = false;
