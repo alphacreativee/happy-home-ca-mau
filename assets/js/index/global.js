@@ -190,3 +190,60 @@ export function pinStackSections() {
     });
   });
 }
+export function animationText() {
+  gsap.registerPlugin(SplitText, ScrollTrigger);
+
+  document.querySelectorAll(".el-txt-line").forEach((el) => {
+    if (el.dataset.scriptInitialized) return;
+    el.dataset.scriptInitialized = "true";
+
+    const splitTitle = SplitText.create(el, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "line",
+    });
+
+    gsap.fromTo(
+      splitTitle.lines,
+      { y: "100%" },
+      {
+        y: "0%",
+        duration: 0.8,
+        ease: "power3.inOut",
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          end: "bottom 85%",
+          toggleActions: "play none none none",
+        },
+      },
+    );
+  });
+}
+export function imageParallax() {
+  document.querySelectorAll(".parallax-image").forEach((el) => {
+    if (el.dataset.scriptInitialized) return;
+    el.dataset.scriptInitialized = "true";
+
+    const img = el.querySelector("img");
+    if (!img) return;
+
+    const percentParallax = 10;
+
+    gsap.fromTo(
+      img,
+      { yPercent: `-${percentParallax}` },
+      {
+        yPercent: percentParallax,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      },
+    );
+  });
+}

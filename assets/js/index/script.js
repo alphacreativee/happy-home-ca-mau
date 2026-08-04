@@ -4,6 +4,8 @@ import {
   createFilterTab,
   getDateLightPick,
   headerScroll,
+  animationText,
+  imageParallax,
 } from "../../main/js/global.min.js";
 
 const $ = jQuery;
@@ -76,6 +78,8 @@ function init() {
   customDropdown();
   createFilterTab();
   // getDateLightPick();
+  animationText();
+  imageParallax();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -20,3 +20,43 @@
 //   }
 //   // ... hoặc dùng CSS counter nếu muốn hoàn toàn tự động
 // }
+// style text gradient
+.txt-gradient {
+  .line {
+    background: linear-gradient(
+      270deg,
+      #cfa67e 0%,
+      #854b20 26.44%,
+      #cfa67e 50.96%,
+      #854b20 74.04%,
+      #cfa67e 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: shine 10s linear infinite;
+  }
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+// parallax image
+.parallax-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+}

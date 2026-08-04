@@ -1,8 +1,50 @@
 .growth {
   position: relative;
   width: 100%;
-  height: 100svh;
+  min-height: 100svh;
   overflow: hidden;
   z-index: 3;
   background-color: var(--color-red-light);
+  &-inner {
+    padding-left: var(--space-20);
+    padding-top: var(--space-72);
+  }
+  &-top {
+    margin-bottom: var(--space-72);
+    &-title {
+      max-width: 65%;
+      margin-bottom: 64px;
+    }
+    &-desc {
+      max-width: 50%;
+    }
+  }
+  &-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    &-title {
+      margin-bottom: var(--space-72);
+    }
+    &-desc {
+      max-width: 60%;
+    }
+    &-left {
+      display: flex;
+      flex-direction: column;
+      gap: 140px;
+      .image {
+        width: 330px;
+        aspect-ratio: 330 / 378;
+      }
+    }
+    &-right {
+      .image {
+        width: 100%;
+        aspect-ratio: 720 / 900;
+      }
+    }
+    &-box {
+    }
+  }
 }
