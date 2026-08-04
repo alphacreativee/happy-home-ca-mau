@@ -1,0 +1,25 @@
+.golf {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  z-index: 3;
+  &-image {
+    width: 100%;
+    aspect-ratio: 1440 / 900;
+  }
+  &-content {
+    position: absolute;
+    top: 50%;
+    right: 200px;
+    transform: translate(0%, -50%);
+    z-index: 4;
+    max-width: 450px;
+    background-color: var(--color-green-dark);
+    padding: 40px;
+  }
+  &-title {
+    margin-bottom: var(--space-72);
+    max-width: 80%;
+  }
+}

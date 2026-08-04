@@ -87,6 +87,10 @@
   font-weight: 600;
 }
 
+.fw-medium {
+  font-weight: 500;
+}
+
 .fs-italic {
   font-style: italic;
 }
@@ -1283,4 +1287,29 @@ body {
 .growth-main-right .image {
   width: 100%;
   aspect-ratio: 720/900;
+}
+.golf {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  z-index: 3;
+}
+.golf-image {
+  width: 100%;
+  aspect-ratio: 1440/900;
+}
+.golf-content {
+  position: absolute;
+  top: 50%;
+  right: 200px;
+  transform: translate(0%, -50%);
+  z-index: 4;
+  max-width: 450px;
+  background-color: var(--color-green-dark);
+  padding: 40px;
+}
+.golf-title {
+  margin-bottom: var(--space-72);
+  max-width: 80%;
 }
