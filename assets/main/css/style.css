@@ -1350,6 +1350,7 @@ body {
   height: 100%;
   transform-origin: center;
   will-change: transform, opacity;
+  object-fit: cover;
 }
 .slider-indicator {
   position: absolute;
