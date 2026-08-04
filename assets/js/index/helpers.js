@@ -143,16 +143,10 @@ export function growthSection() {
 export function sliderScale() {
   // === LẤY DỮ LIỆU SLIDES TỪ HTML ===
   const sliderDataContainer = document.querySelector(".slider-data");
-  if (!sliderDataContainer) {
-    console.error("Không tìm thấy .slider-data");
-    return;
-  }
+  if (!sliderDataContainer) return;
 
   const sliderItems = sliderDataContainer.querySelectorAll(".slider-item");
-  if (sliderItems.length === 0) {
-    console.error("Không có .slider-item nào trong .slider-data");
-    return;
-  }
+  if (sliderItems.length === 0) return;
 
   const slides = Array.from(sliderItems)
     .map((item) => {
@@ -165,10 +159,7 @@ export function sliderScale() {
     })
     .filter((slide) => slide.image && slide.value);
 
-  if (slides.length === 0) {
-    console.error("Không có slide hợp lệ nào (thiếu ảnh hoặc giá trị).");
-    return;
-  }
+  if (slides.length === 0) return;
 
   // === PRELOAD TẤT CẢ ẢNH TRƯỚC ===
   slides.forEach((slide) => {
@@ -231,13 +222,13 @@ export function sliderScale() {
     const newImg = document.createElement("img");
     newImg.alt = `Slide ${index + 1}`;
 
-    gsap.set(newImg, { opacity: 0, scale: 1.1 });
+    gsap.set(newImg, { opacity: 0, scale: 1.08 });
     sliderImages.appendChild(newImg);
 
     const startFade = () => {
       gsap.to(newImg, {
         opacity: 1,
-        duration: 0.5,
+        duration: 0.6,
         ease: "power2.out",
         overwrite: "auto",
         onComplete: () => {
