@@ -1502,3 +1502,7 @@ body {
   z-index: 4;
   background-color: var(--color-green-med);
 }
+.mission-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

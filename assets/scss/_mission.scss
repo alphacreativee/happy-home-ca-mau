@@ -5,4 +5,8 @@
   overflow: hidden;
   z-index: 4;
   background-color: var(--color-green-med);
+  &-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
