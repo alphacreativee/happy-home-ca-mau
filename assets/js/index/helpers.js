@@ -444,3 +444,34 @@ export function sliderScale() {
     },
   });
 }
+export function stackedSections() {
+  const vision = document.querySelector(".vision");
+  const living = document.querySelector(".living");
+  const spacing = document.querySelector(".spacing");
+
+  if (!vision || !living || !spacing) {
+    return;
+  }
+
+  ScrollTrigger.create({
+    trigger: vision,
+    start: "top top",
+    end: "bottom top",
+    pin: true,
+    pinSpacing: false,
+  });
+
+  ScrollTrigger.create({
+    trigger: living,
+    start: "top top",
+    end: "bottom top",
+    pin: true,
+    pinSpacing: false,
+  });
+
+  // Đảm bảo các ScrollTrigger phía sau (nếu có) đo đúng vị trí
+  // sau khi 2 pin trên đã được thiết lập xong
+  requestAnimationFrame(() => {
+    ScrollTrigger.refresh();
+  });
+}

@@ -1442,6 +1442,7 @@ body {
 
 .vision {
   position: relative;
+  z-index: 2;
   width: 100%;
   height: 100svh;
   overflow: hidden;
@@ -1451,4 +1452,34 @@ body {
 .vision-title {
   position: relative;
   z-index: 4;
+}
+
+.living {
+  position: relative;
+  z-index: 1;
+  min-height: 200svh;
+  overflow: hidden;
+}
+.living-inner {
+  position: relative;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+}
+.living-title {
+  position: absolute;
+  left: 50%;
+  bottom: 80px;
+  transform: translate(-50%, 0%);
+  z-index: 2;
+}
+.living-image {
+  width: 100%;
+  height: 100%;
+}
+.living-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

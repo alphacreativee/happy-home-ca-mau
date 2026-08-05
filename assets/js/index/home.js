@@ -4,6 +4,7 @@ import {
   bannerSlide,
   growthSection,
   sliderScale,
+  stackedSections,
 } from "../../main/js/helpers.min.js";
 ("use strict");
 $ = jQuery;
@@ -25,6 +26,7 @@ const init = () => {
   bannerSlide();
   growthSection();
   sliderScale();
+  stackedSections();
 };
 document.addEventListener("DOMContentLoaded", () => {
   init();
