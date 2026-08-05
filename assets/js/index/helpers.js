@@ -445,32 +445,22 @@ export function sliderScale() {
   });
 }
 export function stackedSections() {
-  const vision = document.querySelector(".vision");
-  const living = document.querySelector(".living");
-  const spacing = document.querySelector(".spacing");
+  const sections = document.querySelectorAll('[class*="pin-section-"]');
 
-  if (!vision || !living || !spacing) {
-    return;
-  }
+  if (sections.length === 0) return;
 
-  ScrollTrigger.create({
-    trigger: vision,
-    start: "top top",
-    end: "bottom top",
-    pin: true,
-    pinSpacing: false,
+  sections.forEach((section, index) => {
+    if (index === sections.length - 1) return;
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      pin: true,
+      pinSpacing: false,
+    });
   });
 
-  ScrollTrigger.create({
-    trigger: living,
-    start: "top top",
-    end: "bottom top",
-    pin: true,
-    pinSpacing: false,
-  });
-
-  // Đảm bảo các ScrollTrigger phía sau (nếu có) đo đúng vị trí
-  // sau khi 2 pin trên đã được thiết lập xong
   requestAnimationFrame(() => {
     ScrollTrigger.refresh();
   });
