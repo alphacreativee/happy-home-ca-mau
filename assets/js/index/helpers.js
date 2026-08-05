@@ -444,27 +444,46 @@ export function sliderScale() {
     },
   });
 }
-export function stackedSections() {
-  const sections = document.querySelectorAll('[class*="pin-section-"]');
+// export function stackedSections() {
+//   const sections = document.querySelectorAll('[class*="pin-section-"]');
+//   if (sections.length === 0) return;
 
-  if (sections.length === 0) return;
+//   sections.forEach((section, index) => {
+//     if (index === sections.length - 1) return;
 
-  sections.forEach((section, index) => {
-    if (index === sections.length - 1) return;
+//     const isMission = section.classList.contains("mission");
 
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: "bottom top",
-      pin: true,
-      pinSpacing: false,
-    });
-  });
+//     if (isMission) {
+//       // Section mission cần pin LÂU HƠN (đủ chỗ cho carousel bên trong chuyển item)
+//       const items = section.querySelectorAll(".mission-visual-item");
+//       const extraScroll = window.innerHeight * items.length; // khoảng cuộn thêm cho carousel
 
-  requestAnimationFrame(() => {
-    ScrollTrigger.refresh();
-  });
-}
+//       ScrollTrigger.create({
+//         trigger: section,
+//         start: "top top",
+//         end: `+=${extraScroll}`, // pin lâu hơn bình thường
+//         pin: true,
+//         pinSpacing: false,
+//         onUpdate: (self) => {
+//           missionUpdateItem(self.progress, items);
+//         },
+//       });
+//     } else {
+//       // Các section khác giữ nguyên logic pin cũ
+//       ScrollTrigger.create({
+//         trigger: section,
+//         start: "top top",
+//         end: "bottom top",
+//         pin: true,
+//         pinSpacing: false,
+//       });
+//     }
+//   });
+
+//   requestAnimationFrame(() => {
+//     ScrollTrigger.refresh();
+//   });
+// }
 export function zoomImage() {
   const elements = document.querySelectorAll(".zoomImage");
   if (elements.length === 0) return;
@@ -485,5 +504,145 @@ export function zoomImage() {
         },
       },
     );
+  });
+}
+gsap.registerPlugin(SplitText, ScrollTrigger);
+
+// === FUNCTION 1: PIN CHUNG CHO CÁC SECTION STACKED (TRỪ MISSION) ===
+export function stackedSections() {
+  const sections = document.querySelectorAll('[class*="pin-section-"]');
+  if (sections.length === 0) return;
+
+  sections.forEach((section, index) => {
+    if (index === sections.length - 1) return;
+    if (section.classList.contains("mission")) return; // mission tự lo riêng
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      pin: true,
+      pinSpacing: false,
+    });
+  });
+}
+
+export function missionSection() {
+  const section = document.querySelector(".mission");
+  const items = document.querySelectorAll(".mission-visual-item");
+  const header = document.getElementById("header");
+
+  if (!section || items.length === 0) return;
+
+  let activeIndex = 0;
+  let isAnimating = false;
+  const splitInstances = [];
+
+  items.forEach((item, index) => {
+    const img = item.querySelector(".mission-visual-img img");
+    const title = item.querySelector(".mission-visual-content h3");
+    const desc = item.querySelector(".mission-visual-content .desc");
+
+    const splitTitle = SplitText.create(title, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "line",
+    });
+    const splitDesc = SplitText.create(desc, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "line",
+    });
+
+    splitInstances.push({ splitTitle, splitDesc });
+
+    if (index === 0) {
+      item.classList.add("active");
+      gsap.set(img, { scale: 1, opacity: 1 });
+      gsap.set([splitTitle.lines, splitDesc.lines], { y: "0%" });
+    } else {
+      item.classList.remove("active");
+      gsap.set(item, { display: "none" });
+      gsap.set(img, { scale: 1.08, opacity: 0 });
+      gsap.set([splitTitle.lines, splitDesc.lines], { y: "100%" });
+    }
+  });
+
+  function showItem(index) {
+    const item = items[index];
+    const img = item.querySelector(".mission-visual-img img");
+    const { splitTitle, splitDesc } = splitInstances[index];
+
+    item.classList.add("active");
+    gsap.set(item, { display: "block" });
+
+    gsap.fromTo(
+      img,
+      { opacity: 0, scale: 1.08 },
+      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" },
+    );
+    gsap.fromTo(
+      splitTitle.lines,
+      { y: "100%" },
+      { y: "0%", duration: 0.8, ease: "power3.inOut", stagger: 0.05 },
+    );
+    gsap.fromTo(
+      splitDesc.lines,
+      { y: "100%" },
+      {
+        y: "0%",
+        duration: 0.8,
+        ease: "power3.inOut",
+        stagger: 0.05,
+        delay: 0.05,
+      },
+    );
+  }
+
+  function hideItem(index) {
+    const item = items[index];
+    const img = item.querySelector(".mission-visual-img img");
+    const { splitTitle, splitDesc } = splitInstances[index];
+
+    item.classList.remove("active");
+    gsap.to(img, { opacity: 0, scale: 1.08, duration: 0.6, ease: "power2.in" });
+    gsap.to([splitTitle.lines, splitDesc.lines], {
+      y: "-100%",
+      duration: 0.5,
+      ease: "power2.in",
+      onComplete: () => {
+        gsap.set(item, { display: "none" });
+        gsap.set([splitTitle.lines, splitDesc.lines], { y: "100%" });
+      },
+    });
+  }
+
+  const extraScroll = window.innerHeight * items.length;
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top top",
+    end: `+=${extraScroll}`,
+    pin: true,
+    pinSpacing: true,
+    onEnter: () => header?.classList.add("header-text-light"),
+    onEnterBack: () => header?.classList.add("header-text-light"),
+    onUpdate: (self) => {
+      const currentIndex = Math.min(
+        Math.floor(self.progress * items.length),
+        items.length - 1,
+      );
+
+      if (currentIndex !== activeIndex && !isAnimating) {
+        isAnimating = true;
+        hideItem(activeIndex);
+        showItem(currentIndex);
+        activeIndex = currentIndex;
+
+        gsap.delayedCall(0.5, () => {
+          isAnimating = false;
+        });
+      }
+    },
   });
 }

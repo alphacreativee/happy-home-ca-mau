@@ -3,10 +3,53 @@
   width: 100%;
   height: 100svh;
   overflow: hidden;
-  z-index: 4;
+  z-index: 3;
   background-color: var(--color-green-med);
+
   &-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    height: 100svh; // chỉ đúng 1 màn hình, không phải 100% của .mission
+  }
+
+  &-col {
+    height: 100svh; // ép cứng đúng 1 viewport, không ăn theo .mission-inner
+    background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+    background-position: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-visual {
+    position: relative;
+    height: 100svh; // tương tự, ép cứng luôn cho đồng bộ
+
+    &-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+
+      &.active {
+        z-index: 2;
+      }
+    }
+
+    &-img {
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &-content {
+      overflow: hidden;
+    }
   }
 }

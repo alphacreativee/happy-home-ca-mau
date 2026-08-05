@@ -74,11 +74,21 @@ export function customDropdown() {
     });
   }
 }
+// === BIẾN DÙNG CHUNG, ĐẶT NGOÀI CÙNG FILE (module scope) ===
+let activeLightSections = new Set();
+
+function updateHeaderLightClass(header) {
+  if (activeLightSections.size > 0) {
+    header.classList.add("header-text-light");
+  } else {
+    header.classList.remove("header-text-light");
+  }
+}
 export function headerScroll() {
   const header = document.getElementById("header");
   if (!header) return null;
 
-  const THRESHOLD = 100; // px, gần đầu trang thì remove luôn
+  const THRESHOLD = 100;
 
   const trigger = ScrollTrigger.create({
     start: "top top",
@@ -89,24 +99,36 @@ export function headerScroll() {
       if (currentScroll <= THRESHOLD) {
         header.classList.remove("scrolled");
       } else if (self.direction === 1) {
-        // scrolling down
         header.classList.add("scrolled");
       }
     },
   });
 
-  const lightSections = document.querySelectorAll(".header-light");
+  const lightSections = Array.from(
+    document.querySelectorAll(".header-light"),
+  ).filter((section) => !section.classList.contains("mission"));
 
-  const lightTriggers = Array.from(lightSections).map((section) => {
+  const lightTriggers = lightSections.map((section) => {
     return ScrollTrigger.create({
       trigger: section,
       start: "top top+=20",
       end: "bottom top+=20",
-      // markers: true,
-      onEnter: () => header.classList.add("header-text-light"),
-      onLeave: () => header.classList.remove("header-text-light"),
-      onEnterBack: () => header.classList.add("header-text-light"),
-      onLeaveBack: () => header.classList.remove("header-text-light"),
+      onEnter: () => {
+        activeLightSections.add(section);
+        updateHeaderLightClass(header);
+      },
+      onLeave: () => {
+        activeLightSections.delete(section);
+        updateHeaderLightClass(header);
+      },
+      onEnterBack: () => {
+        activeLightSections.add(section);
+        updateHeaderLightClass(header);
+      },
+      onLeaveBack: () => {
+        activeLightSections.delete(section);
+        updateHeaderLightClass(header);
+      },
     });
   });
 
