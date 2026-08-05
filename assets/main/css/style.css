@@ -1532,6 +1532,11 @@ body {
 }
 .mission-visual-img {
   overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .mission-visual-img img {
   width: 100%;
@@ -1540,4 +1545,17 @@ body {
 }
 .mission-visual-content {
   overflow: hidden;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: var(--color-green-med);
+  padding: 40px;
+  max-width: 400px;
+}
+.mission-visual-content h3 {
+  margin-bottom: 12px;
+}
+.mission-content {
+  max-width: 450px;
+  text-align: center;
 }
