@@ -1362,19 +1362,18 @@ body {
   top: 100%;
   transform: translateY(-100%);
   z-index: 2;
-  max-height: calc(100svh - 4rem);
+  max-height: calc(100svh - 64px);
 }
 .slider-indices {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 1rem 1.25rem;
 }
 .slider-indices p {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  color: #fff;
+  gap: 16px;
+  color: var(--color-white);
   overflow: hidden;
 }
 
