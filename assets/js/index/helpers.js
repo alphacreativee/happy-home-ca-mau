@@ -465,3 +465,26 @@ export function stackedSections() {
     ScrollTrigger.refresh();
   });
 }
+export function zoomImage() {
+  const elements = document.querySelectorAll(".zoomImage");
+  if (elements.length === 0) return;
+
+  elements.forEach((el) => {
+    gsap.fromTo(
+      el,
+      { scale: 1 },
+      {
+        scale: 1.08,
+        duration: 1.5,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+          // markers: true,
+        },
+      },
+    );
+  });
+}

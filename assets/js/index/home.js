@@ -5,6 +5,7 @@ import {
   growthSection,
   sliderScale,
   stackedSections,
+  zoomImage,
 } from "../../main/js/helpers.min.js";
 ("use strict");
 $ = jQuery;
@@ -27,6 +28,7 @@ const init = () => {
   growthSection();
   sliderScale();
   stackedSections();
+  zoomImage();
 };
 document.addEventListener("DOMContentLoaded", () => {
   init();

@@ -1034,6 +1034,16 @@ body {
   will-change: transform, opacity;
 }
 
+.zoomImage {
+  overflow: hidden;
+}
+.zoomImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
 .lightpick {
   --color-stroke: #ccc;
   --color-bg: #fff;
@@ -1482,4 +1492,13 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.mission {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  z-index: 4;
+  background-color: var(--color-green-med);
 }
