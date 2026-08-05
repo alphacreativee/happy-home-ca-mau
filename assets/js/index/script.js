@@ -6,6 +6,7 @@ import {
   headerScroll,
   animationText,
   imageParallax,
+  mousetail,
 } from "../../main/js/global.min.js";
 
 const $ = jQuery;
@@ -80,6 +81,7 @@ function init() {
   // getDateLightPick();
   animationText();
   imageParallax();
+  mousetail();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

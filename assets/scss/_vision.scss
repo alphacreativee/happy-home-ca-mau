@@ -5,6 +5,8 @@
   overflow: hidden;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
   background-position: bottom;
-  &-inner {
+  &-title {
+    position: relative;
+    z-index: 4;
   }
 }
