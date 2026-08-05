@@ -100,8 +100,9 @@ export function headerScroll() {
   const lightTriggers = Array.from(lightSections).map((section) => {
     return ScrollTrigger.create({
       trigger: section,
-      start: "top top",
-      end: "bottom top",
+      start: "top top+=20",
+      end: "bottom top+=20",
+      // markers: true,
       onEnter: () => header.classList.add("header-text-light"),
       onLeave: () => header.classList.remove("header-text-light"),
       onEnterBack: () => header.classList.add("header-text-light"),
