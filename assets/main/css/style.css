@@ -1104,6 +1104,14 @@ body {
 #header.scrolled .header-ham span {
   background-color: var(--color-brown-dark);
 }
+#header.header-text-light .header-name,
+#header.header-text-light .header-right .label,
+#header.header-text-light .header-right .phone {
+  color: var(--color-white);
+}
+#header.header-text-light .header-ham span {
+  background-color: var(--color-white);
+}
 #header .header-container {
   display: grid;
   grid-template-columns: 1fr auto 1fr;

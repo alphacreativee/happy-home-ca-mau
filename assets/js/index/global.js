@@ -95,7 +95,21 @@ export function headerScroll() {
     },
   });
 
-  return trigger;
+  const lightSections = document.querySelectorAll(".header-light");
+
+  const lightTriggers = Array.from(lightSections).map((section) => {
+    return ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      onEnter: () => header.classList.add("header-text-light"),
+      onLeave: () => header.classList.remove("header-text-light"),
+      onEnterBack: () => header.classList.add("header-text-light"),
+      onLeaveBack: () => header.classList.remove("header-text-light"),
+    });
+  });
+
+  return { trigger, lightTriggers };
 }
 
 /////// thêm class select-tab vào thì vẫn filter theo đúng type đó, không show hết item.

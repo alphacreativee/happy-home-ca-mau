@@ -26,6 +26,19 @@
       }
     }
   }
+  &.header-text-light {
+    .header-name,
+    .header-right .label,
+    .header-right .phone {
+      color: var(--color-white);
+    }
+
+    .header-ham {
+      span {
+        background-color: var(--color-white);
+      }
+    }
+  }
   .header {
     &-container {
       display: grid;
