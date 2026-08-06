@@ -7,6 +7,7 @@ import {
   animationText,
   imageParallax,
   mousetail,
+  animationFade,
 } from "../../main/js/global.min.js";
 
 const $ = jQuery;
@@ -82,6 +83,7 @@ function init() {
   animationText();
   imageParallax();
   mousetail();
+  animationFade();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

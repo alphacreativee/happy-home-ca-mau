@@ -58,5 +58,26 @@ window.addEventListener("beforeunload", () => {
 
 window.addEventListener("load", () => {
   connectAnimation();
+  mapCoverAnimation();
   ScrollTrigger.refresh();
 });
+export function mapCoverAnimation() {
+  const connectSection = document.querySelector(".connect");
+  const mapSection = document.querySelector(".map");
+
+  if (!connectSection || !mapSection) return;
+
+  // Chỉ set giá trị ban đầu, KHÔNG pin gì cả
+  gsap.set(mapSection, { marginTop: 0 });
+
+  gsap.to(mapSection, {
+    marginTop: -connectSection.offsetHeight * 0.5, // chỉnh % độ che theo ý bạn
+    ease: "none",
+    scrollTrigger: {
+      trigger: connectSection,
+      start: "bottom bottom", // khi đáy connect chạm đáy viewport thì bắt đầu
+      end: "bottom top",
+      scrub: true,
+    },
+  });
+}

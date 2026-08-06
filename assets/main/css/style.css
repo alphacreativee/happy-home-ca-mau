@@ -1564,7 +1564,8 @@ body {
   position: relative;
   width: 100%;
   min-height: 100svh;
-  background-color: var(--color-red);
+  background: url("../../images/del/bg-re-cay.png") var(--color-red);
+  z-index: 1;
 }
 .connect-top {
   padding: 80px 0 120px;
@@ -1622,8 +1623,14 @@ body {
 .connect-row {
   position: relative;
   z-index: 1;
-  background-color: var(--color-red);
 }
 .connect-row.three-col {
   z-index: 2;
+}
+
+.map {
+  position: relative;
+  z-index: 5;
+  background-color: var(--color-bg, #fff);
+  margin-top: -100svh;
 }

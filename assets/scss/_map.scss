@@ -1,0 +1,6 @@
+.map {
+  position: relative;
+  z-index: 5; // cao hơn connect để đè lên
+  background-color: var(--color-bg, #fff); // bắt buộc có nền để che được
+  margin-top: -100svh; // kéo map lên đè lên connect, chỉnh số theo ý muốn
+}

@@ -2,7 +2,8 @@
   position: relative;
   width: 100%;
   min-height: 100svh;
-  background-color: var(--color-red);
+  background: url("../../images/del/bg-re-cay.png") var(--color-red);
+  z-index: 1;
   &-top {
     padding: 80px 0 120px;
     &-img {
@@ -62,7 +63,7 @@
 .connect-row {
   position: relative;
   z-index: 1;
-  background-color: var(--color-red);
+  // background-color: var(--color-red);
 
   &.three-col {
     z-index: 2;

@@ -288,6 +288,32 @@ export function imageParallax() {
     el._parallaxST = tween.scrollTrigger;
   });
 }
+export function animationFade() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll(".el-fade").forEach((el) => {
+    if (el.dataset.scriptInitialized) return;
+    el.dataset.scriptInitialized = "true";
+
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          end: "bottom 85%",
+          toggleActions: "play none none none",
+          // markers: true,
+        },
+      },
+    );
+  });
+}
 export function mousetail() {
   const allContainers = document.querySelectorAll(".mouse-trail");
 
