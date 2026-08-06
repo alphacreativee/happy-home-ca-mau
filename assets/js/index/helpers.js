@@ -663,7 +663,7 @@ export function connectAnimation() {
     scrollTrigger: {
       trigger: firstRow,
       start: "top 80%",
-      end: "top 15%",
+      end: "top 20%",
       scrub: true,
     },
   });
@@ -692,5 +692,19 @@ export function connectAnimation() {
     onEnterBack: freezeParallax,
     onLeave: resumeParallax,
     onLeaveBack: resumeParallax,
+  });
+
+  // 👇 Tween riêng cho threeColRow, kiểm soát độc lập thời điểm nó trồi lên
+  gsap.set(threeColRow, { y: 100 }); // vị trí ban đầu thấp hơn 1 chút
+
+  gsap.to(threeColRow, {
+    y: 0,
+    ease: "none",
+    scrollTrigger: {
+      trigger: firstRow,
+      start: "top 90%", // 👈 chỉnh số này nhỏ hơn "top top" nghĩa là bắt đầu sớm hơn
+      end: "top top",
+      scrub: true,
+    },
   });
 }

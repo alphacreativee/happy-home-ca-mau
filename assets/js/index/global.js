@@ -267,7 +267,7 @@ export function imageParallax() {
     const img = el.querySelector("img");
     if (!img) return;
 
-    const percentParallax = 10;
+    const percentParallax = 15;
 
     const tween = gsap.fromTo(
       img,
