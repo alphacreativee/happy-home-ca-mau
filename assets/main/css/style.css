@@ -1559,3 +1559,71 @@ body {
   max-width: 450px;
   text-align: center;
 }
+
+.connect {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  background-color: var(--color-red);
+}
+.connect-top {
+  padding: 80px 0 120px;
+}
+.connect-top-img {
+  margin-bottom: var(--space-80);
+}
+.connect-top-title {
+  margin-bottom: var(--space-32);
+}
+.connect-top-desc {
+  max-width: 50%;
+  text-align: center;
+}
+.connect-list-photo {
+  display: flex;
+  flex-direction: column;
+}
+.connect-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.connect-row.three-col {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.connect-row.three-col .connect-box {
+  aspect-ratio: 480/720;
+}
+.connect-row.three-col .image {
+  aspect-ratio: unset;
+  width: 100%;
+  height: 100%;
+}
+.connect-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+.connect-box .image {
+  width: 100%;
+  height: 100%;
+}
+.connect-box .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.connect-box .content {
+  position: absolute;
+  left: 20px;
+  bottom: 170px;
+  letter-spacing: 0.2rem;
+}
+
+.connect-row {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-red);
+}
+.connect-row.three-col {
+  z-index: 2;
+}

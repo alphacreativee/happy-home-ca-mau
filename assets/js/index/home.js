@@ -7,6 +7,7 @@ import {
   stackedSections,
   zoomImage,
   missionSection,
+  connectAnimation,
 } from "../../main/js/helpers.min.js";
 ("use strict");
 $ = jQuery;
@@ -54,4 +55,8 @@ window.addEventListener("beforeunload", () => {
   if (!isLinkClicked) window.scrollTo(0, 0);
   isLinkClicked = false;
 });
-document.addEventListener("DOMContentLoaded", () => {});
+
+window.addEventListener("load", () => {
+  connectAnimation();
+  ScrollTrigger.refresh();
+});

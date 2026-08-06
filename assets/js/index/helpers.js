@@ -646,3 +646,51 @@ export function missionSection() {
     },
   });
 }
+
+export function connectAnimation() {
+  const firstRow = document.querySelector(".connect-row:not(.three-col)");
+  const threeColRow = document.querySelector(".connect-row.three-col");
+
+  if (!firstRow || !threeColRow) return;
+
+  const firstCol = firstRow.querySelector(".connect-col:first-child");
+
+  gsap.set(firstCol, { y: 200 });
+
+  gsap.to(firstCol, {
+    y: 0,
+    ease: "none",
+    scrollTrigger: {
+      trigger: firstRow,
+      start: "top 80%",
+      end: "top 15%",
+      scrub: true,
+    },
+  });
+
+  const parallaxEls = firstRow.querySelectorAll(".parallax-image");
+
+  const freezeParallax = () => {
+    parallaxEls.forEach((el) => {
+      if (el._parallaxST) el._parallaxST.disable(false);
+    });
+  };
+
+  const resumeParallax = () => {
+    parallaxEls.forEach((el) => {
+      if (el._parallaxST) el._parallaxST.enable();
+    });
+  };
+
+  ScrollTrigger.create({
+    trigger: firstRow,
+    start: "top top",
+    end: () => "+=" + threeColRow.offsetHeight,
+    pin: true,
+    pinSpacing: false,
+    onEnter: freezeParallax,
+    onEnterBack: freezeParallax,
+    onLeave: resumeParallax,
+    onLeaveBack: resumeParallax,
+  });
+}

@@ -269,7 +269,7 @@ export function imageParallax() {
 
     const percentParallax = 10;
 
-    gsap.fromTo(
+    const tween = gsap.fromTo(
       img,
       { yPercent: `-${percentParallax}` },
       {
@@ -283,6 +283,9 @@ export function imageParallax() {
         },
       },
     );
+
+    // lưu lại instance ScrollTrigger vào chính element để nơi khác truy cập được
+    el._parallaxST = tween.scrollTrigger;
   });
 }
 export function mousetail() {
