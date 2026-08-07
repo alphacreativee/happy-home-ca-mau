@@ -1593,6 +1593,7 @@ body {
 }
 .connect-row.three-col .connect-box {
   aspect-ratio: 480/720;
+  overflow: hidden;
 }
 .connect-row.three-col .image {
   aspect-ratio: unset;
@@ -1631,7 +1632,6 @@ body {
 .map {
   position: relative;
   z-index: 5;
-  margin-top: -100svh;
   background: url("../../images/del/bg-re-cay.png") var(--color-red);
 }
 .map-content {

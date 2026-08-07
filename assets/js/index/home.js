@@ -58,7 +58,7 @@ window.addEventListener("beforeunload", () => {
 
 window.addEventListener("load", () => {
   connectAnimation();
-  mapCoverAnimation();
+  // mapCoverAnimation();
   ScrollTrigger.refresh();
 });
 export function mapCoverAnimation() {

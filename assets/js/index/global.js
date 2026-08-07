@@ -269,6 +269,10 @@ export function imageParallax() {
 
     const percentParallax = 15;
 
+    // dùng container cha gần nhất có kích thước ổn định làm trigger
+    // để tất cả ảnh trong cùng 1 row đồng bộ progress với nhau
+    const row = el.closest(".connect-row") || el;
+
     const tween = gsap.fromTo(
       img,
       { yPercent: `-${percentParallax}` },
@@ -276,7 +280,7 @@ export function imageParallax() {
         yPercent: percentParallax,
         ease: "none",
         scrollTrigger: {
-          trigger: el,
+          trigger: row, // 👈 đổi từ el sang row (chung cho cả 2 ảnh)
           start: "top bottom",
           end: "bottom top",
           scrub: true,
@@ -284,7 +288,6 @@ export function imageParallax() {
       },
     );
 
-    // lưu lại instance ScrollTrigger vào chính element để nơi khác truy cập được
     el._parallaxST = tween.scrollTrigger;
   });
 }

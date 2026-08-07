@@ -654,8 +654,10 @@ export function connectAnimation() {
   if (!firstRow || !threeColRow) return;
 
   const firstCol = firstRow.querySelector(".connect-col:first-child");
+  const parallaxEls = firstRow.querySelectorAll(".parallax-image");
 
-  gsap.set(firstCol, { y: 200 });
+  // --- Tween cho firstCol ---
+  gsap.set(firstCol, { y: 150 });
 
   gsap.to(firstCol, {
     y: 0,
@@ -668,8 +670,7 @@ export function connectAnimation() {
     },
   });
 
-  const parallaxEls = firstRow.querySelectorAll(".parallax-image");
-
+  // --- Freeze / resume parallax khi pin ---
   const freezeParallax = () => {
     parallaxEls.forEach((el) => {
       if (el._parallaxST) el._parallaxST.disable(false);
@@ -682,10 +683,18 @@ export function connectAnimation() {
     });
   };
 
+  // --- Dùng getBoundingClientRect để lấy chiều cao chính xác (subpixel) ---
+  // + cộng thêm 1-2px buffer để đảm bảo không hở dù có sai số làm tròn nào khác
+  const getPinEndDistance = () => {
+    const rect = threeColRow.getBoundingClientRect();
+    return Math.ceil(rect.height) + 20; // +2px buffer an toàn
+  };
+
+  // --- Pin firstRow ---
   ScrollTrigger.create({
     trigger: firstRow,
     start: "top top",
-    end: () => "+=" + threeColRow.offsetHeight,
+    end: () => "+=" + getPinEndDistance(),
     pin: true,
     pinSpacing: false,
     onEnter: freezeParallax,
@@ -694,17 +703,40 @@ export function connectAnimation() {
     onLeaveBack: resumeParallax,
   });
 
-  // 👇 Tween riêng cho threeColRow, kiểm soát độc lập thời điểm nó trồi lên
-  gsap.set(threeColRow, { y: 100 }); // vị trí ban đầu thấp hơn 1 chút
+  // --- Refresh ScrollTrigger sau khi ảnh + font load xong ---
+  const waitForImages = new Promise((resolve) => {
+    const imgs = firstRow.querySelectorAll("img");
+    if (!imgs.length) return resolve();
 
-  gsap.to(threeColRow, {
-    y: 0,
-    ease: "none",
-    scrollTrigger: {
-      trigger: firstRow,
-      start: "top 90%", // 👈 chỉnh số này nhỏ hơn "top top" nghĩa là bắt đầu sớm hơn
-      end: "top top",
-      scrub: true,
-    },
+    let loaded = 0;
+    const check = () => {
+      loaded++;
+      if (loaded === imgs.length) resolve();
+    };
+
+    imgs.forEach((img) => {
+      if (img.complete && img.naturalWidth !== 0) {
+        check();
+      } else {
+        img.addEventListener("load", check, { once: true });
+        img.addEventListener("error", check, { once: true });
+      }
+    });
   });
+
+  const waitForFonts = document.fonts
+    ? document.fonts.ready
+    : Promise.resolve();
+
+  Promise.all([waitForImages, waitForFonts]).then(() => {
+    ScrollTrigger.refresh();
+  });
+
+  window.addEventListener(
+    "load",
+    () => {
+      ScrollTrigger.refresh();
+    },
+    { once: true },
+  );
 }
