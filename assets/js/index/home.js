@@ -61,23 +61,20 @@ window.addEventListener("load", () => {
   // mapCoverAnimation();
   ScrollTrigger.refresh();
 });
-export function mapCoverAnimation() {
-  const connectSection = document.querySelector(".connect");
+function mapCoverAnimation() {
   const mapSection = document.querySelector(".map");
+  if (!mapSection) return;
 
-  if (!connectSection || !mapSection) return;
+  gsap.set(".connect", { zIndex: 1, position: "relative" });
+  gsap.set(mapSection, { zIndex: 20, position: "relative" });
 
-  // Chỉ set giá trị ban đầu, KHÔNG pin gì cả
-  gsap.set(mapSection, { marginTop: 0 });
-
-  gsap.to(mapSection, {
-    marginTop: -connectSection.offsetHeight * 0.5, // chỉnh % độ che theo ý bạn
-    ease: "none",
-    scrollTrigger: {
-      trigger: connectSection,
-      start: "bottom bottom", // khi đáy connect chạm đáy viewport thì bắt đầu
-      end: "bottom top",
-      scrub: true,
-    },
+  ScrollTrigger.create({
+    trigger: mapSection,
+    start: "top bottom",
+    end: "top top",
+    scrub: true,
+    pin: true,
+    pinSpacing: false,
+    markers: true,
   });
 }

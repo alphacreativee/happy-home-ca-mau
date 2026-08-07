@@ -1649,3 +1649,23 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+.liberate {
+  background-color: var(--color-brown-med);
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+}
+.liberate-top {
+  padding: 120px 0;
+}
+.liberate-top-img {
+  margin-bottom: var(--space-80);
+}
+.liberate-top-title {
+  margin-bottom: var(--space-32);
+}
+.liberate-top-desc {
+  max-width: 50%;
+  text-align: center;
+}
