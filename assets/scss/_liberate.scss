@@ -72,10 +72,8 @@
   will-change: transform;
 
   &--reverse {
-    direction: rtl;
-
-    > * {
-      direction: ltr;
+    .liberate-box-list {
+      grid-column: 1 / 2;
     }
   }
 }

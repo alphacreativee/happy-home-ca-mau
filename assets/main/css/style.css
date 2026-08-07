@@ -1729,11 +1729,8 @@ body {
   background-color: var(--color-brown-med);
   will-change: transform;
 }
-.liberate-item--reverse {
-  direction: rtl;
-}
-.liberate-item--reverse > * {
-  direction: ltr;
+.liberate-item--reverse .liberate-box-list {
+  grid-column: 1/2;
 }
 
 .liberate-content {
