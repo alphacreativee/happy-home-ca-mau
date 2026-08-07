@@ -10,8 +10,10 @@
 // Item-wrap phía sau sẽ tự đè lên nó theo paint-order + z-index
 // ==============================
 .liberate-panel-top {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 0;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
