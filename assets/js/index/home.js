@@ -78,3 +78,36 @@ function mapCoverAnimation() {
     markers: true,
   });
 }
+
+gsap.registerPlugin(ScrollTrigger);
+
+document.querySelectorAll(".liberate-item-wrap").forEach((wrap) => {
+  const panel = wrap.querySelector(".liberate-item");
+  const boxItems = wrap.querySelectorAll(".liberate-box-item");
+  const box1 = boxItems[0];
+  const box2 = boxItems[1];
+
+  gsap.set(box2, { yPercent: -100, zIndex: 1 });
+  gsap.set(box1, { zIndex: 2 });
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: wrap,
+      start: "top top",
+      end: "+=200%", // khớp với height:200vh của wrap
+      scrub: true,
+      // markers: true,
+    },
+  });
+
+  // nửa đầu quãng cuộn: item pin & trượt lên che panel/item trước
+  tl.fromTo(
+    panel,
+    { yPercent: 100 },
+    { yPercent: 0, duration: 0.5, ease: "none" },
+    0,
+  );
+
+  // nửa sau: 2 ảnh tách khỏi nhau
+  tl.to(box2, { yPercent: 0, duration: 0.5, ease: "none" }, 0.5);
+});

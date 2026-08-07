@@ -1,19 +1,137 @@
-.liberate {
-  background-color: var(--color-brown-med);
+.liberate-wrap {
   position: relative;
   width: 100%;
-  min-height: 100svh;
-  &-top {
-    padding: 120px 0;
-    &-img {
-      margin-bottom: var(--space-80);
+  background-color: var(--color-brown-med);
+}
+
+// ==============================
+// Panel nền (hero) — nằm bình thường trong document flow
+// KHÔNG sticky, KHÔNG absolute, KHÔNG pin
+// Item-wrap phía sau sẽ tự đè lên nó theo paint-order + z-index
+// ==============================
+.liberate-panel-top {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0;
+  text-align: center;
+
+  &-img,
+  .liberate-top-img {
+    margin-bottom: var(--space-80);
+  }
+
+  .liberate-top-title {
+    margin-bottom: var(--space-32);
+  }
+
+  .liberate-top-desc {
+    max-width: 50%;
+    text-align: center;
+  }
+}
+
+.liberate-list {
+  position: relative;
+}
+
+// ==============================
+// Wrap của từng item — cao 200vh:
+// 100vh đầu = pin + chạy animation (item trượt lên che + 2 ảnh tách)
+// 100vh sau = giữ nguyên trạng thái cuối (sticky tự giữ) trước khi item kế tiếp đè lên
+// ==============================
+.liberate-item-wrap {
+  position: relative;
+  height: 200vh;
+
+  @for $i from 1 through 10 {
+    &:nth-of-type(#{$i}) {
+      .liberate-item {
+        z-index: $i; // item sau luôn có z-index cao hơn -> đè lên panel-top và item trước
+      }
     }
-    &-title {
-      margin-bottom: var(--space-32);
+  }
+}
+
+// ==============================
+// Panel item — pin trong đúng 1 màn hình bằng sticky
+// ==============================
+.liberate-item {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--color-brown-med);
+  will-change: transform;
+
+  &--reverse {
+    direction: rtl;
+
+    > * {
+      direction: ltr;
     }
-    &-desc {
-      max-width: 50%;
-      text-align: center;
+  }
+}
+
+.liberate-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+}
+
+// ==============================
+// Box-list: 2 ảnh chồng khít lên nhau ban đầu, tách ra sau theo scrub
+// ==============================
+.liberate-box-list {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.liberate-box-item {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  will-change: transform;
+
+  &:nth-child(1) {
+    top: 0;
+  }
+
+  &:nth-child(2) {
+    top: 50%;
+  }
+}
+
+.liberate-box {
+  position: relative;
+  height: 100%;
+
+  .image {
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
+  }
+
+  .title {
+    position: absolute;
+    left: 20px;
+    bottom: 80px;
+    letter-spacing: 0.2rem;
+    z-index: 2;
   }
 }
