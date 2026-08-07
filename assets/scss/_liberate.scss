@@ -47,7 +47,7 @@
 // ==============================
 .liberate-item-wrap {
   position: relative;
-  height: 200vh;
+  height: 100vh;
 
   @for $i from 1 through 10 {
     &:nth-of-type(#{$i}) {
@@ -62,9 +62,9 @@
 // Panel item — pin trong đúng 1 màn hình bằng sticky
 // ==============================
 .liberate-item {
-  position: sticky;
-  top: 0;
-  left: 0;
+  position: relative; // bỏ sticky, để GSAP toàn quyền pin
+  top: auto;
+  left: auto;
   width: 100%;
   height: 100svh;
   overflow: hidden;

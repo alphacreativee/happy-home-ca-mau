@@ -96,7 +96,7 @@ document.querySelectorAll(".liberate-item-wrap").forEach((wrap) => {
       start: "top top",
       end: "+=200%", // khớp với height:200vh của wrap
       scrub: true,
-      // markers: true,
+      markers: true,
     },
   });
 
