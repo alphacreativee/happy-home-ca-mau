@@ -79,35 +79,62 @@ function mapCoverAnimation() {
   });
 }
 
-gsap.registerPlugin(ScrollTrigger);
+window.addEventListener("load", () => {
+  const panelTop = document.querySelector(".liberate-panel-top");
+  const wraps = gsap.utils.toArray(".liberate-item-wrap");
+  const list = document.querySelector(".liberate-list");
 
-document.querySelectorAll(".liberate-item-wrap").forEach((wrap) => {
-  const panel = wrap.querySelector(".liberate-item");
-  const boxItems = wrap.querySelectorAll(".liberate-box-item");
-  const box1 = boxItems[0];
-  const box2 = boxItems[1];
+  const scrollUnits = wraps.length - 1;
+  list.style.height = `${scrollUnits * 100}vh`;
 
-  gsap.set(box2, { yPercent: -100, zIndex: 1 });
-  gsap.set(box1, { zIndex: 2 });
+  wraps.forEach((wrap) => {
+    gsap.set(wrap, { yPercent: 100 });
+  });
 
-  const tl = gsap.timeline({
+  // Pin panel-top: dính đúng bằng chiều cao content thật của nó,
+  // kết thúc pin đúng lúc .liberate-list bắt đầu (item 1 sắp trượt lên đè)
+  ScrollTrigger.create({
+    trigger: panelTop,
+    start: "top top",
+    endTrigger: list,
+    end: "bottom top", // 👈 đổi lại — pin panel-top xuyên suốt lúc list đang pin
+    pin: true,
+    pinSpacing: false,
+    invalidateOnRefresh: true,
+    // markers: true,
+  });
+
+  const master = gsap.timeline({
     scrollTrigger: {
-      trigger: wrap,
+      trigger: list,
       start: "top top",
-      end: "+=200%", // khớp với height:200vh của wrap
+      end: `+=${scrollUnits * 100}%`,
       scrub: true,
-      markers: true,
+      pin: true,
+      invalidateOnRefresh: true,
+      // markers: true,
     },
   });
 
-  // nửa đầu quãng cuộn: item pin & trượt lên che panel/item trước
-  tl.fromTo(
-    panel,
-    { yPercent: 100 },
-    { yPercent: 0, duration: 0.5, ease: "none" },
-    0,
-  );
+  wraps.forEach((wrap, i) => {
+    const boxItems = wrap.querySelectorAll(".liberate-box-item");
+    const [box1, box2] = boxItems;
+    gsap.set(box2, { yPercent: -100 });
 
-  // nửa sau: 2 ảnh tách khỏi nhau
-  tl.to(box2, { yPercent: 0, duration: 0.5, ease: "none" }, 0.5);
+    master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
+    master.to(box2, { yPercent: 0, ease: "none", duration: 0.5 }, i + 0.5);
+  });
+
+  ScrollTrigger.refresh();
 });
+console.log("ScrollTriggers:", ScrollTrigger.getAll().length);
+console.log(
+  "list height:",
+  document.querySelector(".liberate-list").style.height,
+);
+console.log(
+  "wraps:",
+  document.querySelectorAll(".liberate-item-wrap").length,
+  "innerHeight:",
+  window.innerHeight,
+);

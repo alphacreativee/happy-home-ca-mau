@@ -5,13 +5,12 @@
 }
 
 // ==============================
-// Panel nền (hero) — nằm bình thường trong document flow
-// KHÔNG sticky, KHÔNG absolute, KHÔNG pin
-// Item-wrap phía sau sẽ tự đè lên nó theo paint-order + z-index
+// BƯỚC 1: Panel nền — sticky, dính top khi cuộn tới
+// Nằm ngoài .liberate-list, KHÔNG bị pin
+// Sẽ bị item-wrap đầu tiên trượt lên đè khi .liberate-list bắt đầu pin
 // ==============================
 .liberate-panel-top {
-  position: sticky;
-  top: 0;
+  position: relative; // 👈 đổi từ sticky -> relative, để GSAP toàn quyền pin
   z-index: 0;
 
   display: flex;
@@ -20,6 +19,8 @@
   align-items: center;
   padding: 120px 0;
   text-align: center;
+  background-color: var(--color-brown-med);
+  // KHÔNG set min-height: 100svh nữa -> cao theo content thật
 
   &-img,
   .liberate-top-img {
@@ -36,37 +37,37 @@
   }
 }
 
+// ==============================
+// BƯỚC 2: List — bị PIN toàn bộ bởi 1 ScrollTrigger duy nhất (JS)
+// height được set động = (số item + 1) * 100vh -> đủ khoảng cuộn
+// cho toàn bộ hiệu ứng item đè nhau bên trong
+// ==============================
 .liberate-list {
   position: relative;
+  // height: set qua JS
 }
 
 // ==============================
-// Wrap của từng item — cao 200vh:
-// 100vh đầu = pin + chạy animation (item trượt lên che + 2 ảnh tách)
-// 100vh sau = giữ nguyên trạng thái cuối (sticky tự giữ) trước khi item kế tiếp đè lên
+// BƯỚC 3+4: Wrap từng item — absolute chồng full viewport lên nhau
+// z-index tăng dần theo thứ tự DOM -> item sau luôn đè item trước
+// (và item đầu tiên đè luôn panel-top vì panel-top z-index: 0)
 // ==============================
 .liberate-item-wrap {
-  position: relative;
-  height: 100vh;
+  position: absolute;
+  inset: 0;
+  height: 100svh;
 
   @for $i from 1 through 10 {
     &:nth-of-type(#{$i}) {
-      .liberate-item {
-        z-index: $i; // item sau luôn có z-index cao hơn -> đè lên panel-top và item trước
-      }
+      z-index: $i;
     }
   }
 }
 
-// ==============================
-// Panel item — pin trong đúng 1 màn hình bằng sticky
-// ==============================
 .liberate-item {
-  position: relative; // bỏ sticky, để GSAP toàn quyền pin
-  top: auto;
-  left: auto;
+  position: relative;
   width: 100%;
-  height: 100svh;
+  height: 100%;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
