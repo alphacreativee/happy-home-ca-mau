@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --font-heading: "Platypi", sans-serif;
   --font-body: "Manrope", sans-serif;
@@ -1650,10 +1651,14 @@ body {
   object-fit: cover;
 }
 
-.liberate-wrap {
-  position: relative;
-  width: 100%;
+.liberate {
   background-color: var(--color-brown-med);
+}
+
+.liberate-wrap {
+  margin-top: -120vh; /* hoặc -80vh, -90vh tùy thiết kế */
+  position: relative;
+  z-index: 2;
 }
 
 .liberate-panel-top {
@@ -1677,6 +1682,11 @@ body {
 .liberate-panel-top .liberate-top-desc {
   max-width: 50%;
   text-align: center;
+}
+
+.liberate-pin {
+  position: relative;
+  z-index: 1;
 }
 
 .liberate-list {
@@ -1732,12 +1742,18 @@ body {
 .liberate-item--reverse .liberate-box-list {
   grid-column: 1/2;
 }
+.liberate-item--reverse .liberate-content {
+  background-position: bottom right;
+}
 
 .liberate-content {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 40px;
+  background: url("../../images/del/bg-re-cay.png") var(--color-brown-med);
+  background-size: cover;
+  background-position: left top;
 }
 
 .liberate-box-list {

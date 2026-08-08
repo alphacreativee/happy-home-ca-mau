@@ -253,7 +253,7 @@ export function animationText() {
           start: "top 85%",
           end: "bottom 85%",
           toggleActions: "play none none none",
-          // markers: true,
+          markers: true,
         },
       },
     );

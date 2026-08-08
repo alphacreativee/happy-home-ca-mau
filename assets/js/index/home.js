@@ -78,63 +78,205 @@ function mapCoverAnimation() {
     markers: true,
   });
 }
-
-window.addEventListener("load", () => {
-  const panelTop = document.querySelector(".liberate-panel-top");
-  const wraps = gsap.utils.toArray(".liberate-item-wrap");
+function initLiberateScroll() {
+  const pinSection = document.querySelector(".liberate-pin");
+  const wrapSection = document.querySelector(".liberate-wrap");
   const list = document.querySelector(".liberate-list");
+  const wraps = gsap.utils.toArray(".liberate-item-wrap");
 
-  const scrollUnits = wraps.length - 1;
-  list.style.height = `${scrollUnits * 100}vh`;
+  if (!pinSection || !wrapSection || !list || wraps.length === 0) {
+    console.warn("Liberate scroll: thiếu phần tử");
+    return;
+  }
 
+  console.log("Số lượng item:", wraps.length); // ← xem console có đúng 3 không
+
+  gsap.set(pinSection, { position: "relative", zIndex: 1 });
+  gsap.set(wrapSection, { position: "relative", zIndex: 2 });
+
+  // Set trạng thái ban đầu
   wraps.forEach((wrap) => {
+    const [, box2] = wrap.querySelectorAll(".liberate-box-item");
     gsap.set(wrap, { yPercent: 100 });
+    if (box2) gsap.set(box2, { yPercent: -100 });
   });
 
-  // Pin panel-top: dính đúng bằng chiều cao content thật của nó,
-  // kết thúc pin đúng lúc .liberate-list bắt đầu (item 1 sắp trượt lên đè)
+  // Pin text
   ScrollTrigger.create({
-    trigger: panelTop,
+    trigger: pinSection,
     start: "top top",
-    endTrigger: list,
-    end: "bottom top", // 👈 đổi lại — pin panel-top xuyên suốt lúc list đang pin
+    endTrigger: wrapSection,
+    end: "bottom top",
     pin: true,
     pinSpacing: false,
     invalidateOnRefresh: true,
-    // markers: true,
   });
+
+  // === Tăng mạnh khoảng scroll ===
+  const scrollDistance = (wraps.length + 2) * window.innerHeight; // tăng mạnh
 
   const master = gsap.timeline({
     scrollTrigger: {
-      trigger: list,
+      trigger: wrapSection,
       start: "top top",
-      end: `+=${scrollUnits * 100}%`,
+      end: `+=${scrollDistance}`,
       scrub: true,
       pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
       invalidateOnRefresh: true,
-      // markers: true,
+      // markers: true, // ← BẬT MARKERS để nhìn
     },
   });
 
   wraps.forEach((wrap, i) => {
-    const boxItems = wrap.querySelectorAll(".liberate-box-item");
-    const [box1, box2] = boxItems;
-    gsap.set(box2, { yPercent: -100 });
+    const [, box2] = wrap.querySelectorAll(".liberate-box-item");
 
-    master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
-    master.to(box2, { yPercent: 0, ease: "none", duration: 0.5 }, i + 0.5);
+    master.to(
+      wrap,
+      {
+        yPercent: 0,
+        ease: "none",
+        duration: 1,
+      },
+      i,
+    );
+
+    if (box2) {
+      master.to(
+        box2,
+        {
+          yPercent: 0,
+          ease: "none",
+          duration: 0.5,
+        },
+        i + 0.5,
+      );
+    }
   });
 
+  // Giữ cuối lâu hơn
+  master.to({}, { duration: 0.8 });
+
   ScrollTrigger.refresh();
-});
-console.log("ScrollTriggers:", ScrollTrigger.getAll().length);
-console.log(
-  "list height:",
-  document.querySelector(".liberate-list").style.height,
-);
-console.log(
-  "wraps:",
-  document.querySelectorAll(".liberate-item-wrap").length,
-  "innerHeight:",
-  window.innerHeight,
-);
+}
+
+window.addEventListener("load", initLiberateScroll);
+
+// Gọi hàm
+
+// window.addEventListener("load", () => {
+//   const panelTop = document.querySelector(".liberate-panel-top");
+//   const list = document.querySelector(".liberate-list");
+//   const wraps = gsap.utils.toArray(".liberate-item-wrap");
+
+//   // 👇 giờ mỗi wrap (kể cả wrap đầu) đều chiếm 1 unit scroll để trượt vào
+//   const scrollUnits = wraps.length - (wraps.length - 1);
+//   list.style.height = `${scrollUnits * 100}vh`;
+
+//   // 👇 TẤT CẢ wrap đều bắt đầu ẩn hoàn toàn, không còn ngoại lệ cho wrap[0]
+//   wraps.forEach((wrap) => {
+//     gsap.set(wrap, { yPercent: 100 });
+//   });
+
+//   ScrollTrigger.create({
+//     trigger: panelTop,
+//     start: "top top",
+//     endTrigger: list,
+//     end: "bottom top",
+//     pin: true,
+//     pinSpacing: false,
+//     invalidateOnRefresh: true,
+//   });
+
+//   const master = gsap.timeline({
+//     scrollTrigger: {
+//       trigger: list,
+//       start: "top top",
+//       end: `+=${scrollUnits * 100}%`,
+//       scrub: true,
+//       pin: true,
+//       invalidateOnRefresh: true,
+//       markers: true,
+//     },
+//   });
+
+//   wraps.forEach((wrap, i) => {
+//     const [box1, box2] = wrap.querySelectorAll(".liberate-box-item");
+//     gsap.set(box2, { yPercent: -100 });
+
+//     // wrap[0] giờ cũng trượt vào ở segment i=0, y hệt logic các wrap sau
+//     master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
+//     master.to(box2, { yPercent: 0, ease: "none", duration: 0.5 }, i + 0.5);
+//   });
+
+//   ScrollTrigger.refresh();
+// });
+
+// window.addEventListener("load", () => {
+//   const panelTop = document.querySelector(".liberate-panel-top");
+//   const list = document.querySelector(".liberate-list");
+//   const wraps = gsap.utils.toArray(".liberate-item-wrap");
+
+//   const scrollUnits = wraps.length - (wraps.length - 1);
+//   list.style.height = `${scrollUnits * 100}vh`;
+
+//   // Set trạng thái ban đầu cho tất cả
+//   wraps.forEach((wrap) => {
+//     const [, box2] = wrap.querySelectorAll(".liberate-box-item");
+//     gsap.set(wrap, { yPercent: 100 });
+//     gsap.set(box2, { yPercent: -100 });
+//   });
+
+//   // Pin panelTop
+//   ScrollTrigger.create({
+//     trigger: panelTop,
+//     start: "top top",
+//     endTrigger: list,
+//     end: "bottom top",
+//     pin: true,
+//     pinSpacing: false,
+//     invalidateOnRefresh: true,
+//   });
+
+//   // Master timeline – bao gồm cả wrap 0
+//   const master = gsap.timeline({
+//     scrollTrigger: {
+//       trigger: list,
+//       start: "top top",
+//       end: `+=${scrollUnits * 100}%`,
+//       scrub: true,
+//       pin: true,
+//       invalidateOnRefresh: true,
+//       // markers: true,
+//     },
+//   });
+
+//   wraps.forEach((wrap, i) => {
+//     const [, box2] = wrap.querySelectorAll(".liberate-box-item");
+
+//     // Item trượt lên
+//     master.to(
+//       wrap,
+//       {
+//         yPercent: 0,
+//         ease: "none",
+//         duration: 1,
+//       },
+//       i,
+//     );
+
+//     // Box bên trong
+//     master.to(
+//       box2,
+//       {
+//         yPercent: 0,
+//         ease: "none",
+//         duration: 0.5,
+//       },
+//       i + 0.5,
+//     );
+//   });
+
+//   ScrollTrigger.refresh();
+// });
