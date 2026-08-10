@@ -3,6 +3,12 @@
   height: 100svh;
   z-index: 2;
   overflow: hidden;
+  &.hide-title {
+    .reveal-content {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
   &.show-bg {
     &::before {
       opacity: 1;
@@ -39,6 +45,8 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
+
+    transition: all 0.4s ease;
   }
 
   &-slider {

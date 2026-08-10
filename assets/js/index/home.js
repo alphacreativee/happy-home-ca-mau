@@ -270,6 +270,7 @@ function mapCoverAnimation() {
 function animationReveal() {
   gsap.registerPlugin(ScrollTrigger);
 
+  const footer = document.getElementById("footer");
   const header = document.getElementById("header");
 
   document.querySelectorAll(".reveal").forEach((section) => {
@@ -281,50 +282,67 @@ function animationReveal() {
     if (!items.length) return;
 
     const percentParallax = 10;
-
     const images = Array.from(items)
       .map((item) => item.querySelector(".reveal-item-img img"))
       .filter(Boolean);
 
-    gsap.set(items, {
-      y: "100%",
-    });
-    gsap.set(images, {
-      yPercent: `-${percentParallax}`,
-    });
+    // ----- Trạng thái ban đầu -----
+    gsap.set(items, { y: "100%" });
+    gsap.set(images, { yPercent: `-${percentParallax}` });
+    if (footer) gsap.set(footer, { yPercent: 100 });
+
+    const FOOTER_REVEAL = 1; // thêm 1 màn hình scroll dành cho footer trượt lên
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: `+=${(items.length - 1) * 100}%`,
+        end: `+=${(items.length + 1 + FOOTER_REVEAL) * 100}%`,
         pin: true,
         scrub: 1,
-        markers: true,
+        // markers: true,
         onUpdate: (self) => {
-          if (self.progress >= 0.1) {
-            section.classList.add("show-bg");
-            if (header) header.classList.remove("header-text-light");
-          } else {
-            section.classList.remove("show-bg");
+          section.classList.toggle("show-bg", self.progress >= 0.1);
+          if (header) {
+            header.classList.toggle("header-text-light", self.progress >= 0.1);
           }
         },
+        onEnter: () => {
+          // Vào vùng pin -> gắn footer fixed theo viewport
+          if (footer) {
+            gsap.set(footer, {
+              position: "fixed",
+              left: 0,
+              bottom: 0,
+              width: "100%",
+            });
+          }
+        },
+        onLeaveBack: () => {
+          // Cuộn ngược lên trên, ra khỏi vùng pin -> trả footer về flow bình thường
+          // (an toàn vì lúc này footer đang yPercent: 100, ẩn hoàn toàn, không gây nhảy vị trí)
+          if (footer) {
+            gsap.set(footer, {
+              clearProps: "position,left,bottom,width",
+            });
+          }
+          if (header) {
+            header.classList.remove("header-text-light");
+          }
+        },
+        // Không cần onLeave / onEnterBack cho footer nữa —
+        // vì footer là phần tử cuối trang, giữ fixed vĩnh viễn sau khi
+        // đã pin qua 1 lần là đủ, tránh hiện tượng nhảy/giật khi chuyển
+        // fixed -> relative giữa lúc đang hiển thị.
       },
     });
 
+    // ----- Reveal từng item -----
     items.forEach((item, index) => {
       const img = images[index];
       const pos = index;
 
-      tl.to(
-        item,
-        {
-          y: "0%",
-          duration: 1,
-          ease: "power2.out",
-        },
-        pos,
-      );
+      tl.to(item, { y: "0%", duration: 1, ease: "power2.out" }, pos);
 
       if (img) {
         tl.to(
@@ -338,6 +356,38 @@ function animationReveal() {
         );
       }
     });
+
+    // ----- Footer trượt lên đè phủ section, ngay sau item cuối -----
+    if (footer) {
+      tl.to(
+        footer,
+        {
+          yPercent: 0,
+          duration: 1,
+          ease: "power2.out",
+          if(footer) {
+            tl.to(
+              footer,
+              {
+                yPercent: 0,
+                duration: 1,
+                ease: "power2.out",
+                onStart: () => {
+                  section.classList.add("hide-title");
+                  console.log("hide-title added", section);
+                },
+                onReverseComplete: () => {
+                  section.classList.remove("hide-title");
+                  console.log("hide-title removed", section);
+                },
+              },
+              items.length + 0.4,
+            );
+          },
+        },
+        items.length,
+      );
+    }
   });
 }
 function revealImageParallax() {

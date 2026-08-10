@@ -109,10 +109,23 @@ export function headerScroll() {
   ).filter((section) => !section.classList.contains("mission"));
 
   const lightTriggers = lightSections.map((section) => {
+    // Với .reveal, section bị pin (animationReveal) nên chiều dài
+    // scroll thật không phải "bottom" của chính nó, mà dài thêm theo
+    // số item (items.length - 1) * 100%. Tính lại end cho đúng.
+    const isReveal = section.classList.contains("reveal");
+    let endValue = "bottom top+=20";
+
+    if (isReveal) {
+      const items = section.querySelectorAll(".reveal-item");
+      if (items.length) {
+        endValue = `+=${(items.length - 1) * 100}%`;
+      }
+    }
+
     return ScrollTrigger.create({
       trigger: section,
       start: "top top+=20",
-      end: "bottom top+=20",
+      end: endValue,
       onEnter: () => {
         activeLightSections.add(section);
         updateHeaderLightClass(header);

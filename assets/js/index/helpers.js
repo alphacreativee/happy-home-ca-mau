@@ -14,6 +14,7 @@ export function bannerSlide() {
       fadeEffect: { crossFade: true },
       speed: FADE_SPEED,
       loop: true,
+      simulateTouch: false,
       autoplay: {
         delay: SCALE_DURATION,
         disableOnInteraction: false,
