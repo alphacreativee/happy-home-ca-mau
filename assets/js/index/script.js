@@ -80,10 +80,12 @@ function init() {
   customDropdown();
   createFilterTab();
   // getDateLightPick();
-  animationText();
+
   imageParallax();
   mousetail();
   animationFade();
+  animationText();
+  ScrollTrigger.refresh();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

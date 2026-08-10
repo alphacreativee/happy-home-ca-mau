@@ -23,7 +23,75 @@ gsap.ticker.add((time) => {
 });
 
 gsap.ticker.lagSmoothing(0);
+function initLiberateScroll() {
+  const pinSection = document.querySelector(".liberate-pin");
+  const wrapSection = document.querySelector(".liberate-wrap");
+  const list = document.querySelector(".liberate-list");
+  const wraps = gsap.utils.toArray(".liberate-item-wrap");
+  const nextSection = document.querySelector(".spacer"); // section đè lên
 
+  if (!pinSection || !wrapSection || !list || wraps.length === 0) {
+    console.warn("Liberate scroll: thiếu phần tử");
+    return;
+  }
+
+  gsap.set(pinSection, { position: "relative", zIndex: 1 });
+  gsap.set(wrapSection, { position: "relative", zIndex: 2 });
+
+  // Section kế tiếp: đặt cao hơn, và cho trạng thái ban đầu nằm dưới (yPercent 100)
+  if (nextSection) {
+    gsap.set(nextSection, {
+      position: "relative",
+      zIndex: 3,
+      yPercent: 0, // giữ ở vị trí bình thường trong flow
+    });
+  }
+
+  wraps.forEach((wrap) => {
+    const [, box2] = wrap.querySelectorAll(".liberate-box-item");
+    gsap.set(wrap, { yPercent: 100 });
+    if (box2) gsap.set(box2, { yPercent: -100 });
+  });
+
+  ScrollTrigger.create({
+    trigger: pinSection,
+    start: "top top",
+    endTrigger: wrapSection,
+    end: "bottom top",
+    pin: true,
+    pinSpacing: false,
+    invalidateOnRefresh: true,
+  });
+
+  const scrollDistance = (wraps.length + 2) * window.innerHeight;
+
+  const master = gsap.timeline({
+    scrollTrigger: {
+      trigger: wrapSection,
+      start: "top top",
+      end: `+=${scrollDistance}`,
+      scrub: true,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    },
+  });
+
+  wraps.forEach((wrap, i) => {
+    const [, box2] = wrap.querySelectorAll(".liberate-box-item");
+
+    master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
+
+    if (box2) {
+      master.to(box2, { yPercent: 0, ease: "none", duration: 0.5 }, i + 0.5);
+    }
+  });
+
+  master.to({}, { duration: 0.8 });
+
+  ScrollTrigger.refresh();
+}
 const init = () => {
   gsap.registerPlugin(ScrollTrigger);
   bannerSlide();
@@ -32,6 +100,7 @@ const init = () => {
   stackedSections();
   missionSection();
   zoomImage();
+  initLiberateScroll();
 };
 document.addEventListener("DOMContentLoaded", () => {
   init();
@@ -78,90 +147,6 @@ function mapCoverAnimation() {
     markers: true,
   });
 }
-function initLiberateScroll() {
-  const pinSection = document.querySelector(".liberate-pin");
-  const wrapSection = document.querySelector(".liberate-wrap");
-  const list = document.querySelector(".liberate-list");
-  const wraps = gsap.utils.toArray(".liberate-item-wrap");
-
-  if (!pinSection || !wrapSection || !list || wraps.length === 0) {
-    console.warn("Liberate scroll: thiếu phần tử");
-    return;
-  }
-
-  console.log("Số lượng item:", wraps.length); // ← xem console có đúng 3 không
-
-  gsap.set(pinSection, { position: "relative", zIndex: 1 });
-  gsap.set(wrapSection, { position: "relative", zIndex: 2 });
-
-  // Set trạng thái ban đầu
-  wraps.forEach((wrap) => {
-    const [, box2] = wrap.querySelectorAll(".liberate-box-item");
-    gsap.set(wrap, { yPercent: 100 });
-    if (box2) gsap.set(box2, { yPercent: -100 });
-  });
-
-  // Pin text
-  ScrollTrigger.create({
-    trigger: pinSection,
-    start: "top top",
-    endTrigger: wrapSection,
-    end: "bottom top",
-    pin: true,
-    pinSpacing: false,
-    invalidateOnRefresh: true,
-  });
-
-  // === Tăng mạnh khoảng scroll ===
-  const scrollDistance = (wraps.length + 2) * window.innerHeight; // tăng mạnh
-
-  const master = gsap.timeline({
-    scrollTrigger: {
-      trigger: wrapSection,
-      start: "top top",
-      end: `+=${scrollDistance}`,
-      scrub: true,
-      pin: true,
-      pinSpacing: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-      // markers: true, // ← BẬT MARKERS để nhìn
-    },
-  });
-
-  wraps.forEach((wrap, i) => {
-    const [, box2] = wrap.querySelectorAll(".liberate-box-item");
-
-    master.to(
-      wrap,
-      {
-        yPercent: 0,
-        ease: "none",
-        duration: 1,
-      },
-      i,
-    );
-
-    if (box2) {
-      master.to(
-        box2,
-        {
-          yPercent: 0,
-          ease: "none",
-          duration: 0.5,
-        },
-        i + 0.5,
-      );
-    }
-  });
-
-  // Giữ cuối lâu hơn
-  master.to({}, { duration: 0.8 });
-
-  ScrollTrigger.refresh();
-}
-
-window.addEventListener("load", initLiberateScroll);
 
 // Gọi hàm
 

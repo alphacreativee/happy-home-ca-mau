@@ -1,10 +1,12 @@
 .liberate {
+  position: relative;
   background-color: var(--color-brown-med);
 }
 .liberate-wrap {
   margin-top: -120vh; /* hoặc -80vh, -90vh tùy thiết kế */
   position: relative;
   z-index: 2;
+  padding-bottom: 100vh;
 }
 
 // ==============================
