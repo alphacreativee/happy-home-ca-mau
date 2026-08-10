@@ -294,6 +294,7 @@ export function imageParallax() {
 export function animationFade() {
   gsap.registerPlugin(ScrollTrigger);
 
+  // ----- Fade đơn lẻ -----
   document.querySelectorAll(".el-fade").forEach((el) => {
     if (el.dataset.scriptInitialized) return;
     el.dataset.scriptInitialized = "true";
@@ -308,6 +309,34 @@ export function animationFade() {
         ease: "power3.out",
         scrollTrigger: {
           trigger: el,
+          start: "top 85%",
+          end: "bottom 85%",
+          toggleActions: "play none none none",
+          // markers: true,
+        },
+      },
+    );
+  });
+
+  // ----- Fade theo danh sách (stagger) -----
+  document.querySelectorAll(".el-fade-list").forEach((listEl) => {
+    if (listEl.dataset.scriptInitialized) return;
+    listEl.dataset.scriptInitialized = "true";
+
+    const items = listEl.children; // hoặc listEl.querySelectorAll(":scope > *")
+    if (!items.length) return;
+
+    gsap.fromTo(
+      items,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: listEl,
           start: "top 85%",
           end: "bottom 85%",
           toggleActions: "play none none none",
