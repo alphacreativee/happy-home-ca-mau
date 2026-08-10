@@ -1916,3 +1916,99 @@ img.kb-zoom {
 .proud-partner-item .name {
   text-align: center;
 }
+
+.reveal {
+  position: relative;
+  height: 100svh;
+  z-index: 2;
+  overflow: hidden;
+}
+.reveal.show-bg::before {
+  opacity: 1;
+  visibility: visible;
+}
+.reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+  z-index: 3;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+.reveal-inner {
+  width: 100%;
+  height: 100%;
+}
+.reveal-image {
+  width: 100%;
+  height: 100%;
+}
+.reveal-image img {
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+}
+.reveal-content {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+.reveal-slider {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+.reveal-scroll {
+  width: 100%;
+  height: 100%;
+  align-items: flex-end;
+}
+.reveal-item {
+  width: 20%;
+  max-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+.reveal-item-img {
+  width: 100%;
+  aspect-ratio: 288/275;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.reveal-item-img img {
+  width: 115%;
+  height: 115%;
+  object-fit: cover;
+}
+.reveal-item .number, .reveal-item-content {
+  flex-shrink: 0;
+}
+.reveal-item .number {
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%);
+}
+.reveal-item-content {
+  background-color: var(--color-green-med);
+  padding: 40px 32px 32px;
+  position: relative;
+}
+.reveal-item-content .name {
+  color: var(--color-white);
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
+  min-height: 40px;
+  margin-bottom: 12px;
+}
+.reveal-item-content .desc {
+  font-size: 14px;
+  line-height: 22.4px;
+  color: var(--color-white);
+}

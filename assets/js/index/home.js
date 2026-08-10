@@ -127,7 +127,9 @@ window.addEventListener("beforeunload", () => {
 
 window.addEventListener("load", () => {
   connectAnimation();
+  animationReveal();
   // mapCoverAnimation();
+  revealImageParallax();
   ScrollTrigger.refresh();
 });
 function mapCoverAnimation() {
@@ -265,3 +267,103 @@ function mapCoverAnimation() {
 
 //   ScrollTrigger.refresh();
 // });
+function animationReveal() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const header = document.getElementById("header");
+
+  document.querySelectorAll(".reveal").forEach((section) => {
+    if (section.dataset.scriptInitialized) return;
+    section.dataset.scriptInitialized = "true";
+
+    const container = section.querySelector(".reveal-slider");
+    const items = container.querySelectorAll(".reveal-item");
+    if (!items.length) return;
+
+    const percentParallax = 10;
+
+    const images = Array.from(items)
+      .map((item) => item.querySelector(".reveal-item-img img"))
+      .filter(Boolean);
+
+    gsap.set(items, {
+      y: "100%",
+    });
+    gsap.set(images, {
+      yPercent: `-${percentParallax}`,
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: `+=${(items.length - 1) * 100}%`,
+        pin: true,
+        scrub: 1,
+        markers: true,
+        onUpdate: (self) => {
+          if (self.progress >= 0.1) {
+            section.classList.add("show-bg");
+            if (header) header.classList.remove("header-text-light");
+          } else {
+            section.classList.remove("show-bg");
+          }
+        },
+      },
+    });
+
+    items.forEach((item, index) => {
+      const img = images[index];
+      const pos = index;
+
+      tl.to(
+        item,
+        {
+          y: "0%",
+          duration: 1,
+          ease: "power2.out",
+        },
+        pos,
+      );
+
+      if (img) {
+        tl.to(
+          img,
+          {
+            yPercent: percentParallax,
+            duration: 1,
+            ease: "power2.out",
+          },
+          pos,
+        );
+      }
+    });
+  });
+}
+function revealImageParallax() {
+  document.querySelectorAll(".reveal").forEach((section) => {
+    const bgImg = section.querySelector(".reveal-image>img");
+    if (!bgImg) return;
+    if (bgImg.dataset.scriptInitialized) return;
+    bgImg.dataset.scriptInitialized = "true";
+
+    const percentParallax = 15;
+
+    const tween = gsap.fromTo(
+      bgImg,
+      { yPercent: 0 },
+      {
+        yPercent: -percentParallax, // chỉ chạy lên. Đổi thành +percentParallax nếu muốn chạy xuống
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      },
+    );
+
+    bgImg._parallaxST = tween.scrollTrigger;
+  });
+}

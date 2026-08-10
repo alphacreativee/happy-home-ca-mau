@@ -1,0 +1,106 @@
+.reveal {
+  position: relative;
+  height: 100svh;
+  z-index: 2;
+  overflow: hidden;
+  &.show-bg {
+    &::before {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+    z-index: 3;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  &-inner {
+    width: 100%;
+    height: 100%;
+  }
+  &-image {
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+    }
+  }
+  &-content {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+
+  &-slider {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+  }
+
+  &-scroll {
+    width: 100%;
+    height: 100%;
+    align-items: flex-end;
+    // padding-bottom: 60px;
+  }
+
+  &-item {
+    width: 20%;
+    max-height: calc(100svh);
+    display: flex;
+    flex-direction: column;
+
+    &-img {
+      width: 100%;
+      aspect-ratio: 288 / 275;
+      overflow: hidden;
+      flex-shrink: 0;
+
+      img {
+        width: 115%;
+        height: 115%;
+        object-fit: cover;
+      }
+    }
+
+    .number,
+    &-content {
+      flex-shrink: 0;
+    }
+    .number {
+      position: absolute;
+      top: 0;
+      transform: translateY(-50%);
+    }
+    &-content {
+      background-color: var(--color-green-med);
+      padding: 40px 32px 32px;
+      position: relative;
+      .name {
+        color: var(--color-white);
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 1.4;
+        font-weight: bold;
+        letter-spacing: 0.2rem;
+        min-height: 40px;
+        margin-bottom: 12px;
+      }
+      .desc {
+        font-size: 14px;
+        line-height: 22.4px;
+        color: var(--color-white);
+      }
+    }
+  }
+}
