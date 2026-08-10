@@ -21,6 +21,7 @@
 //   // ... hoặc dùng CSS counter nếu muốn hoàn toàn tự động
 // }
 // style text gradient
+
 .txt-gradient {
   .line {
     background: linear-gradient(
@@ -39,6 +40,8 @@
     color: transparent;
     -webkit-text-fill-color: transparent;
     animation: shine 10s linear infinite;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
   }
 }
 @keyframes shine {
@@ -84,5 +87,26 @@
     height: 100%;
     object-fit: cover;
     will-change: transform;
+  }
+}
+.swiper-story img {
+  transform: scale(1);
+  transform-origin: center center;
+  will-change: transform; /* để layer được tạo sẵn TỪ ĐẦU, không phải lúc animation bắt đầu */
+  backface-visibility: hidden; /* ép GPU rendering, giảm giật ở Safari/iOS */
+}
+
+img.kb-zoom {
+  animation-name: kbZoom;
+  animation-timing-function: linear; /* dùng linear thay vì ease-out để mượt tuyệt đối, không có điểm "giật tốc" ở đầu */
+  animation-fill-mode: forwards;
+}
+
+@keyframes kbZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
   }
 }

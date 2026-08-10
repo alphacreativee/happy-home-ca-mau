@@ -7,6 +7,7 @@ export function bannerSlide() {
 
   storyEls.forEach((storyEl) => {
     const paginationEl = storyEl.querySelector(".swiper-pagination");
+    let started = false; // cờ đánh dấu đã chạy chưa
 
     const swiperHero = new Swiper(storyEl, {
       effect: "fade",
@@ -28,7 +29,6 @@ export function bannerSlide() {
       on: {
         init(swiper) {
           updateProgress(swiper, 0);
-          // Không chạy zoom/autoplay ngay, chờ vào viewport
           swiper.autoplay.stop();
         },
         slideChange(swiper) {
@@ -42,22 +42,20 @@ export function bannerSlide() {
       },
     });
 
-    // ----- Quan sát viewport -----
+    // ----- Quan sát viewport (chỉ chạy 1 lần) -----
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !started) {
+            started = true;
             swiperHero.autoplay.start();
             runZoom(swiperHero);
-          } else {
-            swiperHero.autoplay.stop();
-            // reset ảnh để lần sau vào lại chạy zoom từ đầu
-            resetAllImages(swiperHero);
+            observer.unobserve(storyEl); // không cần theo dõi nữa
           }
         });
       },
       {
-        threshold: 0.3, // 30% swiper hiện ra là bắt đầu chạy, chỉnh tùy ý
+        threshold: 0.3,
       },
     );
 

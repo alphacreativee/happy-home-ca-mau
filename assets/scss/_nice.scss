@@ -1,0 +1,32 @@
+.nice {
+  &-top {
+    background: url("../../images/del/bg-re-cay.png") var(--color-red-light);
+    padding: 120px 0;
+    &-img {
+      margin-bottom: var(--space-80);
+    }
+    &-title {
+      margin-bottom: var(--space-32);
+    }
+    &-desc {
+      max-width: 50%;
+      text-align: center;
+    }
+  }
+  &-main {
+    position: relative;
+  }
+  &-content {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+    z-index: 3;
+    max-width: 425px;
+    padding: 40px;
+    background-color: var(--bgc);
+    color: var(--color-text);
+    .desc {
+      margin-top: var(--space-24);
+    }
+  }
+}

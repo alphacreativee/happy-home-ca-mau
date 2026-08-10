@@ -999,6 +999,8 @@ body {
   color: transparent;
   -webkit-text-fill-color: transparent;
   animation: shine 10s linear infinite;
+  padding-right: 0.2em;
+  padding-left: 0.2em;
 }
 
 @keyframes shine {
@@ -1045,6 +1047,27 @@ body {
   will-change: transform;
 }
 
+.swiper-story img {
+  transform: scale(1);
+  transform-origin: center center;
+  will-change: transform; /* để layer được tạo sẵn TỪ ĐẦU, không phải lúc animation bắt đầu */
+  backface-visibility: hidden; /* ép GPU rendering, giảm giật ở Safari/iOS */
+}
+
+img.kb-zoom {
+  animation-name: kbZoom;
+  animation-timing-function: linear; /* dùng linear thay vì ease-out để mượt tuyệt đối, không có điểm "giật tốc" ở đầu */
+  animation-fill-mode: forwards;
+}
+
+@keyframes kbZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
 .lightpick {
   --color-stroke: #ccc;
   --color-bg: #fff;
@@ -1797,4 +1820,35 @@ body {
   bottom: 80px;
   letter-spacing: 0.2rem;
   z-index: 2;
+}
+
+.nice-top {
+  background: url("../../images/del/bg-re-cay.png") var(--color-red-light);
+  padding: 120px 0;
+}
+.nice-top-img {
+  margin-bottom: var(--space-80);
+}
+.nice-top-title {
+  margin-bottom: var(--space-32);
+}
+.nice-top-desc {
+  max-width: 50%;
+  text-align: center;
+}
+.nice-main {
+  position: relative;
+}
+.nice-content {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  z-index: 3;
+  max-width: 425px;
+  padding: 40px;
+  background-color: var(--bgc);
+  color: var(--color-text);
+}
+.nice-content .desc {
+  margin-top: var(--space-24);
 }
