@@ -1891,3 +1891,28 @@ img.kb-zoom {
 .proud-box h3 {
   margin-bottom: var(--space-32);
 }
+.proud-partner {
+  padding: 200px 0;
+}
+.proud-partner-title {
+  margin-bottom: 80px;
+}
+.proud-partner-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.proud-partner-item {
+  border-bottom: 1px solid var(--color-gold-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: var(--space-24);
+}
+.proud-partner-item .name {
+  text-align: center;
+}
