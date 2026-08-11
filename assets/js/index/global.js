@@ -496,3 +496,61 @@ export function mousetail() {
     }
   }
 }
+export function animationFooter() {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  const footer = document.querySelector(".footer-container");
+  if (!footer) return;
+  if (footer.dataset.scriptInitialized) return;
+  footer.dataset.scriptInitialized = "true";
+
+  // ----- Logo: fade + trượt nhẹ lên -----
+  const logos = footer.querySelectorAll(
+    ".footer-logo-big, .footer-logo .logo-simple",
+  );
+
+  gsap.set(logos, { opacity: 0, y: 30 });
+
+  gsap.to(logos, {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: "power2.out",
+    stagger: 0.15,
+    scrollTrigger: {
+      trigger: footer,
+      start: "top 85%",
+      toggleActions: "play none none none",
+      markers: true,
+    },
+  });
+
+  // ----- Text: hiệu ứng line (split theo dòng, trượt lên) -----
+  document.fonts.ready.then(() => {
+    const textEls = footer.querySelectorAll(
+      ".address .label, .address .desc, .hotline .label, .hotline a, .footer-menu ul li a, .footer-terms ul li a, .copy-right p, .footer-author a",
+    );
+    if (!textEls.length) return;
+
+    const splitTexts = SplitText.create(textEls, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "line",
+    });
+
+    gsap.set(splitTexts.lines, { yPercent: 100 });
+
+    gsap.to(splitTexts.lines, {
+      yPercent: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      stagger: 0.03,
+      scrollTrigger: {
+        trigger: footer,
+        start: "top 85%",
+        toggleActions: "play none none none",
+        // markers: true,
+      },
+    });
+  });
+}

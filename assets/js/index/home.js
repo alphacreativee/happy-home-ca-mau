@@ -362,13 +362,17 @@ function animationReveal() {
     gsap.set(images, { yPercent: `-${percentParallax}` });
     if (footer) gsap.set(footer, { yPercent: 100 });
 
-    const FOOTER_REVEAL = 1; // thêm 1 màn hình scroll dành cho footer trượt lên
+    const FOOTER_REVEAL = 1; // độ dài (đơn vị timeline) để footer trượt lên hết
+    const FOOTER_DELAY = 1; // trễ thêm bao nhiêu đơn vị trước khi footer bắt đầu chạy
+
+    // Tổng đơn vị timeline thật = số item + delay + đoạn footer chạy
+    const totalUnits = items.length + FOOTER_DELAY + FOOTER_REVEAL;
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top top",
-        end: `+=${(items.length + 1 + FOOTER_REVEAL) * 100}%`,
+        start: "top top", // section pin đúng tại top top, không dịch chuyển
+        end: `+=${totalUnits * 100}%`,
         pin: true,
         scrub: 1,
         // markers: true,
@@ -379,7 +383,6 @@ function animationReveal() {
           }
         },
         onEnter: () => {
-          // Vào vùng pin -> gắn footer fixed theo viewport
           if (footer) {
             gsap.set(footer, {
               position: "fixed",
@@ -390,21 +393,13 @@ function animationReveal() {
           }
         },
         onLeaveBack: () => {
-          // Cuộn ngược lên trên, ra khỏi vùng pin -> trả footer về flow bình thường
-          // (an toàn vì lúc này footer đang yPercent: 100, ẩn hoàn toàn, không gây nhảy vị trí)
           if (footer) {
-            gsap.set(footer, {
-              clearProps: "position,left,bottom,width",
-            });
+            gsap.set(footer, { clearProps: "position,left,bottom,width" });
           }
           if (header) {
             header.classList.remove("header-text-light");
           }
         },
-        // Không cần onLeave / onEnterBack cho footer nữa —
-        // vì footer là phần tử cuối trang, giữ fixed vĩnh viễn sau khi
-        // đã pin qua 1 lần là đủ, tránh hiện tượng nhảy/giật khi chuyển
-        // fixed -> relative giữa lúc đang hiển thị.
       },
     });
 
@@ -418,47 +413,68 @@ function animationReveal() {
       if (img) {
         tl.to(
           img,
-          {
-            yPercent: percentParallax,
-            duration: 1,
-            ease: "power2.out",
-          },
+          { yPercent: percentParallax, duration: 1, ease: "power2.out" },
           pos,
         );
       }
     });
 
-    // ----- Footer trượt lên đè phủ section, ngay sau item cuối -----
+    // ----- Footer trượt lên đè phủ section, sau khi trễ FOOTER_DELAY -----
     if (footer) {
       tl.to(
         footer,
         {
           yPercent: 0,
-          duration: 1,
+          duration: FOOTER_REVEAL,
           ease: "power2.out",
-          if(footer) {
-            tl.to(
-              footer,
-              {
-                yPercent: 0,
-                duration: 1,
-                ease: "power2.out",
-                onStart: () => {
-                  section.classList.add("hide-title");
-                  console.log("hide-title added", section);
-                },
-                onReverseComplete: () => {
-                  section.classList.remove("hide-title");
-                  console.log("hide-title removed", section);
-                },
-              },
-              items.length + 0.4,
-            );
+          onStart: () => {
+            section.classList.add("hide-title");
+            animateFooterContent(footer);
+          },
+          onReverseComplete: () => {
+            section.classList.remove("hide-title");
           },
         },
-        items.length,
+        items.length + FOOTER_DELAY, // bắt đầu trễ đúng FOOTER_DELAY sau item cuối
       );
     }
+  });
+}
+
+function animateFooterContent(footer) {
+  if (footer.dataset.contentAnimated) return;
+  footer.dataset.contentAnimated = "true";
+
+  const logos = footer.querySelectorAll(
+    ".footer-logo-big, .footer-logo .logo-simple",
+  );
+  gsap.set(logos, { opacity: 0, y: 30 });
+  gsap.to(logos, {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: "power2.out",
+    stagger: 0.15,
+  });
+
+  document.fonts.ready.then(() => {
+    const textEls = footer.querySelectorAll(
+      ".address .label, .address .desc, .hotline .label, .hotline a, .footer-menu ul li a, .footer-terms ul li a, .copy-right p, .footer-author a",
+    );
+    if (!textEls.length) return;
+
+    const splitTexts = SplitText.create(textEls, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "line",
+    });
+    gsap.set(splitTexts.lines, { yPercent: 100 });
+    gsap.to(splitTexts.lines, {
+      yPercent: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      stagger: 0.03,
+    });
   });
 }
 function revealImageParallax() {

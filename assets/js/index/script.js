@@ -8,6 +8,7 @@ import {
   imageParallax,
   mousetail,
   animationFade,
+  animationFooter,
 } from "../../main/js/global.min.js";
 
 const $ = jQuery;
@@ -85,6 +86,7 @@ function init() {
   mousetail();
   animationFade();
   animationText();
+  // animationFooter();
   ScrollTrigger.refresh();
 }
 
