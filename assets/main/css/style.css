@@ -1986,6 +1986,10 @@ img.kb-zoom {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.proud-logo {
+  margin-left: auto;
+  margin-right: auto;
+}
 .proud-image {
   width: 100%;
 }
@@ -2006,14 +2010,17 @@ img.kb-zoom {
   object-position: right;
 }
 .proud-box {
-  align-items: center;
-  gap: 120px;
+  gap: 180px;
   justify-content: space-between;
   height: 100%;
   padding: 80px;
 }
 .proud-box h3 {
   margin-bottom: var(--space-32);
+}
+.proud .desc {
+  max-width: 65%;
+  width: 100%;
 }
 .proud-partner {
   padding: 200px 0;
@@ -2087,7 +2094,8 @@ img.kb-zoom {
   transform: translateX(-50%);
   z-index: 5;
   transition: all 0.4s ease;
-  max-width: max-content;
+  max-width: 1000px;
+  width: 100%;
 }
 .reveal-slider {
   position: absolute;
@@ -2141,8 +2149,15 @@ img.kb-zoom {
 }
 .reveal-item-content .desc {
   font-size: 14px;
-  line-height: 22.4px;
+  line-height: 22px;
   color: var(--color-white);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  min-height: 44px;
 }
 
 #footer {

@@ -6,6 +6,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
+  &-logo {
+    margin-left: auto;
+    margin-right: auto;
+  }
   &-image {
     width: 100%;
     @media (max-width: 1440px) {
@@ -22,8 +26,7 @@
     }
   }
   &-box {
-    align-items: center;
-    gap: 120px;
+    gap: 180px;
     justify-content: space-between;
     height: 100%;
     padding: 80px;
@@ -32,7 +35,8 @@
     }
   }
   .desc {
-    // max-width: 80%;
+    max-width: 65%;
+    width: 100%;
   }
   &-partner {
     padding: 200px 0;
