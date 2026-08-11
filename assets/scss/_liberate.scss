@@ -1,6 +1,11 @@
 .liberate {
   position: relative;
   background-color: var(--color-brown-med);
+  &-content {
+    .content {
+      text-align: center;
+    }
+  }
 }
 .liberate-wrap {
   margin-top: -120vh; /* hoặc -80vh, -90vh tùy thiết kế */
@@ -80,9 +85,12 @@
   &--reverse {
     .liberate-box-list {
       grid-column: 1 / 2;
+      grid-row: 1 / 2;
     }
     .liberate-content {
       background-position: bottom right;
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
     }
   }
 }

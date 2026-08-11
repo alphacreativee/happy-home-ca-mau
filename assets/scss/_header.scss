@@ -25,6 +25,11 @@
         background-color: var(--color-brown-dark);
       }
     }
+    .hover-underline-white {
+      &::before {
+        background-color: var(--color-brown-dark);
+      }
+    }
   }
   &.header-text-light {
     .header-name,
@@ -32,7 +37,11 @@
     .header-right .phone {
       color: var(--color-white);
     }
-
+    .hover-underline-white {
+      &::before {
+        background-color: var(--color-white);
+      }
+    }
     .header-ham {
       span {
         background-color: var(--color-white);
