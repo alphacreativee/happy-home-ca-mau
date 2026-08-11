@@ -7,6 +7,10 @@
   &-image {
     width: 100%;
     aspect-ratio: 1440 / 900;
+    @media (max-width: 991px) {
+      aspect-ratio: unset;
+      height: 100vh;
+    }
   }
   &-content {
     position: absolute;

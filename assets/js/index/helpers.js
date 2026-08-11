@@ -634,12 +634,16 @@ export function missionSection() {
   const section = document.querySelector(".mission");
   const items = document.querySelectorAll(".mission-visual-item");
   const header = document.getElementById("header");
-
+  const cols = document.querySelectorAll(".mission-col");
   if (!section || items.length === 0) return;
 
   let activeIndex = 0;
   let isAnimating = false;
   const splitInstances = [];
+
+  const bgYSetters = Array.from(cols).map((col) =>
+    gsap.quickSetter(col, "backgroundPositionY", "%"),
+  );
 
   items.forEach((item, index) => {
     const img = item.querySelector(".mission-visual-img img");
@@ -728,6 +732,7 @@ export function missionSection() {
     end: `+=${extraScroll}`,
     pin: true,
     pinSpacing: true,
+    scrub: true, // đảm bảo mượt theo tốc độ cuộn thật
     onEnter: () => header?.classList.add("header-text-light"),
     onEnterBack: () => header?.classList.add("header-text-light"),
     onUpdate: (self) => {
@@ -746,6 +751,10 @@ export function missionSection() {
           isAnimating = false;
         });
       }
+
+      // background chạy theo % tiến trình cuộn (0 -> 100)
+      const bgY = self.progress * 100;
+      bgYSetters.forEach((setter) => setter(bgY));
     },
   });
 }

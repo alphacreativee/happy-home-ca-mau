@@ -55,6 +55,12 @@
   font-size: 63px;
   line-height: 1.5;
 }
+@media (max-width: 991px) {
+  .heading-1 {
+    font-size: 36px;
+    line-height: 48px;
+  }
+}
 
 .heading-2 {
   font-size: 24px;
@@ -1271,6 +1277,10 @@ img.kb-zoom {
   height: 100%;
   object-fit: cover;
 }
+.hero .swiper-hero .hero-slider-img {
+  width: 100%;
+  height: 100%;
+}
 .hero .swiper-hero .swiper-slide {
   overflow: hidden;
 }
@@ -1329,6 +1339,13 @@ img.kb-zoom {
   left: 50%;
   transform: translate(-50%, 0%);
   z-index: 2;
+  text-align: center;
+}
+@media (max-width: 991px) {
+  .hero-heading {
+    max-width: calc(100% - 80px);
+    width: 100%;
+  }
 }
 
 @keyframes kenBurnsZoom {
@@ -1359,6 +1376,11 @@ img.kb-zoom {
   padding-left: var(--space-20);
   padding-top: var(--space-72);
 }
+@media (max-width: 991px) {
+  .growth-inner {
+    padding: var(--space-40) var(--space-20);
+  }
+}
 .growth-top {
   margin-bottom: var(--space-72);
 }
@@ -1366,13 +1388,28 @@ img.kb-zoom {
   max-width: 65%;
   margin-bottom: 64px;
 }
+@media (max-width: 991px) {
+  .growth-top-title {
+    max-width: 100%;
+  }
+}
 .growth-top-desc {
   max-width: 50%;
+}
+@media (max-width: 991px) {
+  .growth-top-desc {
+    max-width: 100%;
+  }
 }
 .growth-main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
+}
+@media (max-width: 991px) {
+  .growth-main {
+    grid-template-columns: 1fr;
+  }
 }
 .growth-main-title {
   margin-bottom: var(--space-72);
@@ -1380,10 +1417,20 @@ img.kb-zoom {
 .growth-main-desc {
   max-width: 60%;
 }
+@media (max-width: 991px) {
+  .growth-main-desc {
+    max-width: 100%;
+  }
+}
 .growth-main-left {
   display: flex;
   flex-direction: column;
   gap: 140px;
+}
+@media (max-width: 991px) {
+  .growth-main-left {
+    gap: 40px;
+  }
 }
 .growth-main-left .image {
   width: 330px;
@@ -1403,6 +1450,12 @@ img.kb-zoom {
 .golf-image {
   width: 100%;
   aspect-ratio: 1440/900;
+}
+@media (max-width: 991px) {
+  .golf-image {
+    aspect-ratio: unset;
+    height: 100vh;
+  }
 }
 .golf-content {
   position: absolute;
@@ -1577,7 +1630,8 @@ img.kb-zoom {
 .mission-col {
   height: 100svh;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
-  background-position: right;
+  background-size: 150% 150%;
+  background-position: right 0%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1855,11 +1909,15 @@ img.kb-zoom {
   height: 100%;
 }
 .liberate-box .image {
+  position: relative;
   height: 100%;
+  overflow: hidden;
 }
 .liberate-box .image img {
+  position: absolute;
+  inset: 0;
   width: 115%;
-  height: 115%;
+  height: 120%;
   object-fit: cover;
   display: block;
 }
@@ -2010,6 +2068,7 @@ img.kb-zoom {
   transform: translateX(-50%);
   z-index: 5;
   transition: all 0.4s ease;
+  max-width: max-content;
 }
 .reveal-slider {
   position: absolute;

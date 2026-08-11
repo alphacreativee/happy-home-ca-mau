@@ -15,7 +15,8 @@
   &-col {
     height: 100svh; // ép cứng đúng 1 viewport, không ăn theo .mission-inner
     background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
-    background-position: right;
+    background-size: 150% 150%;
+    background-position: right 0%;
     display: flex;
     align-items: center;
     justify-content: center;

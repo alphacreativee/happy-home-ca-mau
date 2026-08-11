@@ -8,31 +8,49 @@
   &-inner {
     padding-left: var(--space-20);
     padding-top: var(--space-72);
+    @media (max-width: 991px) {
+      padding: var(--space-40) var(--space-20);
+    }
   }
   &-top {
     margin-bottom: var(--space-72);
     &-title {
       max-width: 65%;
       margin-bottom: 64px;
+      @media (max-width: 991px) {
+        max-width: 100%;
+      }
     }
     &-desc {
       max-width: 50%;
+      @media (max-width: 991px) {
+        max-width: 100%;
+      }
     }
   }
   &-main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
+    @media (max-width: 991px) {
+      grid-template-columns: 1fr;
+    }
     &-title {
       margin-bottom: var(--space-72);
     }
     &-desc {
       max-width: 60%;
+      @media (max-width: 991px) {
+        max-width: 100%;
+      }
     }
     &-left {
       display: flex;
       flex-direction: column;
       gap: 140px;
+      @media (max-width: 991px) {
+        gap: 40px;
+      }
       .image {
         width: 330px;
         aspect-ratio: 330 / 378;

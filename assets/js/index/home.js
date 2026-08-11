@@ -89,16 +89,15 @@ function initLiberateScroll() {
     const images = wrap.querySelectorAll(".liberate-box .image img");
 
     master.addLabel(`item${i}`, i);
-
     master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
 
     if (box2) {
       master.to(box2, { yPercent: 0, ease: "none", duration: 0.5 }, i + 0.5);
     }
 
-    // Parallax nhẹ cho ảnh bên trong, chạy song song lúc wrap trượt lên
     if (images.length) {
-      gsap.set(images, { yPercent: `${PARALLAX_PERCENT}` });
+      // set ngay lập tức, đồng bộ - không đợi timeline build xong
+      gsap.set(images, { yPercent: PARALLAX_PERCENT });
       master.to(
         images,
         { yPercent: -PARALLAX_PERCENT, ease: "none", duration: 1 },

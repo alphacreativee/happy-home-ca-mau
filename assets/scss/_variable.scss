@@ -60,6 +60,10 @@
 .heading-1 {
   font-size: 63px;
   line-height: 1.5;
+  @media (max-width: 991px) {
+    font-size: 36px;
+    line-height: 48px;
+  }
 }
 .heading-2 {
   font-size: 24px;
