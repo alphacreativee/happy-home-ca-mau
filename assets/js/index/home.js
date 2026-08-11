@@ -65,7 +65,8 @@ function initLiberateScroll() {
     invalidateOnRefresh: true,
   });
 
-  const scrollDistance = (wraps.length + 2) * window.innerHeight;
+  const scrollDistance =
+    (wraps.length + (wraps.length - 1)) * window.innerHeight;
 
   // ----- Timeline chính: pin toàn bộ list, cho từng item trượt lên -----
   const master = gsap.timeline({
@@ -360,26 +361,33 @@ function animationReveal() {
     // ----- Trạng thái ban đầu -----
     gsap.set(items, { y: "100%" });
     gsap.set(images, { yPercent: `-${percentParallax}` });
-    if (footer) gsap.set(footer, { yPercent: 100 });
+    if (footer) {
+      gsap.set(footer, { yPercent: 100 });
+      initFooterContent(footer); // ẩn logo/text ngay từ đầu
+    }
 
-    const FOOTER_REVEAL = 1; // độ dài (đơn vị timeline) để footer trượt lên hết
-    const FOOTER_DELAY = 1; // trễ thêm bao nhiêu đơn vị trước khi footer bắt đầu chạy
+    const FOOTER_REVEAL = 1;
+    const FOOTER_DELAY = 1;
 
-    // Tổng đơn vị timeline thật = số item + delay + đoạn footer chạy
     const totalUnits = items.length + FOOTER_DELAY + FOOTER_REVEAL;
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top top", // section pin đúng tại top top, không dịch chuyển
+        start: "top top",
         end: `+=${totalUnits * 100}%`,
         pin: true,
         scrub: 1,
-        // markers: true,
         onUpdate: (self) => {
           section.classList.toggle("show-bg", self.progress >= 0.1);
           if (header) {
             header.classList.toggle("header-text-light", self.progress >= 0);
+          }
+          if (footer) {
+            const rect = footer.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.3) {
+              animateFooterContent(footer); // <-- gọi hàm ANIMATE, không phải init
+            }
           }
         },
         onEnter: () => {
@@ -403,7 +411,6 @@ function animationReveal() {
       },
     });
 
-    // ----- Reveal từng item -----
     items.forEach((item, index) => {
       const img = images[index];
       const pos = index;
@@ -419,28 +426,60 @@ function animationReveal() {
       }
     });
 
-    // ----- Footer trượt lên đè phủ section, sau khi trễ FOOTER_DELAY -----
     if (footer) {
       tl.to(
         footer,
         {
           yPercent: 0,
           duration: FOOTER_REVEAL,
-          ease: "power2.out",
+          ease: "none",
           onStart: () => {
             section.classList.add("hide-title");
-            animateFooterContent(footer);
           },
           onReverseComplete: () => {
             section.classList.remove("hide-title");
           },
         },
-        items.length + FOOTER_DELAY, // bắt đầu trễ đúng FOOTER_DELAY sau item cuối
+        items.length + FOOTER_DELAY,
       );
     }
   });
 }
 
+// ----- Ẩn logo + text ngay khi trang load, tránh flash -----
+function initFooterContent(footer) {
+  if (footer.dataset.contentInitialized) return;
+  footer.dataset.contentInitialized = "true";
+
+  const logos = footer.querySelectorAll(
+    ".footer-logo-big, .footer-logo .logo-simple",
+  );
+  gsap.set(logos, { opacity: 0, y: 30 });
+
+  const textEls = footer.querySelectorAll(
+    ".address .label, .address .desc, .hotline .label, .hotline a, .footer-menu ul li a, .footer-terms ul li a, .copy-right p, .footer-author a",
+  );
+
+  if (textEls.length) {
+    gsap.set(textEls, { opacity: 0 });
+  }
+
+  document.fonts.ready.then(() => {
+    if (!textEls.length) return;
+
+    const splitTexts = SplitText.create(textEls, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "line",
+    });
+    footer._splitTexts = splitTexts;
+
+    gsap.set(splitTexts.lines, { yPercent: 100 });
+    gsap.set(textEls, { opacity: 1 });
+  });
+}
+
+// ----- Chạy animation hiện logo + text khi cuộn tới ngưỡng -----
 function animateFooterContent(footer) {
   if (footer.dataset.contentAnimated) return;
   footer.dataset.contentAnimated = "true";
@@ -448,7 +487,6 @@ function animateFooterContent(footer) {
   const logos = footer.querySelectorAll(
     ".footer-logo-big, .footer-logo .logo-simple",
   );
-  gsap.set(logos, { opacity: 0, y: 30 });
   gsap.to(logos, {
     opacity: 1,
     y: 0,
@@ -458,17 +496,9 @@ function animateFooterContent(footer) {
   });
 
   document.fonts.ready.then(() => {
-    const textEls = footer.querySelectorAll(
-      ".address .label, .address .desc, .hotline .label, .hotline a, .footer-menu ul li a, .footer-terms ul li a, .copy-right p, .footer-author a",
-    );
-    if (!textEls.length) return;
+    const splitTexts = footer._splitTexts;
+    if (!splitTexts || !splitTexts.lines?.length) return;
 
-    const splitTexts = SplitText.create(textEls, {
-      type: "lines",
-      mask: "lines",
-      linesClass: "line",
-    });
-    gsap.set(splitTexts.lines, { yPercent: 100 });
     gsap.to(splitTexts.lines, {
       yPercent: 0,
       duration: 0.8,
@@ -477,6 +507,7 @@ function animateFooterContent(footer) {
     });
   });
 }
+
 function revealImageParallax() {
   document.querySelectorAll(".reveal").forEach((section) => {
     const bgImg = section.querySelector(".reveal-image>img");
