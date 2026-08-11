@@ -81,8 +81,11 @@ function initLiberateScroll() {
     },
   });
 
+  const PARALLAX_PERCENT = 10; // ~5-7%, chỉnh trong khoảng này tuỳ ý
+
   wraps.forEach((wrap, i) => {
     const [, box2] = wrap.querySelectorAll(".liberate-box-item");
+    const images = wrap.querySelectorAll(".liberate-box .image img");
 
     master.addLabel(`item${i}`, i);
 
@@ -90,6 +93,16 @@ function initLiberateScroll() {
 
     if (box2) {
       master.to(box2, { yPercent: 0, ease: "none", duration: 0.5 }, i + 0.5);
+    }
+
+    // Parallax nhẹ cho ảnh bên trong, chạy song song lúc wrap trượt lên
+    if (images.length) {
+      gsap.set(images, { yPercent: `${PARALLAX_PERCENT}` });
+      master.to(
+        images,
+        { yPercent: -PARALLAX_PERCENT, ease: "none", duration: 1 },
+        i,
+      );
     }
   });
 
