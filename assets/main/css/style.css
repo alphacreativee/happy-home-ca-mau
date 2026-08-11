@@ -1965,8 +1965,8 @@ img.kb-zoom {
 }
 .nice-content {
   position: absolute;
-  right: 40px;
-  bottom: 40px;
+  right: 20px;
+  bottom: 60px;
   z-index: 3;
   max-width: 425px;
   padding: 60px;
