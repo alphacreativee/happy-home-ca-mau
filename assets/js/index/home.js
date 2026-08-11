@@ -23,6 +23,146 @@ gsap.ticker.add((time) => {
 });
 
 gsap.ticker.lagSmoothing(0);
+// function initLiberateScroll() {
+//   gsap.registerPlugin(ScrollTrigger, SplitText);
+
+//   const pinSection = document.querySelector(".liberate-pin");
+//   const wrapSection = document.querySelector(".liberate-wrap");
+//   const list = document.querySelector(".liberate-list");
+//   const wraps = gsap.utils.toArray(".liberate-item-wrap");
+//   const nextSection = document.querySelector(".spacer"); // section đè lên
+
+//   if (!pinSection || !wrapSection || !list || wraps.length === 0) {
+//     console.warn("Liberate scroll: thiếu phần tử");
+//     return;
+//   }
+
+//   gsap.set(pinSection, { position: "relative", zIndex: 1 });
+//   gsap.set(wrapSection, { position: "relative", zIndex: 2 });
+
+//   if (nextSection) {
+//     gsap.set(nextSection, {
+//       position: "relative",
+//       zIndex: 3,
+//       yPercent: 0,
+//     });
+//   }
+
+//   wraps.forEach((wrap) => {
+//     const [, box2] = wrap.querySelectorAll(".liberate-box-item");
+//     gsap.set(wrap, { yPercent: 100 });
+//     if (box2) gsap.set(box2, { yPercent: -100 });
+//   });
+
+//   // ----- Pin panel-top dưới list -----
+//   ScrollTrigger.create({
+//     trigger: pinSection,
+//     start: "top top",
+//     endTrigger: wrapSection,
+//     end: "top top-=250", // nhả pin sớm hơn 200px so với lúc wrapSection chạm top
+//     pin: true,
+//     pinSpacing: false,
+//     invalidateOnRefresh: true,
+//   });
+
+//   const scrollDistance =
+//     (wraps.length + (wraps.length - 1)) * window.innerHeight;
+
+//   // ----- Timeline chính: pin toàn bộ list, cho từng item trượt lên -----
+//   const master = gsap.timeline({
+//     scrollTrigger: {
+//       trigger: wrapSection,
+//       start: "top top",
+//       end: `+=${scrollDistance}`,
+//       scrub: true,
+//       pin: true,
+//       pinSpacing: true,
+//       anticipatePin: 1,
+//       invalidateOnRefresh: true,
+//     },
+//   });
+
+//   const PARALLAX_PERCENT = 10; // ~5-7%, chỉnh trong khoảng này tuỳ ý
+
+//   wraps.forEach((wrap, i) => {
+//     const [, box2] = wrap.querySelectorAll(".liberate-box-item");
+//     const images = wrap.querySelectorAll(".liberate-box .image img");
+
+//     master.addLabel(`item${i}`, i);
+//     master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
+
+//     if (box2) {
+//       master.to(box2, { yPercent: 0, ease: "none", duration: 0.5 }, i + 0.5);
+//     }
+
+//     if (images.length) {
+//       // set ngay lập tức, đồng bộ - không đợi timeline build xong
+//       gsap.set(images, { yPercent: PARALLAX_PERCENT });
+//       master.to(
+//         images,
+//         { yPercent: -PARALLAX_PERCENT, ease: "none", duration: 1 },
+//         i,
+//       );
+//     }
+//   });
+
+//   master.addLabel("end", wraps.length);
+//   master.to({}, { duration: 0.8 });
+
+//   ScrollTrigger.refresh();
+
+//   // ----- Text animation riêng cho từng item, chạy trễ hơn card 1 xíu -----
+//   document.fonts.ready.then(() => {
+//     const DELAY = 0.3; // trễ hơn 0.3 đơn vị timeline so với lúc card bắt đầu lên
+
+//     wraps.forEach((wrap, i) => {
+//       const el = wrap.querySelector(".liberate-content .content");
+//       if (!el) return;
+
+//       const splitTitle = SplitText.create(el, {
+//         type: "lines",
+//         mask: "lines",
+//         linesClass: "line",
+//       });
+
+//       gsap.set(splitTitle.lines, { yPercent: 100 });
+
+//       const startLabel = `item${i}`;
+//       const endLabel = i + 1 < wraps.length ? `item${i + 1}` : "end";
+
+//       ScrollTrigger.create({
+//         start: () =>
+//           master.scrollTrigger.labelToScroll(startLabel) +
+//           DELAY *
+//             ((master.scrollTrigger.end - master.scrollTrigger.start) /
+//               wraps.length),
+//         end: () => master.scrollTrigger.labelToScroll(endLabel),
+//         toggleActions: "play none none reverse",
+//         // markers: true,
+//         onEnter: () => {
+//           gsap.to(splitTitle.lines, {
+//             yPercent: 0,
+//             duration: 0.8,
+//             ease: "power3.inOut",
+//             stagger: 0.05,
+//             overwrite: "auto",
+//           });
+//         },
+//         onLeaveBack: () => {
+//           gsap.to(splitTitle.lines, {
+//             yPercent: 100,
+//             duration: 0.5,
+//             ease: "power3.inOut",
+//             stagger: 0.05,
+//             overwrite: "auto",
+//           });
+//         },
+//       });
+//     });
+
+//     ScrollTrigger.refresh();
+//   });
+// }
 function initLiberateScroll() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -83,10 +223,12 @@ function initLiberateScroll() {
   });
 
   const PARALLAX_PERCENT = 10; // ~5-7%, chỉnh trong khoảng này tuỳ ý
+  const BG_PARALLAX_PERCENT = 15; // biên độ riêng cho background-image, chỉnh tuỳ ý
 
   wraps.forEach((wrap, i) => {
     const [, box2] = wrap.querySelectorAll(".liberate-box-item");
     const images = wrap.querySelectorAll(".liberate-box .image img");
+    const contentEl = wrap.querySelector(".liberate-content");
 
     master.addLabel(`item${i}`, i);
     master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
@@ -101,6 +243,19 @@ function initLiberateScroll() {
       master.to(
         images,
         { yPercent: -PARALLAX_PERCENT, ease: "none", duration: 1 },
+        i,
+      );
+    }
+
+    if (contentEl) {
+      gsap.set(contentEl, { backgroundPositionY: "0%" });
+      master.to(
+        contentEl,
+        {
+          backgroundPositionY: `${BG_PARALLAX_PERCENT}%`,
+          ease: "none",
+          duration: 1,
+        },
         i,
       );
     }
