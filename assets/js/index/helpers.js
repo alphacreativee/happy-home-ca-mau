@@ -1,4 +1,114 @@
+// export function bannerSlide() {
+//   const storyEls = document.querySelectorAll(".swiper-story");
+//   if (!storyEls.length) return;
+
+//   const SCALE_DURATION = 4000;
+//   const FADE_SPEED = 1000;
+
+//   storyEls.forEach((storyEl) => {
+//     const paginationEl = storyEl.querySelector(".swiper-pagination");
+//     let started = false; // cờ đánh dấu đã chạy chưa
+
+//     const swiperHero = new Swiper(storyEl, {
+//       effect: "fade",
+//       fadeEffect: { crossFade: true },
+//       speed: FADE_SPEED,
+//       loop: true,
+//       simulateTouch: false,
+//       autoplay: {
+//         delay: SCALE_DURATION,
+//         disableOnInteraction: false,
+//         waitForTransition: false,
+//       },
+//       pagination: {
+//         el: paginationEl,
+//         clickable: true,
+//         renderBullet: function (index, className) {
+//           return `<span class="${className}"><div class="progress"></div></span>`;
+//         },
+//       },
+//       on: {
+//         init(swiper) {
+//           updateProgress(swiper, 0);
+//           swiper.autoplay.stop();
+//         },
+//         slideChange(swiper) {
+//           updateProgress(swiper, 0);
+//           runZoom(swiper);
+//         },
+//         autoplayTimeLeft(swiper, timeLeft, percentage) {
+//           const progress = 1 - percentage;
+//           updateProgress(swiper, progress);
+//         },
+//       },
+//     });
+
+//     // ----- Quan sát viewport (chỉ chạy 1 lần) -----
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         entries.forEach((entry) => {
+//           if (entry.isIntersecting && !started) {
+//             started = true;
+//             swiperHero.autoplay.start();
+//             runZoom(swiperHero);
+//             observer.unobserve(storyEl); // không cần theo dõi nữa
+//           }
+//         });
+//       },
+//       {
+//         threshold: 0.3,
+//       },
+//     );
+
+//     observer.observe(storyEl);
+//   });
+
+//   function updateProgress(swiper, progressValue) {
+//     const realIndex = swiper.realIndex;
+//     const bullets = swiper.pagination.bullets;
+
+//     bullets.forEach((bullet, index) => {
+//       const progressEl = bullet.querySelector(".progress");
+//       if (!progressEl) return;
+
+//       progressEl.classList.remove("is-active");
+//       progressEl.style.animation = "none";
+
+//       if (index < realIndex) {
+//         progressEl.style.width = "100%";
+//       } else if (index === realIndex) {
+//         progressEl.style.width = `${Math.min(progressValue * 100, 100)}%`;
+//       } else {
+//         progressEl.style.width = "0%";
+//       }
+//     });
+//   }
+
+//   function resetAllImages(swiper) {
+//     swiper.slides.forEach((slide) => {
+//       const img = slide.querySelector("img");
+//       if (img) {
+//         img.classList.remove("kb-zoom");
+//         img.style.animationDuration = "";
+//       }
+//     });
+//   }
+
+//   function runZoom(swiper) {
+//     const activeImg = swiper.slides[swiper.activeIndex]?.querySelector("img");
+
+//     resetAllImages(swiper);
+
+//     if (activeImg) {
+//       void activeImg.offsetWidth; // force reflow
+//       activeImg.style.animationDuration = `${SCALE_DURATION}ms`;
+//       activeImg.classList.add("kb-zoom");
+//     }
+//   }
+// }
 export function bannerSlide() {
+  gsap.registerPlugin(ScrollTrigger);
+
   const storyEls = document.querySelectorAll(".swiper-story");
   if (!storyEls.length) return;
 
@@ -43,24 +153,18 @@ export function bannerSlide() {
       },
     });
 
-    // ----- Quan sát viewport (chỉ chạy 1 lần) -----
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !started) {
-            started = true;
-            swiperHero.autoplay.start();
-            runZoom(swiperHero);
-            observer.unobserve(storyEl); // không cần theo dõi nữa
-          }
-        });
+    // ----- Kích hoạt bằng ScrollTrigger (chỉ chạy 1 lần) -----
+    ScrollTrigger.create({
+      trigger: storyEl,
+      start: "top 70%", // tương đương threshold 0.3 của IntersectionObserver
+      once: true, // tự động chỉ bắn onEnter đúng 1 lần rồi kill trigger
+      onEnter: () => {
+        if (started) return;
+        started = true;
+        swiperHero.autoplay.start();
+        runZoom(swiperHero);
       },
-      {
-        threshold: 0.3,
-      },
-    );
-
-    observer.observe(storyEl);
+    });
   });
 
   function updateProgress(swiper, progressValue) {
