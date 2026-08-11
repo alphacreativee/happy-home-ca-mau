@@ -3,6 +3,8 @@
   width: 100%;
   min-height: 100svh;
   background: url("../../images/del/bg-re-cay.png") var(--color-red);
+  background-size: cover;
+  background-repeat: no-repeat;
   z-index: 1;
   &-top {
     padding: 80px 0 120px;

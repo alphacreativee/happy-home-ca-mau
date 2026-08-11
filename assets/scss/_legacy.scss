@@ -1,6 +1,8 @@
 .legacy {
   padding: 120px 0;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+  background-repeat: no-repeat;
+  background-size: cover;
   &-heading {
     margin-bottom: var(--space-72);
   }

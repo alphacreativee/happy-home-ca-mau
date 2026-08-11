@@ -2,6 +2,8 @@
   &-top {
     background: url("../../images/del/bg-re-cay.png") var(--color-gold-light);
     padding: 120px 0;
+    background-repeat: no-repeat;
+    background-size: cover;
     &-img {
       margin-bottom: var(--space-80);
     }
@@ -22,7 +24,7 @@
     bottom: 40px;
     z-index: 3;
     max-width: 425px;
-    padding: 40px;
+    padding: 60px;
     background-color: var(--bgc);
     color: var(--color-text);
     .desc {

@@ -1475,6 +1475,8 @@ img.kb-zoom {
 .legacy {
   padding: 120px 0;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .legacy-heading {
   margin-bottom: var(--space-72);
@@ -1577,6 +1579,8 @@ img.kb-zoom {
   height: 100svh;
   overflow: hidden;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: bottom;
 }
 .vision-title {
@@ -1689,6 +1693,8 @@ img.kb-zoom {
   width: 100%;
   min-height: 100svh;
   background: url("../../images/del/bg-re-cay.png") var(--color-red);
+  background-size: cover;
+  background-repeat: no-repeat;
   z-index: 1;
 }
 .connect-top {
@@ -1757,6 +1763,8 @@ img.kb-zoom {
   position: relative;
   z-index: 5;
   background: url("../../images/del/bg-re-cay.png") var(--color-red);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .map-content {
   padding: 120px 0;
@@ -1904,6 +1912,7 @@ img.kb-zoom {
 }
 .liberate-box-item:nth-child(1) {
   top: 0;
+  z-index: 2;
 }
 .liberate-box-item:nth-child(2) {
   top: 50%;
@@ -1920,9 +1929,10 @@ img.kb-zoom {
 }
 .liberate-box .image img {
   position: absolute;
-  inset: 0;
+  top: -20%;
+  left: 0;
   width: 115%;
-  height: 120%;
+  height: 140%;
   object-fit: cover;
   display: block;
 }
@@ -1937,6 +1947,8 @@ img.kb-zoom {
 .nice-top {
   background: url("../../images/del/bg-re-cay.png") var(--color-gold-light);
   padding: 120px 0;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .nice-top-img {
   margin-bottom: var(--space-80);
@@ -1957,7 +1969,7 @@ img.kb-zoom {
   bottom: 40px;
   z-index: 3;
   max-width: 425px;
-  padding: 40px;
+  padding: 60px;
   background-color: var(--bgc);
   color: var(--color-text);
 }
@@ -2017,7 +2029,7 @@ img.kb-zoom {
   margin: 0 auto;
 }
 .proud-partner-item {
-  border-bottom: 1px solid var(--color-gold-light);
+  border-bottom: 0.5px solid var(--color-gold-light);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2048,6 +2060,8 @@ img.kb-zoom {
   position: absolute;
   inset: 0;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+  background-size: cover;
+  background-repeat: no-repeat;
   z-index: 3;
   opacity: 0;
   visibility: hidden;

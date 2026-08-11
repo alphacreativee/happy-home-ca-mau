@@ -596,7 +596,7 @@ export function zoomImage() {
       el,
       { scale: 1 },
       {
-        scale: 1.08,
+        scale: 1.2,
         ease: "none",
         scrollTrigger: {
           trigger: el,

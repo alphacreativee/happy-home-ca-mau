@@ -3,6 +3,8 @@
   z-index: 5;
   // margin-top: -100svh;
   background: url("../../images/del/bg-re-cay.png") var(--color-red);
+  background-size: cover;
+  background-repeat: no-repeat;
   &-content {
     padding: 120px 0;
     .desc {

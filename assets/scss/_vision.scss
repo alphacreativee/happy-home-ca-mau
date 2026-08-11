@@ -5,6 +5,8 @@
   height: 100svh;
   overflow: hidden;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: bottom;
   &-title {
     position: relative;

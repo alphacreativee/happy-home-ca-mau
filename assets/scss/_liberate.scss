@@ -125,6 +125,7 @@
 
   &:nth-child(1) {
     top: 0;
+    z-index: 2;
   }
 
   &:nth-child(2) {
@@ -143,9 +144,10 @@
 
     img {
       position: absolute;
-      inset: 0;
+      top: -20%; // tràn đều lên trên
+      left: 0;
       width: 115%;
-      height: 120%;
+      height: 140%; // đủ lớn để chứa biên độ parallax cả 2 chiều
       object-fit: cover;
       display: block;
     }

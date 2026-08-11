@@ -20,6 +20,8 @@
     position: absolute;
     inset: 0;
     background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+    background-size: cover;
+    background-repeat: no-repeat;
     z-index: 3;
     opacity: 0;
     visibility: hidden;
