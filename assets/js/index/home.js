@@ -304,7 +304,7 @@ function animationReveal() {
         onUpdate: (self) => {
           section.classList.toggle("show-bg", self.progress >= 0.1);
           if (header) {
-            header.classList.toggle("header-text-light", self.progress >= 0.1);
+            header.classList.toggle("header-text-light", self.progress >= 0);
           }
         },
         onEnter: () => {
