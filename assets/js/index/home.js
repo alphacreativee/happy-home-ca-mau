@@ -24,6 +24,8 @@ gsap.ticker.add((time) => {
 
 gsap.ticker.lagSmoothing(0);
 function initLiberateScroll() {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
   const pinSection = document.querySelector(".liberate-pin");
   const wrapSection = document.querySelector(".liberate-wrap");
   const list = document.querySelector(".liberate-list");
@@ -38,12 +40,11 @@ function initLiberateScroll() {
   gsap.set(pinSection, { position: "relative", zIndex: 1 });
   gsap.set(wrapSection, { position: "relative", zIndex: 2 });
 
-  // Section kế tiếp: đặt cao hơn, và cho trạng thái ban đầu nằm dưới (yPercent 100)
   if (nextSection) {
     gsap.set(nextSection, {
       position: "relative",
       zIndex: 3,
-      yPercent: 0, // giữ ở vị trí bình thường trong flow
+      yPercent: 0,
     });
   }
 
@@ -53,6 +54,7 @@ function initLiberateScroll() {
     if (box2) gsap.set(box2, { yPercent: -100 });
   });
 
+  // ----- Pin panel-top dưới list -----
   ScrollTrigger.create({
     trigger: pinSection,
     start: "top top",
@@ -65,6 +67,7 @@ function initLiberateScroll() {
 
   const scrollDistance = (wraps.length + 2) * window.innerHeight;
 
+  // ----- Timeline chính: pin toàn bộ list, cho từng item trượt lên -----
   const master = gsap.timeline({
     scrollTrigger: {
       trigger: wrapSection,
@@ -81,6 +84,8 @@ function initLiberateScroll() {
   wraps.forEach((wrap, i) => {
     const [, box2] = wrap.querySelectorAll(".liberate-box-item");
 
+    master.addLabel(`item${i}`, i);
+
     master.to(wrap, { yPercent: 0, ease: "none", duration: 1 }, i);
 
     if (box2) {
@@ -88,9 +93,62 @@ function initLiberateScroll() {
     }
   });
 
+  master.addLabel("end", wraps.length);
   master.to({}, { duration: 0.8 });
 
   ScrollTrigger.refresh();
+
+  // ----- Text animation riêng cho từng item, chạy trễ hơn card 1 xíu -----
+  document.fonts.ready.then(() => {
+    const DELAY = 0.3; // trễ hơn 0.3 đơn vị timeline so với lúc card bắt đầu lên
+
+    wraps.forEach((wrap, i) => {
+      const el = wrap.querySelector(".liberate-content .content");
+      if (!el) return;
+
+      const splitTitle = SplitText.create(el, {
+        type: "lines",
+        mask: "lines",
+        linesClass: "line",
+      });
+
+      gsap.set(splitTitle.lines, { yPercent: 100 });
+
+      const startLabel = `item${i}`;
+      const endLabel = i + 1 < wraps.length ? `item${i + 1}` : "end";
+
+      ScrollTrigger.create({
+        start: () =>
+          master.scrollTrigger.labelToScroll(startLabel) +
+          DELAY *
+            ((master.scrollTrigger.end - master.scrollTrigger.start) /
+              wraps.length),
+        end: () => master.scrollTrigger.labelToScroll(endLabel),
+        toggleActions: "play none none reverse",
+        // markers: true,
+        onEnter: () => {
+          gsap.to(splitTitle.lines, {
+            yPercent: 0,
+            duration: 0.8,
+            ease: "power3.inOut",
+            stagger: 0.05,
+            overwrite: "auto",
+          });
+        },
+        onLeaveBack: () => {
+          gsap.to(splitTitle.lines, {
+            yPercent: 100,
+            duration: 0.5,
+            ease: "power3.inOut",
+            stagger: 0.05,
+            overwrite: "auto",
+          });
+        },
+      });
+    });
+
+    ScrollTrigger.refresh();
+  });
 }
 const init = () => {
   gsap.registerPlugin(ScrollTrigger);
