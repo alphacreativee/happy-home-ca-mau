@@ -37,6 +37,13 @@
       &.active {
         z-index: 2;
       }
+      &:first-child {
+        .mission-visual-img {
+          img {
+            object-position: right;
+          }
+        }
+      }
     }
 
     &-img {

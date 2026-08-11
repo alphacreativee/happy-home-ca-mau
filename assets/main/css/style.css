@@ -1651,6 +1651,9 @@ img.kb-zoom {
 .mission-visual-item.active {
   z-index: 2;
 }
+.mission-visual-item:first-child .mission-visual-img img {
+  object-position: right;
+}
 .mission-visual-img {
   overflow: hidden;
   position: absolute;
