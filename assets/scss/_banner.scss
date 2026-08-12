@@ -38,7 +38,9 @@
       justify-content: center;
       gap: 8px;
       bottom: 40px;
-
+      @media (max-width: 991px) {
+        bottom: 24px;
+      }
       .swiper-pagination-bullet {
         position: relative;
         width: 55px;

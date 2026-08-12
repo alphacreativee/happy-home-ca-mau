@@ -243,6 +243,173 @@ export function growthSection() {
     },
   );
 }
+export function fadeSlide() {
+  if (window.innerWidth > 992) return;
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  const fadeEls = document.querySelectorAll(".swiper-fade-story");
+  if (!fadeEls.length) return;
+
+  const SCALE_DURATION = 4000;
+  const FADE_SPEED = 1000;
+
+  fadeEls.forEach((fadeEl) => {
+    const paginationEl = fadeEl.querySelector(".swiper-pagination");
+    const titleListEl = fadeEl
+      .closest(".connect-list-mobile")
+      ?.querySelector(".swiper-title-list");
+    const titleEls = titleListEl
+      ? Array.from(titleListEl.querySelectorAll(".tilte-item"))
+      : [];
+
+    // ----- Split từng title 1 lần duy nhất, lưu lại lines -----
+    const titleSplits = titleEls.map((titleEl) => {
+      const split = SplitText.create(titleEl, {
+        type: "lines",
+        mask: "lines",
+        linesClass: "line",
+      });
+      gsap.set(split.lines, { y: "100%" }); // ẩn ban đầu
+      return split;
+    });
+
+    let activeIndex = -1;
+    let started = false;
+
+    const swiperFade = new Swiper(fadeEl, {
+      effect: "fade",
+      fadeEffect: { crossFade: true },
+      speed: FADE_SPEED,
+      loop: true,
+      simulateTouch: false,
+      // autoplay: {
+      //   delay: SCALE_DURATION,
+      //   disableOnInteraction: false,
+      //   waitForTransition: false,
+      // },
+      pagination: {
+        el: paginationEl,
+        clickable: true,
+        renderBullet: function (index, className) {
+          return `<span class="${className}"><div class="progress"></div></span>`;
+        },
+      },
+      on: {
+        init(swiper) {
+          updateProgress(swiper, 0);
+          updateTitle(swiper);
+          swiper.autoplay.stop();
+        },
+        slideChange(swiper) {
+          updateProgress(swiper, 0);
+          updateTitle(swiper);
+          runZoom(swiper);
+        },
+        autoplayTimeLeft(swiper, timeLeft, percentage) {
+          const progress = 1 - percentage;
+          updateProgress(swiper, progress);
+        },
+      },
+    });
+
+    ScrollTrigger.create({
+      trigger: fadeEl,
+      start: "top 70%",
+      once: true,
+      onEnter: () => {
+        if (started) return;
+        started = true;
+        swiperFade.autoplay.start();
+        runZoom(swiperFade);
+      },
+    });
+
+    function updateTitle(swiper) {
+      if (!titleSplits.length) return;
+      const realIndex = swiper.realIndex;
+
+      if (realIndex === activeIndex) return; // tránh chạy lại nếu chưa đổi index
+
+      // Ẩn title cũ (nếu có)
+      if (activeIndex !== -1 && titleSplits[activeIndex]) {
+        const oldTitleEl = titleEls[activeIndex];
+        const oldLines = titleSplits[activeIndex].lines;
+
+        gsap.to(oldLines, {
+          y: "-100%",
+          duration: 0.5,
+          ease: "power3.inOut",
+          stagger: 0.03,
+          onComplete: () => {
+            oldTitleEl.classList.remove("active");
+            gsap.set(oldLines, { y: "100%" }); // reset về trạng thái ẩn ban đầu
+          },
+        });
+      }
+
+      // Hiện title mới
+      const newTitleEl = titleEls[realIndex];
+      const newLines = titleSplits[realIndex]?.lines;
+
+      if (newTitleEl && newLines) {
+        newTitleEl.classList.add("active");
+        gsap.set(newLines, { y: "100%" });
+        gsap.to(newLines, {
+          y: "0%",
+          duration: 0.7,
+          ease: "power3.inOut",
+          stagger: 0.05,
+          delay: activeIndex === -1 ? 0 : 0.2, // delay nhẹ để chờ title cũ thoát ra (bỏ nếu muốn chạy đồng thời)
+        });
+      }
+
+      activeIndex = realIndex;
+    }
+  });
+
+  function updateProgress(swiper, progressValue) {
+    const realIndex = swiper.realIndex;
+    const bullets = swiper.pagination.bullets;
+
+    bullets.forEach((bullet, index) => {
+      const progressEl = bullet.querySelector(".progress");
+      if (!progressEl) return;
+
+      progressEl.classList.remove("is-active");
+      progressEl.style.animation = "none";
+
+      if (index < realIndex) {
+        progressEl.style.width = "100%";
+      } else if (index === realIndex) {
+        progressEl.style.width = `${Math.min(progressValue * 100, 100)}%`;
+      } else {
+        progressEl.style.width = "0%";
+      }
+    });
+  }
+
+  function resetAllImages(swiper) {
+    swiper.slides.forEach((slide) => {
+      const img = slide.querySelector("img");
+      if (img) {
+        img.classList.remove("kb-zoom");
+        img.style.animationDuration = "";
+      }
+    });
+  }
+
+  function runZoom(swiper) {
+    const activeImg = swiper.slides[swiper.activeIndex]?.querySelector("img");
+
+    resetAllImages(swiper);
+
+    if (activeImg) {
+      void activeImg.offsetWidth;
+      activeImg.style.animationDuration = `${SCALE_DURATION}ms`;
+      activeImg.classList.add("kb-zoom");
+    }
+  }
+}
 // export function sliderScale() {
 //   // === LẤY DỮ LIỆU SLIDES TỪ HTML ===
 //   const sliderDataContainer = document.querySelector(".slider-data");
@@ -635,6 +802,7 @@ export function missionSection() {
   const items = document.querySelectorAll(".mission-visual-item");
   const header = document.getElementById("header");
   const cols = document.querySelectorAll(".mission-col");
+  if (window.innerWidth < 991) return;
   if (!section || items.length === 0) return;
 
   let activeIndex = 0;
@@ -760,6 +928,7 @@ export function missionSection() {
 }
 
 export function connectAnimation() {
+  if (window.innerWidth < 991) return;
   const firstRow = document.querySelector(".connect-row:not(.three-col)");
   const threeColRow = document.querySelector(".connect-row.three-col");
 

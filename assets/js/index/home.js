@@ -8,6 +8,7 @@ import {
   zoomImage,
   missionSection,
   connectAnimation,
+  fadeSlide,
 } from "../../main/js/helpers.min.js";
 ("use strict");
 $ = jQuery;
@@ -172,6 +173,7 @@ const init = () => {
   missionSection();
   zoomImage();
   initLiberateScroll();
+  fadeSlide();
 };
 document.addEventListener("DOMContentLoaded", () => {
   init();

@@ -8,6 +8,9 @@
   z-index: 1;
   &-top {
     padding: 80px 0 120px;
+    @media (max-width: 991px) {
+      padding: 40px 20px;
+    }
     &-img {
       margin-bottom: var(--space-80);
     }
@@ -60,6 +63,112 @@
       left: 20px;
       bottom: 170px;
       letter-spacing: 0.2rem;
+    }
+  }
+  .swiper-title {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+  }
+  .swiper-title-list {
+    position: relative;
+    min-height: 17px;
+  }
+
+  .tilte-item {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+    color: var(--color-white);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tilte-item.active {
+    visibility: visible;
+    // 👈 bỏ hẳn "position: relative;"
+  }
+
+  /* SplitText tự thêm class .line, cần overflow hidden để tạo hiệu ứng mask */
+  .tilte-item .line {
+    overflow: hidden;
+  }
+  .swiper-fade-story {
+    width: 100%;
+    aspect-ratio: 1;
+    .hero-slider-img {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      overflow: hidden;
+      height: 100%;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.08); // 👈 fix vụ zoom ngược đã nói ở trên
+        transform-origin: center center;
+        will-change: transform;
+
+        &.kb-zoom {
+          animation: kenBurnsZoom linear forwards;
+          // Không hard-code 3s nữa, để JS set animation-duration
+        }
+      }
+    }
+
+    .swiper-pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      bottom: 24px;
+
+      .swiper-pagination-bullet {
+        position: relative;
+        width: 55px;
+        height: 3px;
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+        margin: 0 !important;
+        overflow: hidden;
+        cursor: pointer;
+
+        .progress {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 0%;
+          background-color: var(--color-white);
+          border-radius: 2px;
+
+          &.is-active {
+            animation-name: progressRun;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes kenBurnsZoomFade {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
     }
   }
 }

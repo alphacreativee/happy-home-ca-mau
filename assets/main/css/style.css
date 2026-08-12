@@ -28,21 +28,6 @@
   --spacing-padding: 120px 40px;
 }
 
-@media (max-width: 991px) {
-  :root {
-    --space-8: 8px;
-    --space-16: 8px;
-    --space-24: 16px;
-    --space-32: 24px;
-    --space-40: 32px;
-    --space-48: 40px;
-    --space-56: 48px;
-    --space-64: 56px;
-    --space-72: 64px;
-    --space-80: 72px;
-    --spacing-padding: 64px 16px;
-  }
-}
 .font-heading {
   font-family: var(--font-heading);
 }
@@ -1053,7 +1038,8 @@ body {
   will-change: transform;
 }
 
-.swiper-story img {
+.swiper-story img,
+.swiper-fade-story img {
   transform: scale(1);
   transform-origin: center center;
   will-change: transform; /* để layer được tạo sẵn TỪ ĐẦU, không phải lúc animation bắt đầu */
@@ -1301,6 +1287,11 @@ img.kb-zoom {
   gap: 8px;
   bottom: 40px;
 }
+@media (max-width: 991px) {
+  .hero .swiper-hero .swiper-pagination {
+    bottom: 24px;
+  }
+}
 .hero .swiper-hero .swiper-pagination .swiper-pagination-bullet {
   position: relative;
   width: 55px;
@@ -1467,9 +1458,24 @@ img.kb-zoom {
   background-color: var(--color-green-dark);
   padding: 40px;
 }
+@media (max-width: 991px) {
+  .golf-content {
+    top: auto;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    transform: translate(0);
+  }
+}
 .golf-title {
   margin-bottom: var(--space-72);
   max-width: 80%;
+}
+@media (max-width: 991px) {
+  .golf-title {
+    max-width: 100%;
+    margin-bottom: var(--space-32);
+  }
 }
 
 .legacy {
@@ -1478,13 +1484,36 @@ img.kb-zoom {
   background-repeat: no-repeat;
   background-size: cover;
 }
+@media (max-width: 991px) {
+  .legacy {
+    padding: 40px 20px;
+  }
+}
 .legacy-heading {
   margin-bottom: var(--space-72);
+}
+@media (max-width: 991px) {
+  .legacy-heading {
+    margin-bottom: var(--space-32);
+  }
+}
+@media (min-width: 991px) {
+  .legacy-heading h3 {
+    max-width: 45%;
+    text-align: center;
+  }
 }
 .legacy-desc {
   max-width: 50%;
   margin-left: auto;
   padding-right: 120px;
+}
+@media (max-width: 991px) {
+  .legacy-desc {
+    padding-right: 0;
+    margin-left: 0;
+    max-width: 100%;
+  }
 }
 
 .slider {
@@ -1519,6 +1548,11 @@ img.kb-zoom {
   z-index: 2;
   max-height: calc(100svh - 64px);
 }
+@media (max-width: 991px) {
+  .slider-indicator {
+    left: 20px;
+  }
+}
 .slider-indices {
   display: flex;
   flex-direction: column;
@@ -1546,6 +1580,14 @@ img.kb-zoom {
   white-space: nowrap;
   transition: font-size 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
   will-change: opacity, font-size, color;
+}
+@media (max-width: 991px) {
+  .index {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 36px;
+    line-height: 48px;
+  }
 }
 .index sup {
   font-family: var(--font-body);
@@ -1583,6 +1625,11 @@ img.kb-zoom {
   background-size: cover;
   background-position: bottom;
 }
+@media (max-width: 991px) {
+  .vision {
+    background-position: center left;
+  }
+}
 .vision-title {
   position: relative;
   z-index: 4;
@@ -1607,6 +1654,7 @@ img.kb-zoom {
   bottom: 80px;
   transform: translate(-50%, 0%);
   z-index: 2;
+  width: max-content;
 }
 .living-image {
   width: 100%;
@@ -1626,10 +1674,27 @@ img.kb-zoom {
   z-index: 3;
   background-color: var(--color-green-med);
 }
+@media (max-width: 991px) {
+  .mission {
+    height: auto;
+    padding: 40px 20px;
+    background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+  }
+}
 .mission-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100svh;
+}
+@media (max-width: 991px) {
+  .mission-inner {
+    height: auto;
+    display: flex;
+    flex-direction: column-reverse;
+  }
 }
 .mission-col {
   height: 100svh;
@@ -1640,9 +1705,21 @@ img.kb-zoom {
   align-items: center;
   justify-content: center;
 }
+@media (max-width: 991px) {
+  .mission-col {
+    height: auto;
+    background: none;
+    margin-bottom: 40px;
+  }
+}
 .mission-visual {
   position: relative;
   height: 100svh;
+}
+@media (max-width: 991px) {
+  .mission-visual {
+    height: auto;
+  }
 }
 .mission-visual-item {
   position: absolute;
@@ -1651,6 +1728,15 @@ img.kb-zoom {
   width: 100%;
   height: 100%;
   z-index: 1;
+}
+@media (max-width: 991px) {
+  .mission-visual-item {
+    position: static;
+    margin-bottom: 40px;
+  }
+  .mission-visual-item:last-child {
+    margin-bottom: 0;
+  }
 }
 .mission-visual-item.active {
   z-index: 2;
@@ -1666,6 +1752,12 @@ img.kb-zoom {
   width: 100%;
   height: 100%;
 }
+@media (max-width: 991px) {
+  .mission-visual-img {
+    position: static;
+    aspect-ratio: 335/390;
+  }
+}
 .mission-visual-img img {
   width: 100%;
   height: 100%;
@@ -1680,12 +1772,26 @@ img.kb-zoom {
   padding: 40px;
   max-width: 400px;
 }
+@media (max-width: 991px) {
+  .mission-visual-content {
+    position: static;
+    max-width: 100%;
+    width: 100%;
+    padding: 24px 0 0;
+    background-color: transparent;
+  }
+}
 .mission-visual-content h3 {
   margin-bottom: 12px;
 }
 .mission-content {
   max-width: 450px;
   text-align: center;
+}
+@media (max-width: 991px) {
+  .mission-content {
+    max-width: 100%;
+  }
 }
 
 .connect {
@@ -1699,6 +1805,11 @@ img.kb-zoom {
 }
 .connect-top {
   padding: 80px 0 120px;
+}
+@media (max-width: 991px) {
+  .connect-top {
+    padding: 40px 20px;
+  }
 }
 .connect-top-img {
   margin-bottom: var(--space-80);
@@ -1749,6 +1860,103 @@ img.kb-zoom {
   left: 20px;
   bottom: 170px;
   letter-spacing: 0.2rem;
+}
+.connect .swiper-title {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+}
+.connect .swiper-title-list {
+  position: relative;
+  min-height: 17px;
+}
+.connect .tilte-item {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  color: var(--color-white);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.connect .tilte-item.active {
+  visibility: visible;
+}
+.connect {
+  /* SplitText tự thêm class .line, cần overflow hidden để tạo hiệu ứng mask */
+}
+.connect .tilte-item .line {
+  overflow: hidden;
+}
+.connect .swiper-fade-story {
+  width: 100%;
+  aspect-ratio: 1;
+}
+.connect .swiper-fade-story .hero-slider-img {
+  width: 100%;
+  height: 100%;
+}
+.connect .swiper-fade-story .swiper-slide {
+  overflow: hidden;
+  height: 100%;
+}
+.connect .swiper-fade-story .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  transform-origin: center center;
+  will-change: transform;
+}
+.connect .swiper-fade-story .swiper-slide img.kb-zoom {
+  animation: kenBurnsZoom linear forwards;
+}
+.connect .swiper-fade-story .swiper-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  bottom: 24px;
+}
+.connect .swiper-fade-story .swiper-pagination .swiper-pagination-bullet {
+  position: relative;
+  width: 55px;
+  height: 3px;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  margin: 0 !important;
+  overflow: hidden;
+  cursor: pointer;
+}
+.connect .swiper-fade-story .swiper-pagination .swiper-pagination-bullet .progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: var(--color-white);
+  border-radius: 2px;
+}
+.connect .swiper-fade-story .swiper-pagination .swiper-pagination-bullet .progress.is-active {
+  animation-name: progressRun;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes kenBurnsZoomFade {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 .connect-row {

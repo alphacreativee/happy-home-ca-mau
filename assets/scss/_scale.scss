@@ -33,6 +33,9 @@
     transform: translateY(-100%);
     z-index: 2;
     max-height: calc(100svh - 64px);
+    @media (max-width: 991px) {
+      left: 20px;
+    }
   }
 
   &-indices {
@@ -67,6 +70,12 @@
     color 0.3s ease,
     padding-left 0.3s ease;
   will-change: opacity, font-size, color;
+  @media (max-width: 991px) {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 36px;
+    line-height: 48px;
+  }
   sup {
     font-family: var(--font-body);
     font-size: 14px;

@@ -89,7 +89,8 @@
     will-change: transform;
   }
 }
-.swiper-story img {
+.swiper-story img,
+.swiper-fade-story img {
   transform: scale(1);
   transform-origin: center center;
   will-change: transform; /* để layer được tạo sẵn TỪ ĐẦU, không phải lúc animation bắt đầu */

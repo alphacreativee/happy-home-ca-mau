@@ -3,12 +3,29 @@
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
   background-repeat: no-repeat;
   background-size: cover;
+  @media (max-width: 991px) {
+    padding: 40px 20px;
+  }
   &-heading {
     margin-bottom: var(--space-72);
+    @media (max-width: 991px) {
+      margin-bottom: var(--space-32);
+    }
+    h3 {
+      @media (min-width: 991px) {
+        max-width: 45%;
+        text-align: center;
+      }
+    }
   }
   &-desc {
     max-width: 50%;
     margin-left: auto;
     padding-right: 120px;
+    @media (max-width: 991px) {
+      padding-right: 0;
+      margin-left: 0;
+      max-width: 100%;
+    }
   }
 }

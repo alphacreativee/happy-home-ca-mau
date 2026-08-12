@@ -21,9 +21,20 @@
     max-width: 450px;
     background-color: var(--color-green-dark);
     padding: 40px;
+    @media (max-width: 991px) {
+      top: auto;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      transform: translate(0);
+    }
   }
   &-title {
     margin-bottom: var(--space-72);
     max-width: 80%;
+    @media (max-width: 991px) {
+      max-width: 100%;
+      margin-bottom: var(--space-32);
+    }
   }
 }
