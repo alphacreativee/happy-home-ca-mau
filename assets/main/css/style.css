@@ -981,6 +981,17 @@ body {
   background-color: var(--color-red-light);
 }
 
+.txt-gradient {
+  padding-right: 0.2em;
+  padding-left: 0.2em;
+}
+@media (max-width: 991px) {
+  .txt-gradient {
+    padding-left: 0;
+    padding-right: 8px;
+    text-wrap: balance;
+  }
+}
 .txt-gradient .line {
   background: linear-gradient(270deg, #cfa67e 0%, #854b20 26.44%, #cfa67e 50.96%, #854b20 74.04%, #cfa67e 100%);
   background-size: 200% auto;
@@ -990,8 +1001,6 @@ body {
   color: transparent;
   -webkit-text-fill-color: transparent;
   animation: shine 10s linear infinite;
-  padding-right: 0.2em;
-  padding-left: 0.2em;
 }
 
 @keyframes shine {
@@ -1559,7 +1568,7 @@ img.kb-zoom {
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100svh;
+  height: 100vh;
   overflow: hidden;
 }
 .slider-wrapper {
@@ -1585,7 +1594,7 @@ img.kb-zoom {
   top: 100%;
   transform: translateY(-100%);
   z-index: 2;
-  max-height: calc(100svh - 64px);
+  max-height: calc(100vh - 64px);
 }
 @media (max-width: 991px) {
   .slider-indicator {
@@ -2682,6 +2691,11 @@ img.kb-zoom {
 #footer .footer-logo-big img {
   height: 110px;
   width: auto;
+}
+@media (max-width: 767px) {
+  #footer .footer-logo-big img {
+    height: 60px;
+  }
 }
 #footer .footer-container {
   padding: 40px 20px 20px;

@@ -248,28 +248,34 @@ export function animationText() {
       if (el.dataset.scriptInitialized) return;
       el.dataset.scriptInitialized = "true";
 
-      const splitTitle = SplitText.create(el, {
+      let splitTitle;
+
+      SplitText.create(el, {
         type: "lines",
         mask: "lines",
         linesClass: "line",
-      });
+        autoSplit: true, // tự động resplit khi resize (kể cả đổi lines) - cần GSAP 3.13+
+        onSplit: (self) => {
+          splitTitle = self;
 
-      gsap.fromTo(
-        splitTitle.lines,
-        { y: "100%" },
-        {
-          y: "0%",
-          duration: 0.8,
-          ease: "power3.inOut",
-          stagger: 0.05,
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            end: "bottom 85%",
-            toggleActions: "play none none none",
-          },
+          return gsap.fromTo(
+            self.lines,
+            { y: "100%" },
+            {
+              y: "0%",
+              duration: 0.8,
+              ease: "power3.inOut",
+              stagger: 0.05,
+              scrollTrigger: {
+                trigger: el,
+                start: "top 85%",
+                end: "bottom 85%",
+                toggleActions: "play none none none",
+              },
+            },
+          );
         },
-      );
+      });
     });
   });
 }

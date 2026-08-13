@@ -14,6 +14,9 @@
       img {
         height: 110px;
         width: auto;
+        @media (max-width: 767px) {
+          height: 60px;
+        }
       }
     }
     &-container {
