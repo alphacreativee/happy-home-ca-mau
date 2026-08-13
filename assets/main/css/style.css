@@ -1203,6 +1203,13 @@ img.kb-zoom {
   padding: 12px 20px;
   position: relative;
 }
+@media (max-width: 991px) {
+  #header .header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 #header .header-container::before {
   content: "";
   position: absolute;
@@ -1243,12 +1250,28 @@ img.kb-zoom {
   visibility: hidden;
   transition: var(--tt-medium);
 }
+@media (max-width: 991px) {
+  #header .header-logo a {
+    opacity: 1;
+    visibility: visible;
+  }
+}
 #header .header-logo a img {
   width: 38px;
   height: 34px;
 }
 #header .header-left {
   gap: 20px;
+}
+@media (max-width: 991px) {
+  #header .header-left {
+    display: none !important;
+  }
+}
+@media (max-width: 991px) {
+  #header .header-right {
+    display: none !important;
+  }
 }
 
 .hero {
@@ -1437,6 +1460,11 @@ img.kb-zoom {
 .growth-main-left .image {
   width: 330px;
   aspect-ratio: 330/378;
+}
+@media (max-width: 991px) {
+  .growth-main-left .image {
+    width: 100%;
+  }
 }
 .growth-main-right .image {
   width: 100%;

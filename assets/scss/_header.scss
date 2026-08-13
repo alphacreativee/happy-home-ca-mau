@@ -55,6 +55,11 @@
       gap: 0 40px;
       padding: 12px 20px;
       position: relative;
+      @media (max-width: 991px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       &::before {
         content: "";
         position: absolute;
@@ -96,6 +101,10 @@
         opacity: 0;
         visibility: hidden;
         transition: var(--tt-medium);
+        @media (max-width: 991px) {
+          opacity: 1;
+          visibility: visible;
+        }
         img {
           width: 38px;
           height: 34px;
@@ -104,6 +113,14 @@
     }
     &-left {
       gap: 20px;
+      @media (max-width: 991px) {
+        display: none !important;
+      }
+    }
+    &-right {
+      @media (max-width: 991px) {
+        display: none !important;
+      }
     }
   }
 }
