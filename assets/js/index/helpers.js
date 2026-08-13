@@ -783,9 +783,11 @@ export function stackedSections() {
   const sections = document.querySelectorAll('[class*="pin-section-"]');
   if (sections.length === 0) return;
 
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
   sections.forEach((section, index) => {
     if (index === sections.length - 1) return;
-    if (section.classList.contains("mission")) return; // mission tự lo riêng
+    if (section.classList.contains("mission")) return;
 
     ScrollTrigger.create({
       trigger: section,
@@ -793,6 +795,7 @@ export function stackedSections() {
       end: "bottom top",
       pin: true,
       pinSpacing: false,
+      invalidateOnRefresh: true, // tính lại đúng khi có refresh thật sự (đổi orientation, resize thật)
     });
   });
 }

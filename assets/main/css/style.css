@@ -1629,7 +1629,7 @@ img.kb-zoom {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 100svh;
+  height: 100vh;
   overflow: hidden;
   background: url("../../images/del/bg-re-cay.png") var(--color-green-med);
   background-repeat: no-repeat;
@@ -1649,13 +1649,13 @@ img.kb-zoom {
 .living {
   position: relative;
   z-index: 1;
-  min-height: 200svh;
+  min-height: 200vh;
   overflow: hidden;
 }
 .living-inner {
   position: relative;
   top: 0;
-  height: 100svh;
+  height: 100vh;
   width: 100%;
   overflow: hidden;
 }

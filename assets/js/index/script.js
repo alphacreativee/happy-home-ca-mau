@@ -85,11 +85,13 @@ function init() {
   imageParallax();
   mousetail();
   animationFade();
-  animationText();
+
   // animationFooter();
   ScrollTrigger.refresh();
 }
-
+document.fonts.ready.then(() => {
+  animationText();
+});
 document.addEventListener("DOMContentLoaded", () => {
   init();
   initSwiper();

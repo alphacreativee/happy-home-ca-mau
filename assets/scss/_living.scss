@@ -1,13 +1,13 @@
 .living {
   position: relative;
   z-index: 1;
-  min-height: 200svh;
+  min-height: 200vh;
   overflow: hidden;
 
   &-inner {
     position: relative;
     top: 0;
-    height: 100svh;
+    height: 100vh;
     width: 100%;
     overflow: hidden;
   }
