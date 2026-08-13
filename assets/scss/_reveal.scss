@@ -1,6 +1,6 @@
 .reveal {
   position: relative;
-  height: 100svh;
+  height: 100vh;
   z-index: 2;
   overflow: hidden;
   &.hide-title {
@@ -53,8 +53,9 @@
     width: 100%;
     @media (max-width: 991px) {
       max-width: calc(100% - 40px);
-      // font-size: 24px;
-      // line-height: 33px;
+      font-size: 24px;
+      line-height: 33px;
+      top: 60px;
     }
   }
 

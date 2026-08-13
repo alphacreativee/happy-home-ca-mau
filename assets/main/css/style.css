@@ -2504,7 +2504,7 @@ img.kb-zoom {
 
 .reveal {
   position: relative;
-  height: 100svh;
+  height: 100vh;
   z-index: 2;
   overflow: hidden;
 }
@@ -2554,6 +2554,9 @@ img.kb-zoom {
 @media (max-width: 991px) {
   .reveal-content {
     max-width: calc(100% - 40px);
+    font-size: 24px;
+    line-height: 33px;
+    top: 60px;
   }
 }
 .reveal-slider {
