@@ -256,7 +256,7 @@ export function fadeSlide() {
   fadeEls.forEach((fadeEl) => {
     const paginationEl = fadeEl.querySelector(".swiper-pagination");
     const titleListEl = fadeEl
-      .closest(".connect-list-mobile")
+      .closest(".title-fade-change")
       ?.querySelector(".swiper-title-list");
     const titleEls = titleListEl
       ? Array.from(titleListEl.querySelectorAll(".tilte-item"))
@@ -282,11 +282,11 @@ export function fadeSlide() {
       speed: FADE_SPEED,
       loop: true,
       simulateTouch: false,
-      // autoplay: {
-      //   delay: SCALE_DURATION,
-      //   disableOnInteraction: false,
-      //   waitForTransition: false,
-      // },
+      autoplay: {
+        delay: SCALE_DURATION,
+        disableOnInteraction: false,
+        waitForTransition: false,
+      },
       pagination: {
         el: paginationEl,
         clickable: true,

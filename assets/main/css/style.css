@@ -2035,6 +2035,12 @@ img.kb-zoom {
   z-index: 2;
   padding-bottom: 100vh;
 }
+@media (max-width: 991px) {
+  .liberate-wrap {
+    padding-bottom: 0;
+    margin-top: 0;
+  }
+}
 
 .liberate-panel-top {
   position: relative;
@@ -2050,6 +2056,12 @@ img.kb-zoom {
 .liberate-panel-top-img,
 .liberate-panel-top .liberate-top-img {
   margin-bottom: var(--space-80);
+}
+@media (max-width: 991px) {
+  .liberate-panel-top-img,
+  .liberate-panel-top .liberate-top-img {
+    margin-bottom: 40px;
+  }
 }
 .liberate-panel-top .liberate-top-title {
   margin-bottom: var(--space-32);
@@ -2183,6 +2195,105 @@ img.kb-zoom {
   z-index: 2;
 }
 
+@media (max-width: 991px) {
+  .liberate-list-mobile .swiper-title {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+  }
+  .liberate-list-mobile .swiper-title-list {
+    position: relative;
+    min-height: 17px;
+  }
+  .liberate-list-mobile .tilte-item {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+    color: var(--color-white);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .liberate-list-mobile .tilte-item.active {
+    visibility: visible;
+  }
+  .liberate-list-mobile {
+    /* SplitText tự thêm class .line, cần overflow hidden để tạo hiệu ứng mask */
+  }
+  .liberate-list-mobile .tilte-item .line {
+    overflow: hidden;
+  }
+  .liberate-list-mobile .swiper-fade-story {
+    width: 100%;
+    aspect-ratio: 1;
+  }
+  .liberate-list-mobile .swiper-fade-story .hero-slider-img {
+    width: 100%;
+    height: 100%;
+  }
+  .liberate-list-mobile .swiper-fade-story .swiper-slide {
+    overflow: hidden;
+    height: 100%;
+  }
+  .liberate-list-mobile .swiper-fade-story .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
+    transform-origin: center center;
+    will-change: transform;
+  }
+  .liberate-list-mobile .swiper-fade-story .swiper-slide img.kb-zoom {
+    animation: kenBurnsZoom linear forwards;
+  }
+  .liberate-list-mobile .swiper-fade-story .swiper-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    bottom: 24px;
+  }
+  .liberate-list-mobile .swiper-fade-story .swiper-pagination .swiper-pagination-bullet {
+    position: relative;
+    width: 55px;
+    height: 3px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+    margin: 0 !important;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .liberate-list-mobile .swiper-fade-story .swiper-pagination .swiper-pagination-bullet .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--color-white);
+    border-radius: 2px;
+  }
+  .liberate-list-mobile .swiper-fade-story .swiper-pagination .swiper-pagination-bullet .progress.is-active {
+    animation-name: progressRun;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+  @keyframes kenBurnsZoomFade {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+}
 .nice-top {
   background: url("../../images/del/bg-re-cay.png") var(--color-gold-light);
   padding: 120px 0;

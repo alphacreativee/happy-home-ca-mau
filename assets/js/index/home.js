@@ -26,7 +26,7 @@ gsap.ticker.add((time) => {
 gsap.ticker.lagSmoothing(0);
 function initLiberateScroll() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
-
+  if (window.innerWidth < 991) return;
   const pinSection = document.querySelector(".liberate-pin");
   const wrapSection = document.querySelector(".liberate-wrap");
   const list = document.querySelector(".liberate-list");
@@ -167,13 +167,13 @@ function initLiberateScroll() {
 const init = () => {
   gsap.registerPlugin(ScrollTrigger);
   bannerSlide();
+  fadeSlide();
   growthSection();
   sliderScale();
   stackedSections();
   missionSection();
   zoomImage();
   initLiberateScroll();
-  fadeSlide();
 };
 document.addEventListener("DOMContentLoaded", () => {
   init();
