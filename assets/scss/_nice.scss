@@ -4,15 +4,27 @@
     padding: 120px 0;
     background-repeat: no-repeat;
     background-size: cover;
+    @media (max-width: 991px) {
+      padding: 40px 20px;
+    }
     &-img {
       margin-bottom: var(--space-80);
+      @media (max-width: 991px) {
+        margin-bottom: 40px;
+      }
     }
     &-title {
       margin-bottom: var(--space-32);
+      @media (max-width: 991px) {
+        margin-bottom: 24px;
+      }
     }
     &-desc {
       max-width: 50%;
       text-align: center;
+      @media (max-width: 991px) {
+        max-width: 100%;
+      }
     }
   }
   &-main {
@@ -27,6 +39,11 @@
     padding: 60px;
     background-color: var(--bgc);
     color: var(--color-text);
+    @media (max-width: 991px) {
+      left: 20px;
+      max-width: 100%;
+      padding: 40px;
+    }
     .desc {
       margin-top: var(--space-24);
     }

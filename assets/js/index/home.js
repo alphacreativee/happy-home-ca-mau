@@ -340,6 +340,112 @@ function mapCoverAnimation() {
 
 //   ScrollTrigger.refresh();
 // });
+// function animationReveal() {
+//   gsap.registerPlugin(ScrollTrigger);
+
+//   const footer = document.getElementById("footer");
+//   const header = document.getElementById("header");
+
+//   document.querySelectorAll(".reveal").forEach((section) => {
+//     if (section.dataset.scriptInitialized) return;
+//     section.dataset.scriptInitialized = "true";
+
+//     const container = section.querySelector(".reveal-slider");
+//     const items = container.querySelectorAll(".reveal-item");
+//     if (!items.length) return;
+
+//     const percentParallax = 10;
+//     const images = Array.from(items)
+//       .map((item) => item.querySelector(".reveal-item-img img"))
+//       .filter(Boolean);
+
+//     // ----- Trạng thái ban đầu -----
+//     gsap.set(items, { y: "100%" });
+//     gsap.set(images, { yPercent: `-${percentParallax}` });
+//     if (footer) {
+//       gsap.set(footer, { yPercent: 100 });
+//       initFooterContent(footer); // ẩn logo/text ngay từ đầu
+//     }
+
+//     const FOOTER_REVEAL = 1;
+//     const FOOTER_DELAY = 1;
+
+//     const totalUnits = items.length + FOOTER_DELAY + FOOTER_REVEAL;
+
+//     const tl = gsap.timeline({
+//       scrollTrigger: {
+//         trigger: section,
+//         start: "top top",
+//         end: `+=${totalUnits * 100}%`,
+//         pin: true,
+//         scrub: 1,
+//         onUpdate: (self) => {
+//           section.classList.toggle("show-bg", self.progress >= 0.1);
+//           if (header) {
+//             header.classList.toggle("header-text-light", self.progress >= 0);
+//           }
+//           if (footer) {
+//             const rect = footer.getBoundingClientRect();
+//             if (rect.top <= window.innerHeight * 0.3) {
+//               animateFooterContent(footer); // <-- gọi hàm ANIMATE, không phải init
+//             }
+//           }
+//         },
+//         onEnter: () => {
+//           if (footer) {
+//             gsap.set(footer, {
+//               position: "fixed",
+//               left: 0,
+//               bottom: 0,
+//               width: "100%",
+//             });
+//           }
+//         },
+//         onLeaveBack: () => {
+//           if (footer) {
+//             gsap.set(footer, { clearProps: "position,left,bottom,width" });
+//           }
+//           if (header) {
+//             header.classList.remove("header-text-light");
+//           }
+//         },
+//       },
+//     });
+
+//     items.forEach((item, index) => {
+//       const img = images[index];
+//       const pos = index;
+
+//       tl.to(item, { y: "0%", duration: 1, ease: "power2.out" }, pos);
+
+//       if (img) {
+//         tl.to(
+//           img,
+//           { yPercent: percentParallax, duration: 1, ease: "power2.out" },
+//           pos,
+//         );
+//       }
+//     });
+
+//     if (footer) {
+//       tl.to(
+//         footer,
+//         {
+//           yPercent: 0,
+//           duration: FOOTER_REVEAL,
+//           ease: "none",
+//           onStart: () => {
+//             section.classList.add("hide-title");
+//           },
+//           onReverseComplete: () => {
+//             section.classList.remove("hide-title");
+//           },
+//         },
+//         items.length + FOOTER_DELAY,
+//       );
+//     }
+//   });
+// }
 function animationReveal() {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -351,6 +457,7 @@ function animationReveal() {
     section.dataset.scriptInitialized = "true";
 
     const container = section.querySelector(".reveal-slider");
+    const scrollEl = section.querySelector(".reveal-scroll");
     const items = container.querySelectorAll(".reveal-item");
     if (!items.length) return;
 
@@ -359,94 +466,155 @@ function animationReveal() {
       .map((item) => item.querySelector(".reveal-item-img img"))
       .filter(Boolean);
 
-    // ----- Trạng thái ban đầu -----
-    gsap.set(items, { y: "100%" });
-    gsap.set(images, { yPercent: `-${percentParallax}` });
-    if (footer) {
-      gsap.set(footer, { yPercent: 100 });
-      initFooterContent(footer); // ẩn logo/text ngay từ đầu
-    }
+    if (footer) initFooterContent(footer);
 
-    const FOOTER_REVEAL = 1;
-    const FOOTER_DELAY = 1;
+    const mm = gsap.matchMedia();
 
-    const totalUnits = items.length + FOOTER_DELAY + FOOTER_REVEAL;
+    // ================= DESKTOP: reveal item theo trục Y (giữ nguyên) =================
+    mm.add("(min-width: 769px)", () => {
+      gsap.set(items, { y: "100%", x: 0 });
+      gsap.set(images, { yPercent: `-${percentParallax}` });
+      if (footer) gsap.set(footer, { yPercent: 100 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: `+=${totalUnits * 100}%`,
-        pin: true,
-        scrub: 1,
-        onUpdate: (self) => {
-          section.classList.toggle("show-bg", self.progress >= 0.1);
-          if (header) {
-            header.classList.toggle("header-text-light", self.progress >= 0);
-          }
-          if (footer) {
-            const rect = footer.getBoundingClientRect();
-            if (rect.top <= window.innerHeight * 0.3) {
-              animateFooterContent(footer); // <-- gọi hàm ANIMATE, không phải init
+      const FOOTER_REVEAL = 1;
+      const FOOTER_DELAY = 1;
+      const totalUnits = items.length + FOOTER_DELAY + FOOTER_REVEAL;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${totalUnits * 100}%`,
+          pin: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            section.classList.toggle("show-bg", self.progress >= 0.1);
+            if (header)
+              header.classList.toggle("header-text-light", self.progress >= 0);
+            if (footer) {
+              const rect = footer.getBoundingClientRect();
+              if (rect.top <= window.innerHeight * 0.3)
+                animateFooterContent(footer);
             }
-          }
+          },
+          onEnter: () => {
+            if (footer)
+              gsap.set(footer, {
+                position: "fixed",
+                left: 0,
+                bottom: 0,
+                width: "100%",
+              });
+          },
+          onLeaveBack: () => {
+            if (footer)
+              gsap.set(footer, { clearProps: "position,left,bottom,width" });
+            if (header) header.classList.remove("header-text-light");
+          },
         },
-        onEnter: () => {
-          if (footer) {
-            gsap.set(footer, {
-              position: "fixed",
-              left: 0,
-              bottom: 0,
-              width: "100%",
-            });
-          }
-        },
-        onLeaveBack: () => {
-          if (footer) {
-            gsap.set(footer, { clearProps: "position,left,bottom,width" });
-          }
-          if (header) {
-            header.classList.remove("header-text-light");
-          }
-        },
-      },
-    });
+      });
 
-    items.forEach((item, index) => {
-      const img = images[index];
-      const pos = index;
+      items.forEach((item, index) => {
+        const img = images[index];
+        const pos = index;
+        tl.to(item, { y: "0%", duration: 1, ease: "power2.out" }, pos);
+        if (img)
+          tl.to(
+            img,
+            { yPercent: percentParallax, duration: 1, ease: "power2.out" },
+            pos,
+          );
+      });
 
-      tl.to(item, { y: "0%", duration: 1, ease: "power2.out" }, pos);
-
-      if (img) {
+      if (footer) {
         tl.to(
-          img,
-          { yPercent: percentParallax, duration: 1, ease: "power2.out" },
-          pos,
+          footer,
+          {
+            yPercent: 0,
+            duration: FOOTER_REVEAL,
+            ease: "none",
+            onStart: () => section.classList.add("hide-title"),
+            onReverseComplete: () => section.classList.remove("hide-title"),
+          },
+          items.length + FOOTER_DELAY,
         );
       }
     });
 
-    if (footer) {
-      tl.to(
-        footer,
-        {
-          yPercent: 0,
-          duration: FOOTER_REVEAL,
-          ease: "none",
-          onStart: () => {
-            section.classList.add("hide-title");
+    // ================= MOBILE: pin section, chạy ngang =================
+    mm.add("(max-width: 991px)", () => {
+      gsap.set(items, { y: "0%" });
+      gsap.set(scrollEl, { x: 0 });
+      if (footer) gsap.set(footer, { yPercent: 100 });
+
+      const getMaxScroll = () =>
+        Math.max(0, scrollEl.scrollWidth - container.clientWidth);
+
+      const FOOTER_REVEAL_UNIT = 100; // % chiều cao viewport dành cho phần footer
+      const HORIZONTAL_UNIT = items.length * 60; // càng nhiều item, càng dài quãng scroll ngang
+      const totalScroll = HORIZONTAL_UNIT + FOOTER_REVEAL_UNIT;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${totalScroll}%`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true, // để getMaxScroll tính lại khi resize/refresh
+          onUpdate: (self) => {
+            section.classList.toggle("show-bg", self.progress >= 0.05);
+            if (header)
+              header.classList.toggle("header-text-light", self.progress >= 0);
+            if (footer) {
+              const rect = footer.getBoundingClientRect();
+              if (rect.top <= window.innerHeight * 0.3)
+                animateFooterContent(footer);
+            }
           },
-          onReverseComplete: () => {
-            section.classList.remove("hide-title");
+          onEnter: () => {
+            if (footer)
+              gsap.set(footer, {
+                position: "fixed",
+                left: 0,
+                bottom: 0,
+                width: "100%",
+              });
+          },
+          onLeaveBack: () => {
+            if (footer)
+              gsap.set(footer, { clearProps: "position,left,bottom,width" });
+            if (header) header.classList.remove("header-text-light");
           },
         },
-        items.length + FOOTER_DELAY,
+      });
+
+      tl.to(
+        scrollEl,
+        {
+          x: () => -getMaxScroll(),
+          duration: HORIZONTAL_UNIT / 100,
+          ease: "none",
+        },
+        0,
       );
-    }
+
+      if (footer) {
+        tl.to(
+          footer,
+          {
+            yPercent: 0,
+            duration: FOOTER_REVEAL_UNIT / 100,
+            ease: "none",
+            onStart: () => section.classList.add("hide-title"),
+            onReverseComplete: () => section.classList.remove("hide-title"),
+          },
+          HORIZONTAL_UNIT / 100,
+        );
+      }
+    });
   });
 }
-
 // ----- Ẩn logo + text ngay khi trang load, tránh flash -----
 function initFooterContent(footer) {
   if (footer.dataset.contentInitialized) return;
