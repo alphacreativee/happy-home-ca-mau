@@ -612,7 +612,12 @@ export function sliderScale() {
   const sliderIndicator = document.querySelector(".slider-indicator");
 
   // Cộng thêm 1 viewport height để bù cho chiều cao của chính phần tử sticky
-  sliderWrapper.style.height = `${window.innerHeight * (slides.length + 1)}px`;
+  const isMobile = window.innerWidth <= 991; // chỉnh breakpoint theo project của bạn
+  const multiplier = isMobile ? 0.5 : 1; // 0.6 = scroll ngắn hơn ~40%, chỉnh số này tùy ý
+
+  sliderWrapper.style.height = `${
+    window.innerHeight * (slides.length + multiplier)
+  }px`;
 
   let activeSlide = 0;
   let isAnimating = false;
