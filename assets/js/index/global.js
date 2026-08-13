@@ -243,33 +243,34 @@ export function pinStackSections() {
 export function animationText() {
   gsap.registerPlugin(SplitText, ScrollTrigger);
 
-  document.querySelectorAll(".el-txt-line").forEach((el) => {
-    if (el.dataset.scriptInitialized) return;
-    el.dataset.scriptInitialized = "true";
+  document.fonts.ready.then(() => {
+    document.querySelectorAll(".el-txt-line").forEach((el) => {
+      if (el.dataset.scriptInitialized) return;
+      el.dataset.scriptInitialized = "true";
 
-    const splitTitle = SplitText.create(el, {
-      type: "lines",
-      mask: "lines",
-      linesClass: "line",
-    });
+      const splitTitle = SplitText.create(el, {
+        type: "lines",
+        mask: "lines",
+        linesClass: "line",
+      });
 
-    gsap.fromTo(
-      splitTitle.lines,
-      { y: "100%" },
-      {
-        y: "0%",
-        duration: 0.8,
-        ease: "power3.inOut",
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          end: "bottom 85%",
-          toggleActions: "play none none none",
-          // markers: true,
+      gsap.fromTo(
+        splitTitle.lines,
+        { y: "100%" },
+        {
+          y: "0%",
+          duration: 0.8,
+          ease: "power3.inOut",
+          stagger: 0.05,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            end: "bottom 85%",
+            toggleActions: "play none none none",
+          },
         },
-      },
-    );
+      );
+    });
   });
 }
 export function imageParallax() {
