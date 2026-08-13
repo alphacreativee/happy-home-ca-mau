@@ -1375,6 +1375,11 @@ img.kb-zoom {
 .growth-top {
   margin-bottom: var(--space-72);
 }
+@media (max-width: 991px) {
+  .growth-top {
+    margin-bottom: 40px;
+  }
+}
 .growth-top-title {
   max-width: 65%;
   margin-bottom: 64px;
@@ -1382,6 +1387,7 @@ img.kb-zoom {
 @media (max-width: 991px) {
   .growth-top-title {
     max-width: 100%;
+    margin-bottom: 32px;
   }
 }
 .growth-top-desc {
@@ -1404,6 +1410,11 @@ img.kb-zoom {
 }
 .growth-main-title {
   margin-bottom: var(--space-72);
+}
+@media (max-width: 991px) {
+  .growth-main-title {
+    margin-bottom: 32px;
+  }
 }
 .growth-main-desc {
   max-width: 60%;

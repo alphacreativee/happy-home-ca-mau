@@ -14,11 +14,15 @@
   }
   &-top {
     margin-bottom: var(--space-72);
+    @media (max-width: 991px) {
+      margin-bottom: 40px;
+    }
     &-title {
       max-width: 65%;
       margin-bottom: 64px;
       @media (max-width: 991px) {
         max-width: 100%;
+        margin-bottom: 32px;
       }
     }
     &-desc {
@@ -37,6 +41,9 @@
     }
     &-title {
       margin-bottom: var(--space-72);
+      @media (max-width: 991px) {
+        margin-bottom: 32px;
+      }
     }
     &-desc {
       max-width: 60%;
