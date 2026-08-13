@@ -30,7 +30,9 @@
   text-align: center;
   background-color: var(--color-brown-med);
   // KHÔNG set min-height: 100svh nữa -> cao theo content thật
-
+  @media (max-width: 991px) {
+    padding: 40px 20px;
+  }
   &-img,
   .liberate-top-img {
     margin-bottom: var(--space-80);
@@ -41,11 +43,17 @@
 
   .liberate-top-title {
     margin-bottom: var(--space-32);
+    @media (max-width: 991px) {
+      margin-bottom: 24px;
+    }
   }
 
   .liberate-top-desc {
     max-width: 50%;
     text-align: center;
+    @media (max-width: 991px) {
+      max-width: 100%;
+    }
   }
 }
 .liberate-pin {
@@ -169,6 +177,19 @@
   }
 }
 @media (max-width: 991px) {
+  .liberate-mobile-content {
+    padding: 24px 0 0;
+    text-align: center;
+  }
+  .liberate-list-mobile {
+    padding: 0 20px 40px;
+  }
+  .liberate-mobile-item {
+    margin-bottom: 40px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
   .liberate-list-mobile {
     .swiper-title {
       position: absolute;
