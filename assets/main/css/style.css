@@ -1106,6 +1106,43 @@ img.kb-zoom {
   background-color: var(--color-gold-light);
 }
 
+.cta-call {
+  position: fixed;
+  right: 20px;
+  bottom: 40px;
+  z-index: 123;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.cta-call:hover a::before {
+  opacity: 1;
+  visibility: visible;
+}
+.cta-call a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(120deg, #cfa67e 32%, #854b20 99%);
+  position: relative;
+}
+.cta-call a img {
+  z-index: 2;
+}
+.cta-call a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #cfa67e 32%, #854b20 99%);
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
 .lightpick {
   --color-stroke: #ccc;
   --color-bg: #fff;
