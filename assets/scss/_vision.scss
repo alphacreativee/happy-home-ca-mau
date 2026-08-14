@@ -14,5 +14,11 @@
   &-title {
     position: relative;
     z-index: 4;
+    @media (min-width: 992px) {
+      .line {
+        padding-right: 0.4rem;
+        padding-left: 0.4rem;
+      }
+    }
   }
 }

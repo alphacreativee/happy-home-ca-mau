@@ -23,6 +23,12 @@
     }
     &-title {
       margin-bottom: var(--space-32);
+      @media (min-width: 992px) {
+        .line {
+          padding-right: 0.4rem;
+          padding-left: 0.4rem;
+        }
+      }
       @media (max-width: 991px) {
         margin-bottom: 24px;
         .line {
@@ -34,6 +40,12 @@
     &-desc {
       max-width: 50%;
       text-align: center;
+      @media (min-width: 992px) {
+        .line {
+          padding-right: 0.4rem;
+          padding-left: 0.4rem;
+        }
+      }
       @media (max-width: 991px) {
         max-width: 100%;
       }
