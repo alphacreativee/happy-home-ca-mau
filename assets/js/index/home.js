@@ -466,12 +466,14 @@ function animationReveal() {
     const images = Array.from(items)
       .map((item) => item.querySelector(".reveal-item-img img"))
       .filter(Boolean);
-
+    if (footer) {
+      footer.style.visibility = "visible";
+    }
     if (footer) initFooterContent(footer);
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 769px)", () => {
+    mm.add("(min-width: 992px)", () => {
       gsap.set(items, { y: "100%", x: 0 });
       gsap.set(images, { yPercent: `-${percentParallax}` });
       if (footer) gsap.set(footer, { yPercent: 100 });

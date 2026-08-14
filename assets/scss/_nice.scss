@@ -15,6 +15,12 @@
     }
     &-title {
       margin-bottom: var(--space-32);
+      @media (min-width: 992px) {
+        .line {
+          padding-right: 1rem;
+          padding-left: 1rem;
+        }
+      }
       @media (max-width: 991px) {
         margin-bottom: 24px;
         .line {

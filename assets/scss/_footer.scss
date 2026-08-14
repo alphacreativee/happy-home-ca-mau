@@ -13,7 +13,7 @@
   z-index: 3;
   will-change: transform; // báo trước cho browser tạo layer riêng, tránh repaint layout
   transform: translateZ(0); // ép GPU-accelerated layer trên iOS
-
+  visibility: hidden;
   height: 90svh;
   background: url("../../images/del/bg-re-cay-footer.png");
   background-repeat: no-repeat;

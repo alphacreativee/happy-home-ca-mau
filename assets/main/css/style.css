@@ -2495,6 +2495,12 @@ img.kb-zoom {
 .nice-top-title {
   margin-bottom: var(--space-32);
 }
+@media (min-width: 992px) {
+  .nice-top-title .line {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}
 @media (max-width: 991px) {
   .nice-top-title {
     margin-bottom: 24px;
@@ -2799,6 +2805,7 @@ img.kb-zoom {
   z-index: 3;
   will-change: transform;
   transform: translateZ(0);
+  visibility: hidden;
   height: 90svh;
   background: url("../../images/del/bg-re-cay-footer.png");
   background-repeat: no-repeat;
