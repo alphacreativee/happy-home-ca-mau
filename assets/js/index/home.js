@@ -448,6 +448,7 @@ function mapCoverAnimation() {
 // }
 function animationReveal() {
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true }); // thêm dòng này, chỉ 1 lần
 
   const footer = document.getElementById("footer");
   const header = document.getElementById("header");
@@ -470,7 +471,6 @@ function animationReveal() {
 
     const mm = gsap.matchMedia();
 
-    // ================= DESKTOP: reveal item theo trục Y (giữ nguyên) =================
     mm.add("(min-width: 769px)", () => {
       gsap.set(items, { y: "100%", x: 0 });
       gsap.set(images, { yPercent: `-${percentParallax}` });
@@ -497,18 +497,12 @@ function animationReveal() {
                 animateFooterContent(footer);
             }
           },
+          // bỏ onEnter / onLeaveBack toggle position — footer đã fixed sẵn từ CSS
           onEnter: () => {
-            if (footer)
-              gsap.set(footer, {
-                position: "fixed",
-                left: 0,
-                bottom: 0,
-                width: "100%",
-              });
+            if (header) {
+            } // giữ nếu bạn cần logic khác
           },
           onLeaveBack: () => {
-            if (footer)
-              gsap.set(footer, { clearProps: "position,left,bottom,width" });
             if (header) header.classList.remove("header-text-light");
           },
         },
@@ -541,7 +535,6 @@ function animationReveal() {
       }
     });
 
-    // ================= MOBILE: pin section, chạy ngang =================
     mm.add("(max-width: 991px)", () => {
       gsap.set(items, { y: "0%" });
       gsap.set(scrollEl, { x: 0 });
@@ -550,8 +543,8 @@ function animationReveal() {
       const getMaxScroll = () =>
         Math.max(0, scrollEl.scrollWidth - container.clientWidth);
 
-      const FOOTER_REVEAL_UNIT = 100; // % chiều cao viewport dành cho phần footer
-      const HORIZONTAL_UNIT = items.length * 60; // càng nhiều item, càng dài quãng scroll ngang
+      const FOOTER_REVEAL_UNIT = 100;
+      const HORIZONTAL_UNIT = items.length * 60;
       const totalScroll = HORIZONTAL_UNIT + FOOTER_REVEAL_UNIT;
 
       const tl = gsap.timeline({
@@ -561,7 +554,7 @@ function animationReveal() {
           end: `+=${totalScroll}%`,
           pin: true,
           scrub: 1,
-          invalidateOnRefresh: true, // để getMaxScroll tính lại khi resize/refresh
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             section.classList.toggle("show-bg", self.progress >= 0.05);
             if (header)
@@ -572,18 +565,7 @@ function animationReveal() {
                 animateFooterContent(footer);
             }
           },
-          onEnter: () => {
-            if (footer)
-              gsap.set(footer, {
-                position: "fixed",
-                left: 0,
-                bottom: 0,
-                width: "100%",
-              });
-          },
           onLeaveBack: () => {
-            if (footer)
-              gsap.set(footer, { clearProps: "position,left,bottom,width" });
             if (header) header.classList.remove("header-text-light");
           },
         },

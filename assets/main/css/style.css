@@ -1210,6 +1210,7 @@ img.kb-zoom {
   transition: var(--tt-medium);
 }
 #header.scrolled {
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 #header.scrolled .header-name,
@@ -1392,6 +1393,15 @@ img.kb-zoom {
   left: 50%;
   transform: translate(-50%, 0%);
   z-index: 2;
+}
+.hero-logo img {
+  width: auto;
+  height: 175px;
+}
+@media (max-width: 991px) {
+  .hero-logo img {
+    height: 107px;
+  }
 }
 .hero-heading {
   position: absolute;
@@ -1917,6 +1927,10 @@ img.kb-zoom {
   .connect-top-title {
     margin-bottom: 24px;
   }
+  .connect-top-title .line {
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+  }
 }
 .connect-top-desc {
   max-width: 50%;
@@ -2159,6 +2173,10 @@ img.kb-zoom {
 @media (max-width: 991px) {
   .liberate-panel-top .liberate-top-title {
     margin-bottom: 24px;
+  }
+  .liberate-panel-top .liberate-top-title .line {
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
   }
 }
 .liberate-panel-top .liberate-top-desc {
@@ -2433,6 +2451,10 @@ img.kb-zoom {
   .nice-top-title {
     margin-bottom: 24px;
   }
+  .nice-top-title .line {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
 }
 .nice-top-desc {
   max-width: 50%;
@@ -2524,6 +2546,15 @@ img.kb-zoom {
 }
 .proud-box h3 {
   margin-bottom: var(--space-32);
+}
+@media (max-width: 991px) {
+  .proud-box h3 {
+    margin-bottom: 24px;
+  }
+  .proud-box h3 .line {
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+  }
 }
 .proud .desc {
   max-width: 65%;
@@ -2630,7 +2661,7 @@ img.kb-zoom {
     max-width: calc(100% - 40px);
     font-size: 24px;
     line-height: 33px;
-    top: 60px;
+    top: 108px;
   }
 }
 .reveal-slider {
@@ -2713,12 +2744,17 @@ img.kb-zoom {
 }
 
 #footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 3;
+  will-change: transform;
+  transform: translateZ(0);
   height: 80svh;
   background: url("../../images/del/bg-re-cay-footer.png");
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
-  z-index: 3;
 }
 @media (max-width: 991px) {
   #footer {

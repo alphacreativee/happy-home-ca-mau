@@ -17,6 +17,10 @@
       margin-bottom: var(--space-32);
       @media (max-width: 991px) {
         margin-bottom: 24px;
+        .line {
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+        }
       }
     }
     &-desc {

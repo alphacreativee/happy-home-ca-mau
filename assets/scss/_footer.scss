@@ -1,11 +1,23 @@
 #footer {
-  height: 80svh;
+  // height: 80svh;
 
+  // background: url("../../images/del/bg-re-cay-footer.png");
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // position: relative;
+  // z-index: 3;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 3;
+  will-change: transform; // báo trước cho browser tạo layer riêng, tránh repaint layout
+  transform: translateZ(0); // ép GPU-accelerated layer trên iOS
+
+  height: 80svh;
   background: url("../../images/del/bg-re-cay-footer.png");
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
-  z-index: 3;
   @media (max-width: 991px) {
     height: max-content;
   }

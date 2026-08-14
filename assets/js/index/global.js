@@ -343,7 +343,7 @@ export function animationFade() {
     if (listEl.dataset.scriptInitialized) return;
     listEl.dataset.scriptInitialized = "true";
 
-    const items = listEl.children; // hoặc listEl.querySelectorAll(":scope > *")
+    const items = listEl.children;
     if (!items.length) return;
 
     gsap.fromTo(
@@ -364,6 +364,39 @@ export function animationFade() {
         },
       },
     );
+  });
+
+  // ----- Fade chỉ chạy trên mobile -----
+  document.querySelectorAll(".el-fade-mobile").forEach((el) => {
+    if (el.dataset.scriptInitializedMobile) return;
+    el.dataset.scriptInitializedMobile = "true";
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(max-width: 991px)", () => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            end: "bottom 85%",
+            toggleActions: "play none none none",
+            // markers: true,
+          },
+        },
+      );
+
+      // cleanup khi ra khỏi breakpoint mobile (vd: xoay ngang qua desktop)
+      return () => {
+        gsap.set(el, { clearProps: "opacity,transform" });
+      };
+    });
   });
 }
 export function mousetail() {

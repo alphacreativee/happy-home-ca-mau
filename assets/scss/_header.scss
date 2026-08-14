@@ -1,7 +1,9 @@
 #header {
   z-index: 999;
   transition: var(--tt-medium);
+
   &.scrolled {
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     .header-name,
     .header-right .label,

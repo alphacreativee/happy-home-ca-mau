@@ -77,6 +77,13 @@
     left: 50%;
     transform: translate(-50%, 0%);
     z-index: 2;
+    img {
+      width: auto;
+      height: 175px;
+      @media (max-width: 991px) {
+        height: 107px;
+      }
+    }
   }
 
   &-heading {
