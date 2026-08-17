@@ -89,13 +89,12 @@ function init() {
   // animationFooter();
   ScrollTrigger.refresh();
 }
-document.fonts.ready.then(() => {
-  animationText();
-});
+
 document.addEventListener("DOMContentLoaded", () => {
   init();
   initSwiper();
   headerScroll();
+  animationText();
 });
 
 let isLinkClicked = false;

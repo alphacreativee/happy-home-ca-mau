@@ -254,7 +254,7 @@ export function animationText() {
         type: "lines",
         mask: "lines",
         linesClass: "line",
-        autoSplit: true, // tự động resplit khi resize (kể cả đổi lines) - cần GSAP 3.13+
+        // autoSplit: true, // tự động resplit khi resize (kể cả đổi lines) - cần GSAP 3.13+
         onSplit: (self) => {
           splitTitle = self;
 
@@ -271,6 +271,7 @@ export function animationText() {
                 start: "top 85%",
                 end: "bottom 85%",
                 toggleActions: "play none none none",
+                // markers: true,
               },
             },
           );
